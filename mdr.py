@@ -43,24 +43,24 @@ def get_children_count(e):
     return len(e)
 
 class MiningDataRegion(object):
-    def __init__(self, root, max_generalized_nodes=9, threshold=0.8, **options):
+    def __init__(self, root, max_generalized_nodes=3, threshold=0.3, **options):
         self.root = root
         self.max_generalized_nodes = max_generalized_nodes
         self.threshold = threshold
         self.stm = SimpleTreeMatch(get_root, get_children_count, get_child)
         self.options = options
 
-    def find_regions(self, element):
+    def find_regions(self, root):
         data_regions = []
-        if tree_depth(element) >= 2:
-            scores = self.compare_generalized_nodes(element, self.max_generalized_nodes)
-            data_regions.extend(self.identify_regions(0, element, self.max_generalized_nodes, self.threshold, scores))
+        if tree_depth(root) >= 2:
+            scores = self.compare_generalized_nodes(root, self.max_generalized_nodes)
+            data_regions.extend(self.identify_regions(0, root, self.max_generalized_nodes, self.threshold, scores))
             covered = set()
             for data_region in data_regions:
                 for i in xrange(data_region.start, data_region.covered):
                     covered.add(data_region.root[i])
 
-            for child in element:
+            for child in root:
                 if child not in covered:
                     data_regions.extend(self.find_regions(child))
         return data_regions
@@ -72,7 +72,7 @@ class MiningDataRegion(object):
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
-            for i in xrange(start, k+start):
+            for i in xrange(start, k + start):
                 flag = True
                 for j in xrange(i, len(root) - k, k):
                     pair = GeneralizedNode(root[j], k), GeneralizedNode(root[j + k], k)
@@ -88,7 +88,7 @@ class MiningDataRegion(object):
                     elif not flag:  # doesn't match but previous match
                         break
 
-                if max_region.covered < cur_region.covered and (max_region.start == 0 or cur_region.start < max_region.start):
+                if max_region.covered < cur_region.covered and (max_region.start == 0 or cur_region.start <= max_region.start):
                     max_region.k = cur_region.k
                     max_region.start = cur_region.start
                     max_region.covered = cur_region.covered
@@ -96,7 +96,8 @@ class MiningDataRegion(object):
         if max_region.covered:
             data_regions.append(max_region)
             if max_region.start + max_region.covered < len(max_region.root):
-                data_regions.extend(self.identify_regions(max_region.start + max_region.covered, root, k, threshold, scores))
+                data_regions.extend(self.identify_regions(max_region.start + max_region.covered, root,
+                                                          max_generalized_nodes, threshold, scores))
 
         return data_regions
 
@@ -115,6 +116,8 @@ class MiningDataRegion(object):
             gn1 = GeneralizedNode(a[0], len(a))
             gn2 = GeneralizedNode(b[0], len(b))
             scores.setdefault((gn1, gn2), score)
+            if gn1.element.tag == 'p':
+                print len(a), score
             if self.options.get('debug'):
                 print self._format_generalized_node(gn1, gn2), score
         return scores
