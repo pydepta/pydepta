@@ -8,7 +8,7 @@ class CurrentRegion(object):
         self.__dict__.update(dict)
 
     def __str__(self):
-        return '{}[{}]:{} covered {}'.format(self.element, self.start, self.k, self.covered)
+        return '{}[{}]:{} covered {}'.format(self.root, self.start, self.k, self.covered)
 
 def generalized_nodes(a, K, **options):
     """
@@ -34,12 +34,10 @@ def get_root(e):
         return e.tag
     return None
 
-
 def get_child(e, i):
     if i > len(e):
         return None
     return e[i - 1]
-
 
 def get_children_count(e):
     return len(e)
@@ -54,13 +52,13 @@ class MiningDataRegion(object):
 
     def find_regions(self, element):
         data_regions = []
-        if tree_depth(element) > 2:
+        if tree_depth(element) >= 2:
             scores = self.compare_generalized_nodes(element, self.max_generalized_nodes)
             data_regions.extend(self.identify_regions(0, element, self.max_generalized_nodes, self.threshold, scores))
             covered = set()
             for data_region in data_regions:
                 for i in xrange(data_region.start, data_region.covered):
-                    covered.add(data_region.element[i])
+                    covered.add(data_region.root[i])
 
             for child in element:
                 if child not in covered:
@@ -69,8 +67,8 @@ class MiningDataRegion(object):
 
 
     def identify_regions(self, start, root, max_generalized_nodes, threshold, scores):
-        cur_region = CurrentRegion(element=root, start=0, k=0, covered=0)
-        max_region = CurrentRegion(element=root, start=0, k=0, covered=0)
+        cur_region = CurrentRegion(root=root, start=0, k=0, covered=0)
+        max_region = CurrentRegion(root=root, start=0, k=0, covered=0)
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
@@ -97,7 +95,7 @@ class MiningDataRegion(object):
 
         if max_region.covered:
             data_regions.append(max_region)
-            if max_region.start + max_region.covered < len(max_region.element):
+            if max_region.start + max_region.covered < len(max_region.root):
                 data_regions.extend(self.identify_regions(max_region.start + max_region.covered, root, k, threshold, scores))
 
         return data_regions
