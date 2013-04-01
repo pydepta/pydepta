@@ -3,23 +3,62 @@ from __future__ import division
 def tree_size(root):
     """
     Get the subtree size.
+
+    for example:
+    >>> from lxml.html import fragment_fromstring, tostring
+
+    >>> root = fragment_fromstring("<p> </p>")
+    >>> tree_size(root)
+    1
+
+    >>> root = fragment_fromstring("<p> <font> <a href='#top'> </a> </font> </p>")
+    >>> tree_size(root)
+    3
+
+    >>> html = "<p><font><font>^ </font><a href='#top'><font>Return to the top</font></a></font><br><font>--</font> </p>"
+    >>> root = fragment_fromstring(html)
+    >>> tree_size(root)
+    7
     """
     if len(root) == 0:
         return 1
-    return sum([tree_size(child) for child in root])
+    return sum([tree_size(child) for child in root]) + 1
 
 def tree_depth(root):
     """
     Get the subtree depth.
+
+    for example:
+    >>> from lxml.html import fragment_fromstring
+
+    >>> root = fragment_fromstring("<p> </p>")
+    >>> tree_depth(root)
+    1
+
+    >>> root = fragment_fromstring("<p> <font> </font> </p>")
+    >>> tree_depth(root)
+    2
+
+    >>> html = "<p><font><font>^ </font><a href='#top'><font>Return to the top</font></a></font><br><font>--</font> </p>"
+    >>> root = fragment_fromstring(html)
+    >>> tree_depth(root)
+    4
+
     """
     if len(root) == 0:
-        return 0
+        return 1
     return max([tree_depth(child) for child in root]) + 1
 
 
 class SimpleTreeMatch(object):
     """
     Abstract Simple Tree Match.
+
+    for example:
+    >>> from lxml.html import fragment_fromstring
+    >>> from mdr import get_root, get_children_count, get_child
+    >>> stm = SimpleTreeMatch(get_root, get_children_count, get_child)
+
     """
     def __init__(self, ger_root, get_children_count, get_child):
         self.get_root = ger_root
@@ -52,6 +91,7 @@ class SimpleTreeMatch(object):
         >>> t1 = ('tr', ('td', ()), ('td', ()))
         >>> t2 = ('tr', ('td', ()), ('tr', ()))
         >>> stm._single_match(t1, t2)
+        2
         """
         if self.get_root(t1) is None or self.get_root(t2) is None:
             return 0

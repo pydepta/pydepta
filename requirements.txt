@@ -1,1 +1,3 @@
 lxml
+w3lib
+pyquery

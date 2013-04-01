@@ -35,9 +35,9 @@ def get_root(e):
     return None
 
 def get_child(e, i):
-    if i > len(e):
+    if i >= len(e):
         return None
-    return e[i - 1]
+    return e[i]
 
 def get_children_count(e):
     return len(e)
@@ -116,8 +116,6 @@ class MiningDataRegion(object):
             gn1 = GeneralizedNode(a[0], len(a))
             gn2 = GeneralizedNode(b[0], len(b))
             scores.setdefault((gn1, gn2), score)
-            if gn1.element.tag == 'p':
-                print len(a), score
             if self.options.get('debug'):
                 print self._format_generalized_node(gn1, gn2), score
         return scores
