@@ -1,4 +1,5 @@
 #coding=utf-8
+from random import choice
 from urllib2 import urlopen
 from lxml import etree
 from lxml.html import tostring
@@ -18,18 +19,18 @@ class DomTreeBuilder(object):
         parser = etree.HTMLParser(encoding='utf-8')
         return etree.fromstring(self.html, parser)
 
-def pyquery_highlight(element):
-    p = pq(element)
-    p.attr('style', 'color:#ffff42; border:solid 5px')
-    # p.wrap("<div class='MDR' style='color:#ffff42; border:solid 5px'></div>")
+def annotate(regions):
+    """
+    annotate the regions with PyQuery. quite neat!
+    """
+    colors = ['#ffff42', '#ff0000', '#00ff00', '#ff00ff']
 
-def annotate(element, region_elements, highlight=pyquery_highlight):
-
-    if element in region_elements:
-        highlight(element)
-
-    for child in element:
-        annotate(child, region_elements)
+    for i, region in enumerate(regions):
+        p = pq(region.root[region.start])
+        others = [region.root[j] for j in xrange(region.start + 1, region.start + region.covered)]
+        div = p.wrap('<div class="mdr_region" id={} style="color:{}; border:solid 5px"></div>'.format(i, choice(colors)))
+        for e in others:
+            div.append(e)
 
 def main(html=None):
     builder = DomTreeBuilder(html, debug=False)
@@ -40,14 +41,11 @@ def main(html=None):
 
     mdr = MiningDataRegion(root, threshold=0.3, debug=True)
     regions = mdr.find_regions(root)
-    region_elements = set()
 
     for i, region in enumerate(regions):
-        print 'region {}: {}[{}], {}, {}, {}'.format(i, region.root.tag, region.start, region.root[region.start].tag, region.k, region.covered)
-        for j in xrange(region.start, region.start + region.covered):
-            region_elements.add(region.root[j])
-
-    annotate(root, region_elements)
+        print 'region {}: {}[{}], {}, {}, {}'.format(i, region.root.tag, region.start,
+                                                     region.root[region.start].tag, region.k, region.covered)
+    annotate(regions)
 
     with open('output.html', 'w') as f:
         print >> f, tostring(root, pretty_print=True)
