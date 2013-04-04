@@ -51,29 +51,12 @@ def pairwise(a, K, start=0):
             if len(slice_a) >= k and len(slice_b) >= k:
                 yield slice_a, slice_b
 
-
-def get_root(e):
-    if e is not None and len(e):
-        return e.tag
-    return None
-
-
-def get_child(e, i):
-    if i >= len(e):
-        return None
-    return e[i]
-
-
-def get_children_count(e):
-    return len(e)
-
-
 class MiningDataRegion(object):
     def __init__(self, root, max_generalized_nodes=3, threshold=0.3, **options):
         self.root = root
         self.max_generalized_nodes = max_generalized_nodes
         self.threshold = threshold
-        self.stm = SimpleTreeMatch(get_root, get_children_count, get_child)
+        self.stm = SimpleTreeMatch()
         self.options = options
 
     def find_regions(self, root):
@@ -163,7 +146,7 @@ class MiningDataRecord(object):
     """
 
     def __init__(self, threshold=0.3):
-        self.stm = SimpleTreeMatch(get_root, get_children_count, get_child)
+        self.stm = SimpleTreeMatch()
         self.threshold = threshold
 
     def find_records(self, region):

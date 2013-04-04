@@ -49,18 +49,24 @@ def tree_depth(root):
         return 1
     return max([tree_depth(child) for child in root]) + 1
 
+def _get_root(e):
+    if e is not None and len(e):
+        return e.tag
+    return None
+
+def _get_child(e, i):
+    if i >= len(e):
+        return None
+    return e[i]
+
+def _get_children_count(e):
+    return len(e)
 
 class SimpleTreeMatch(object):
     """
     Abstract Simple Tree Match.
-
-    for example:
-    >>> from lxml.html import fragment_fromstring
-    >>> from mdr import get_root, get_children_count, get_child
-    >>> stm = SimpleTreeMatch(get_root, get_children_count, get_child)
-
     """
-    def __init__(self, ger_root, get_children_count, get_child):
+    def __init__(self, ger_root=_get_root, get_children_count=_get_children_count, get_child=_get_child):
         self.get_root = ger_root
         self.get_children_count = get_children_count
         self.get_child = get_child
