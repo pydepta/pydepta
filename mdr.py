@@ -12,35 +12,35 @@ class DataRegion(object):
         return 'parent {}, start {}, k {} covered {} length {}'.format(self.parent, self.start, self.k, self.covered,
                                                                        len(self.parent))
 
-    def children(self, k):
+    def iter(self, k):
         """
         >>> root = [1, 2, 3, 4, 5]
         >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
-        >>> list(region.children(1))
+        >>> list(region.iter(1))
         [[2], [3], [4], [5]]
 
         >>> region = DataRegion(parent=root, start=1, k=2, covered=4)
-        >>> list(region.children(2))
+        >>> list(region.iter(2))
         [[2, 3], [4, 5]]
 
         >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
-        >>> list(region.children(2))
+        >>> list(region.iter(2))
         [[2, 3], [4, 5]]
 
         """
         for i in xrange(self.start, self.start + self.covered, k):
             yield self.parent[i:i + k]
 
-def generalized_nodes(a, K, start=0):
+def pairwise(a, K, start=0):
     """
     A generator to return the comparison pair.
 
     for example:
-    >>> list(generalized_nodes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3))
+    >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3))
     [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10]), ([1, 2, 3], [4, 5, 6]), ([4, 5, 6], [7, 8, 9])]
-    >>> list(generalized_nodes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2))
+    >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2))
     [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10])]
-    >>> list(generalized_nodes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, 1))
+    >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, 1))
     [([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([2, 3], [4, 5]), ([4, 5], [6, 7]), ([6, 7], [8, 9]), ([2, 3, 4], [5, 6, 7]), ([5, 6, 7], [8, 9, 10])]
     """
     for k in xrange(1, K + 1):
@@ -138,7 +138,7 @@ class MiningDataRegion(object):
          `k`: the maximum length of generalized node.
         """
         scores = {}
-        for a, b in generalized_nodes(parent, k):
+        for a, b in pairwise(parent, k):
             score = self.stm.normalized_match_score(a, b)
             gn1 = GeneralizedNode(a[0], len(a))
             gn2 = GeneralizedNode(b[0], len(b))
@@ -170,13 +170,13 @@ class MiningDataRecord(object):
         records = []
         if region.k == 1:
             for i in xrange(region.start, region.start + region.covered):
-                for child1, child2 in generalized_nodes(region.parent, 1, region.start):
+                for child1, child2 in pairwise(region.parent, 1, region.start):
                     similarity = self.stm.normalized_match_score(child1, child2)
                     if similarity < self.threshold:
                         return self.slice_region(region)
                 else:
                     # each child of generalized node is a data record
-                    for gn in region.children(1):
+                    for gn in region.iter(1):
                         records.extend([DataRecord(element=c, size=1) for c in gn])
 
         return self.slice_region(region)
@@ -186,7 +186,7 @@ class MiningDataRecord(object):
         slice every generalized node of region to a data record
         """
         records = []
-        for gn in region.children(region.k):
+        for gn in region.iter(region.k):
             records.append(DataRecord(element=gn[0], size=len(gn)))
         return records
 
