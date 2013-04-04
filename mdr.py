@@ -8,7 +8,7 @@ class CurrentRegion(object):
         self.__dict__.update(dict)
 
     def __str__(self):
-        return '{}[{}]:{} covered {}'.format(self.root, self.start, self.k, self.covered)
+        return '{}[{}]:{} covered {}'.format(self.parent, self.start, self.k, self.covered)
 
 def generalized_nodes(a, K, **options):
     """
@@ -58,7 +58,7 @@ class MiningDataRegion(object):
             covered = set()
             for data_region in data_regions:
                 for i in xrange(data_region.start, data_region.covered):
-                    covered.add(data_region.root[i])
+                    covered.add(data_region.parent[i])
 
             for child in root:
                 if child not in covered:
@@ -67,8 +67,8 @@ class MiningDataRegion(object):
 
 
     def identify_regions(self, start, root, max_generalized_nodes, threshold, scores):
-        cur_region = CurrentRegion(root=root, start=0, k=0, covered=0)
-        max_region = CurrentRegion(root=root, start=0, k=0, covered=0)
+        cur_region = CurrentRegion(parent=root, start=0, k=0, covered=0)
+        max_region = CurrentRegion(parent=root, start=0, k=0, covered=0)
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
@@ -95,7 +95,7 @@ class MiningDataRegion(object):
 
         if max_region.covered:
             data_regions.append(max_region)
-            if max_region.start + max_region.covered < len(max_region.root):
+            if max_region.start + max_region.covered < len(max_region.parent):
                 data_regions.extend(self.identify_regions(max_region.start + max_region.covered, root,
                                                           max_generalized_nodes, threshold, scores))
 

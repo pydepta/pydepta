@@ -26,8 +26,8 @@ def annotate(regions):
     colors = ['#ffff42', '#ff0000', '#00ff00', '#ff00ff']
 
     for i, region in enumerate(regions):
-        p = pq(region.root[region.start])
-        others = [region.root[j] for j in xrange(region.start + 1, region.start + region.covered)]
+        p = pq(region.parent[region.start])
+        others = [region.parent[j] for j in xrange(region.start + 1, region.start + region.covered)]
         div = p.wrap('<div class="mdr_region" id={} style="color:{}; border:solid 5px"></div>'.format(i, choice(colors)))
         for e in others:
             div.append(e)
@@ -43,8 +43,8 @@ def main(html=None):
     regions = mdr.find_regions(root)
 
     for i, region in enumerate(regions):
-        print 'region {}: {}[{}], {}, {}, {}'.format(i, region.root.tag, region.start,
-                                                     region.root[region.start].tag, region.k, region.covered)
+        print 'region {}: {}[{}], {}, {}, {}'.format(i, region.parent.tag, region.start,
+                                                     region.parent[region.start].tag, region.k, region.covered)
     annotate(regions)
 
     with open('output.html', 'w') as f:
