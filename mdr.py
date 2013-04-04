@@ -2,15 +2,36 @@ from collections import namedtuple
 from trees import SimpleTreeMatch, tree_depth
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
+DataRecord = namedtuple('DataRecord', ['element', 'size'])
 
-class CurrentRegion(object):
+class DataRegion(object):
     def __init__(self, **dict):
         self.__dict__.update(dict)
 
     def __str__(self):
-        return '{}[{}]:{} covered {}'.format(self.parent, self.start, self.k, self.covered)
+        return 'parent {}, start {}, k {} covered {} length {}'.format(self.parent, self.start, self.k, self.covered,
+                                                                       len(self.parent))
 
-def generalized_nodes(a, K, **options):
+    def children(self, k):
+        """
+        >>> root = [1, 2, 3, 4, 5]
+        >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
+        >>> list(region.children(1))
+        [[2], [3], [4], [5]]
+
+        >>> region = DataRegion(parent=root, start=1, k=2, covered=4)
+        >>> list(region.children(2))
+        [[2, 3], [4, 5]]
+
+        >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
+        >>> list(region.children(2))
+        [[2, 3], [4, 5]]
+
+        """
+        for i in xrange(self.start, self.start + self.covered, k):
+            yield self.parent[i:i + k]
+
+def generalized_nodes(a, K, start=0):
     """
     A generator to return the comparison pair.
 
@@ -19,9 +40,11 @@ def generalized_nodes(a, K, **options):
     [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10]), ([1, 2, 3], [4, 5, 6]), ([4, 5, 6], [7, 8, 9])]
     >>> list(generalized_nodes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2))
     [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10])]
+    >>> list(generalized_nodes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, 1))
+    [([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([2, 3], [4, 5]), ([4, 5], [6, 7]), ([6, 7], [8, 9]), ([2, 3, 4], [5, 6, 7]), ([5, 6, 7], [8, 9, 10])]
     """
     for k in xrange(1, K + 1):
-        for i in xrange(0, len(a), k):
+        for i in xrange(start, len(a), k):
             slice_a = a[i:i + k]
             slice_b = a[i + k: i + 2 * k]
 
@@ -34,13 +57,16 @@ def get_root(e):
         return e.tag
     return None
 
+
 def get_child(e, i):
     if i >= len(e):
         return None
     return e[i]
 
+
 def get_children_count(e):
     return len(e)
+
 
 class MiningDataRegion(object):
     def __init__(self, root, max_generalized_nodes=3, threshold=0.3, **options):
@@ -67,8 +93,8 @@ class MiningDataRegion(object):
 
 
     def identify_regions(self, start, root, max_generalized_nodes, threshold, scores):
-        cur_region = CurrentRegion(parent=root, start=0, k=0, covered=0)
-        max_region = CurrentRegion(parent=root, start=0, k=0, covered=0)
+        cur_region = DataRegion(parent=root, start=0, k=0, covered=0)
+        max_region = DataRegion(parent=root, start=0, k=0, covered=0)
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
@@ -88,7 +114,8 @@ class MiningDataRegion(object):
                     elif not flag:  # doesn't match but previous match
                         break
 
-                if max_region.covered < cur_region.covered and (max_region.start == 0 or cur_region.start <= max_region.start):
+                if max_region.covered < cur_region.covered and (
+                        max_region.start == 0 or cur_region.start <= max_region.start):
                     max_region.k = cur_region.k
                     max_region.start = cur_region.start
                     max_region.covered = cur_region.covered
@@ -123,3 +150,43 @@ class MiningDataRegion(object):
     def _format_generalized_node(self, gn1, gn2):
         assert gn1.length == gn2.length, 'must be have same K generalized nodes'
         return "{}:{} {}:{}".format(gn1.element.tag, gn1.length, gn2.element.tag, gn1.length)
+
+
+class MiningDataRecord(object):
+    """
+    mining the data record from a region.
+
+    basic assumption:
+    the subtree of data records also similar. so if not any adjacent pair of them are
+    similar (less than threshold), data region itself is a data record,
+    otherwise children are individual data record.
+    """
+
+    def __init__(self, threshold=0.3):
+        self.stm = SimpleTreeMatch(get_root, get_children_count, get_child)
+        self.threshold = threshold
+
+    def find_records(self, region):
+        records = []
+        if region.k == 1:
+            for i in xrange(region.start, region.start + region.covered):
+                for child1, child2 in generalized_nodes(region.parent, 1, region.start):
+                    similarity = self.stm.normalized_match_score(child1, child2)
+                    if similarity < self.threshold:
+                        return self.slice_region(region)
+                else:
+                    # each child of generalized node is a data record
+                    for gn in region.children(1):
+                        records.extend([DataRecord(element=c, size=1) for c in gn])
+
+        return self.slice_region(region)
+
+    def slice_region(self, region):
+        """
+        slice every generalized node of region to a data record
+        """
+        records = []
+        for gn in region.children(region.k):
+            records.append(DataRecord(element=gn[0], size=len(gn)))
+        return records
+

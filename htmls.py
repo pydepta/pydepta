@@ -6,7 +6,7 @@ from lxml.html import tostring
 from lxml.html.clean import Cleaner
 import sys
 from w3lib import encoding
-from mdr import MiningDataRegion
+from mdr import MiningDataRegion, MiningDataRecord
 from pyquery import PyQuery as pq
 
 class DomTreeBuilder(object):
@@ -39,12 +39,23 @@ def main(html=None):
     with open('verbose.html', 'w') as f:
         print >>f, tostring(root, pretty_print=True)
 
-    mdr = MiningDataRegion(root, threshold=0.3, debug=True)
-    regions = mdr.find_regions(root)
+    region_m = MiningDataRegion(root, threshold=0.3, debug=True)
+    regions = region_m.find_regions(root)
 
     for i, region in enumerate(regions):
         print 'region {}: {}[{}], {}, {}, {}'.format(i, region.parent.tag, region.start,
                                                      region.parent[region.start].tag, region.k, region.covered)
+
+    record_m = MiningDataRecord()
+    records = []
+
+    for region in regions:
+        records.append(record_m.find_records(region))
+
+    for record in records:
+        print record
+
+    # always annotate at last to avoid modify the DOM tree
     annotate(regions)
 
     with open('output.html', 'w') as f:
