@@ -116,13 +116,13 @@ class SimpleTreeMatch(object):
 
 
 class TreeAlignment(object):
+
     TRACE_LEFT = 1
     TRACE_UP = 2
     TRACE_DIAG = 3
 
-    def __init__(self, A=None, B=None, score=0):
-        self.A = A
-        self.B = B
+    def __init__(self, e=None, score=0):
+        self.element = e
         self.score = score
         self.subs = []
 
@@ -132,7 +132,7 @@ class TreeAlignment(object):
             self.subs.extend(alignment.subs)
 
     def __str__(self):
-        return '{} {}: {}'.format(self.A, self.B, self.score)
+        return '{}: {}'.format(self.e, self.score)
 
 
 class SimpleTreeAlign(object):
@@ -157,7 +157,7 @@ class SimpleTreeAlign(object):
         >>> alignment = sta._single_align(t1, t2)
         >>> alignment.score
         3
-        >>> [align.A for align in alignment.subs]
+        >>> [align.element for align in alignment.subs]
         ['c', 'b']
 
         >>> t1 = ('c', ('b',), ('e',))
@@ -165,7 +165,7 @@ class SimpleTreeAlign(object):
         >>> alignment = sta._single_align(t1, t2)
         >>> alignment.score
         3
-        >>> [align.A for align in alignment.subs]
+        >>> [align.element for align in alignment.subs]
         ['e', 'b']
 
         >>> t1 = ('a', ('b',), ('c', ('b',), ('e',)), ('e',))
@@ -173,7 +173,7 @@ class SimpleTreeAlign(object):
         >>> alignment = sta._single_align(t1, t2)
         >>> alignment.score
         5
-        >>> [align.A for align in alignment.subs]
+        >>> [align.element for align in alignment.subs]
         ['c', 'e', 'b', 'b']
 
         >>> t1 = ('a', ('b',), ('c', ('b', ('a',)), ('e',)), ('e',))
@@ -181,7 +181,7 @@ class SimpleTreeAlign(object):
         >>> alignment = sta._single_align(t1, t2)
         >>> alignment.score
         6
-        >>> [align.A for align in alignment.subs]
+        >>> [align.element for align in alignment.subs]
         ['c', 'e', 'b', 'a', 'b']
 
         """
@@ -190,7 +190,7 @@ class SimpleTreeAlign(object):
         if self.get_root(t1) != self.get_root(t2):
             return TreeAlignment()
 
-        alignment = TreeAlignment(self.get_root(t1), self.get_root(t2))
+        alignment = TreeAlignment(self.get_root(t1))
 
         t1_len = self.get_children_count(t1)
         t2_len = self.get_children_count(t2)
