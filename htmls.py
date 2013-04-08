@@ -52,8 +52,8 @@ def main(html=None):
     for region in regions:
         records.append(record_m.find_records(region))
 
-    for record in records:
-        print record
+    for i, record in enumerate(records):
+        print 'record #{} length: {}'.format(i, len(record))
 
     # always annotate at last to avoid modify the DOM tree
     annotate(regions)
