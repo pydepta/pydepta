@@ -1,4 +1,3 @@
-#coding=utf-8
 from random import choice
 from urllib2 import urlopen
 from lxml import etree
@@ -8,6 +7,7 @@ import sys
 from w3lib import encoding
 from mdr import MiningDataRegion, MiningDataRecord
 from pyquery import PyQuery as pq
+from trees import SimpleTreeAligner, PartialTreeAligner
 
 class DomTreeBuilder(object):
     def __init__(self, html, **options):
@@ -39,7 +39,7 @@ def main(html=None):
     with open('verbose.html', 'w') as f:
         print >>f, tostring(root, pretty_print=True)
 
-    region_m = MiningDataRegion(root, threshold=0.3, debug=True)
+    region_m = MiningDataRegion(root, threshold=0.3, debug=False)
     regions = region_m.find_regions(root)
 
     for i, region in enumerate(regions):
@@ -51,6 +51,8 @@ def main(html=None):
 
     for region in regions:
         records.append(record_m.find_records(region))
+
+    pta = PartialTreeAligner(SimpleTreeAligner())
 
     for i, record in enumerate(records):
         print 'record #{} length: {}'.format(i, len(record))
