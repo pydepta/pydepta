@@ -47,15 +47,16 @@ def main(html=None):
                                                      region.parent[region.start].tag, region.k, region.covered)
 
     record_m = MiningDataRecord()
-    records = []
+    records_list = []
 
     for region in regions:
-        records.append(record_m.find_records(region))
+        records_list.append(record_m.find_records(region))
 
     pta = PartialTreeAligner(SimpleTreeAligner())
 
-    for i, record in enumerate(records):
-        print 'record #{} length: {}'.format(i, len(record))
+    for i, records in enumerate(records_list):
+        print 'records #{} length: {} elements/record: {}'.format(i, len(records), records[0].size)
+        pta.align_records(*records)
 
     # always annotate at last to avoid modify the DOM tree
     annotate(regions)

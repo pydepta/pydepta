@@ -1,5 +1,8 @@
 from __future__ import division
+from collections import defaultdict
 import copy
+import itertools
+from lxml.html import tostring
 
 
 def tree_size(root):
@@ -336,11 +339,17 @@ def find_subsequence(iterable, predicted):
     return seqs
 
 class PartialTreeAligner(object):
-    """
-    """
     def __init__(self, aligner, **options):
         self.sta = aligner
         self.options = options
+
+    def align_records(self, *records):
+        """
+        partial align data records
+        """
+        if records[0].size == 1:
+            trees = [record.element for record in records]
+            self.align(*trees)
 
     def align(self, *trees):
         """
@@ -348,27 +357,47 @@ class PartialTreeAligner(object):
 
         for example (from Web Data Extraction Based on Partial Tree Alignment):
         >>> from lxml.html import fragment_fromstring
-        >>> t1 = fragment_fromstring("<p> <x1></x1> <x2></x2> <x3></x3> <x></x> <b></b> <d></d> </p>")
+        >>> t1 = fragment_fromstring("<p> <x1></x1> <x2></x2> <x3></x3> <x>hello</x> <b>world</b> <d>python</d> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <n></n> <c></c> <k></k> <g></g> </p>")
         >>> t3 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
         >>> sta = SimpleTreeAligner()
         >>> pta = PartialTreeAligner(sta)
-        >>> pta.align(t1, t2, t3)
-        >>> [e.tag for e in t1]
+        >>> seed, _ = pta.align(t1, t2, t3)
+        >>> [e.tag for e in seed]
         ['x1', 'x2', 'x3', 'x', 'b', 'n', 'c', 'd', 'h', 'k', 'g']
-
+        >>> [e.tag for e in t1]
+        ['x1', 'x2', 'x3', 'x', 'b', 'd']
         """
         # sort by the tree size
-        trees = sorted(trees, key=tree_size)
+        sorted_trees = sorted(trees, key=tree_size)
 
         # seed is the largest tree
-        seed = trees.pop()
-        while len(trees):
-            next = trees.pop()
-            insertion = self._single_align(seed, next)
-            if not insertion:
+        seed = sorted_trees.pop()
+
+        # a dict like {'t2': {}, 't3': {}, etc}
+        # the nested dictionary is like {'seed_element' : 'original_element'}
+        mappings = defaultdict(dict)
+        seed_copy = self._copy_element(seed)
+        mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
+
+        R = []
+        while len(sorted_trees):
+            next = sorted_trees.pop()
+            insertion, mapping = self._single_align(seed_copy, next)
+            if insertion:
+                sorted_trees.extend(R)
+                R = []
+                mappings.setdefault(next, mapping)
+            else:
                 # add it back to try it later since seed might change
-                trees.append(next)
+                R.append(next)
+
+        for tree in trees:
+            mapping = mappings.get(tree, {})
+            print mapping
+            text = self._extract_data_field(seed_copy, mapping)
+
+        return seed_copy, mappings
 
     def _single_align(self, t1, t2):
         """
@@ -382,44 +411,49 @@ class PartialTreeAligner(object):
         "flanked by 2 sibling nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")
-        >>> pta._single_align(t1, t2)
+        >>> _, mapping = pta._single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'c', 'd', 'e']
+        >>> [e.tag for e in mapping.itervalues()]
+        ['d', 'c']
 
         "rightmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <e></e> <f></f> <g></g> </p>")
-        >>> pta._single_align(t1, t2)
+        >>> _, mapping = pta._single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'e', 'f', 'g']
 
         "leftmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <f></f> <g></g> <a></a> </p>")
-        >>> pta._single_align(t1, t2)
+        >>> _, mapping = pta._single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['f', 'g', 'a', 'b', 'e']
 
         "no alignment"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <a></a> <g></g> <e></e> </div>")
-        >>> pta._single_align(t1, t2)
+        >>> _, mapping = pta._single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'e']
 
         "multiple unaligned nodes"
         >>> t1 = fragment_fromstring("<p> <x></x> <b></b> <d></d> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
-        >>> pta._single_align(t1, t2)
+        >>> _, mapping = pta._single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['x', 'b', 'c', 'd', 'h', 'k']
 
         """
+        mapping = {}
         aligned = dict((align.first, align.second) for align in self.sta._single_align(t1, t2).subs)
+
         # add reverse mapping too
         aligned.update([reversed(i) for i in aligned.items()])
 
         any_insertion = False
+
         for l in self.find_unaligned_elements(aligned, t2):
             left_most = l[0]
             right_most = l[-1]
@@ -432,7 +466,9 @@ class PartialTreeAligner(object):
                     # leftmost alignment
                     next_sibling_match = aligned.get(next_sibling, None)
                     for i, element in enumerate(l):
-                        next_sibling_match.getparent().insert(i, copy.copy(element))
+                        element_copy = self._copy_element(element)
+                        next_sibling_match.getparent().insert(i, element_copy)
+                        mapping.update({element_copy: element})
                     any_insertion = True
 
             elif next_sibling is None:
@@ -441,7 +477,9 @@ class PartialTreeAligner(object):
                 previous_match_index = self._get_index(prev_sibling_match)
                 # unique insertion
                 for i, element in enumerate(l):
-                    prev_sibling_match.getparent().insert(previous_match_index + 1 + i, copy.copy(element))
+                    element_copy = self._copy_element(element)
+                    prev_sibling_match.getparent().insert(previous_match_index + 1 + i, element_copy)
+                    mapping.update({element_copy: element})
                 any_insertion = True
             else:
                 # flanked by two sibling elements
@@ -454,9 +492,11 @@ class PartialTreeAligner(object):
                     if next_match_index - previous_match_index == 1:
                         # unique insertion
                         for i, element in enumerate(l):
-                            prev_sibling_match.getparent().insert(previous_match_index + 1 + i, copy.copy(element))
-                    any_insertion = True
-        return any_insertion
+                            element_copy = self._copy_element(element)
+                            prev_sibling_match.getparent().insert(previous_match_index + 1 + i, element_copy)
+                            mapping.update({element_copy: element})
+                        any_insertion = True
+        return any_insertion, mapping
 
     def find_unaligned_elements(self, aligned, element):
         """
@@ -482,8 +522,34 @@ class PartialTreeAligner(object):
             unaligned.extend(sublevel)
         return unaligned
 
+    def _create_seed_mapping(self, seed_copy, seed):
+        d = {}
+        for _copy, _original in itertools.izip(seed_copy, seed):
+            d[_copy] = _original
+
+        for i in range(len(seed)):
+            d.update(self._create_seed_mapping(seed_copy[i], seed[i]))
+
+        return d
+
     def _get_index(self, element):
         """
         get the position of the element within the parent.
         """
         return element.getparent().index(element)
+
+    def _copy_element(self, element):
+        return copy.deepcopy(element)
+
+    def _extract_data_field(self, seed, d):
+        """
+        extract data field from tree.
+        `seed`: the seed tree
+        `d`: a seed element -> original element dictionary
+        """
+        text = []
+        if seed in d:
+            text.append(seed.text)
+        for child in seed:
+            text.extend(self._extract_data_field(child, d))
+        return text
