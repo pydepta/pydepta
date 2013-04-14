@@ -57,7 +57,8 @@ def main(html=None):
     mdf = MiningDataField()
 
     for i, records in enumerate(records_list):
-        print 'records #{} length: {} elements/record: {}'.format(i, len(records), records[0].size)
+        print 'records #{} length: {} elements/record: {} elements: {}'.format(i, len(records), \
+                                                                                  len(records[0]), records[0])
         mdf.align_records(*records)
 
     # always annotate at last to avoid modify the DOM tree

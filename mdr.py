@@ -4,7 +4,6 @@ import itertools
 from trees import SimpleTreeMatch, tree_depth, tree_size, PartialTreeAligner, SimpleTreeAligner
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
-DataRecord = namedtuple('DataRecord', ['element', 'size'])
 
 class DataRegion(object):
     def __init__(self, **dict):
@@ -32,6 +31,16 @@ class DataRegion(object):
         """
         for i in xrange(self.start, self.start + self.covered, k):
             yield self.parent[i:i + k]
+
+class DataRecord(object):
+    def __init__(self, *elements):
+        self.elements = elements
+
+    def __len__(self):
+        return len(self.elements)
+
+    def __str__(self):
+        return 'DataRecord: %s' % " ".join(element.tag for element in self.elements)
 
 def pairwise(a, K, start=0):
     """
@@ -162,7 +171,7 @@ class MiningDataRecord(object):
                 else:
                     # each child of generalized node is a data record
                     for gn in region.iter(1):
-                        records.extend([DataRecord(element=c, size=1) for c in gn])
+                        records.extend([DataRecord(c) for c in gn])
 
         return self.slice_region(region)
 
@@ -172,7 +181,8 @@ class MiningDataRecord(object):
         """
         records = []
         for gn in region.iter(region.k):
-            records.append(DataRecord(element=gn[0], size=len(gn)))
+            elements = [element for element in gn]
+            records.append(DataRecord(*elements))
         return records
 
 class MiningDataField(object):
@@ -186,8 +196,8 @@ class MiningDataField(object):
         """
         partial align data records
         """
-        if records[0].size == 1:
-            trees = [record.element for record in records]
+        if len(records[0]) == 1:
+            trees = [record.elements[0] for record in records]
             self.align_trees(*trees)
 
     def align_trees(self, *trees):
