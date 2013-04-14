@@ -1,13 +1,15 @@
 from random import choice
 from urllib2 import urlopen
+import sys
+
 from lxml import etree
 from lxml.html import tostring
 from lxml.html.clean import Cleaner
-import sys
 from w3lib import encoding
-from mdr import MiningDataRegion, MiningDataRecord
 from pyquery import PyQuery as pq
-from trees import SimpleTreeAligner, PartialTreeAligner
+
+from mdr import MiningDataRegion, MiningDataRecord, MiningDataField
+
 
 class DomTreeBuilder(object):
     def __init__(self, html, **options):
@@ -52,11 +54,11 @@ def main(html=None):
     for region in regions:
         records_list.append(record_m.find_records(region))
 
-    pta = PartialTreeAligner(SimpleTreeAligner())
+    mdf = MiningDataField()
 
     for i, records in enumerate(records_list):
         print 'records #{} length: {} elements/record: {}'.format(i, len(records), records[0].size)
-        pta.align_records(*records)
+        mdf.align_records(*records)
 
     # always annotate at last to avoid modify the DOM tree
     annotate(regions)

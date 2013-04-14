@@ -1,8 +1,5 @@
 from __future__ import division
-from collections import defaultdict
 import copy
-import itertools
-from lxml.html import tostring
 
 
 def tree_size(root):
@@ -166,7 +163,7 @@ class SimpleTreeAligner(object):
                     matrix[i][j] = matrix[i-1][j]
                     trace[i-1][j-1] = TreeAlignment.TRACE_UP
 
-                alignment_matrix[i-1][j-1] = self._single_align(l1[i-1], l2[j-1])
+                alignment_matrix[i-1][j-1] = self.single_align(l1[i-1], l2[j-1])
                 score = matrix[i-1][j-1] + alignment_matrix[i-1][j-1].score
 
                 if score > matrix[i-1][j-1]:
@@ -189,7 +186,7 @@ class SimpleTreeAligner(object):
         alignment.score = 1 + matrix[len(matrix)-1][len(matrix[0]) - 1]
         return alignment
 
-    def _single_align(self, t1, t2):
+    def single_align(self, t1, t2):
         """
         match two single trees.
         >>> get_root = lambda x: x[0]
@@ -199,7 +196,7 @@ class SimpleTreeAligner(object):
 
         >>> t1 = ('a', ('b',), ('c',), ('e',))
         >>> t2 = ('a', ('b',), ('c',), ('d',))
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         3
         >>> [get_root(align.first) for align in alignment.subs]
@@ -207,7 +204,7 @@ class SimpleTreeAligner(object):
 
         >>> t1 = ('c', ('b',), ('e',))
         >>> t2 = ('c', ('b',), ('e',))
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         3
         >>> [get_root(align.first) for align in alignment.subs]
@@ -215,7 +212,7 @@ class SimpleTreeAligner(object):
 
         >>> t1 = ('a', ('b',), ('c', ('b',), ('e',)), ('e',))
         >>> t2 = ('a', ('b',), ('c', ('b',), ('e',)), ('d',))
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         5
         >>> [get_root(align.first) for align in alignment.subs]
@@ -223,7 +220,7 @@ class SimpleTreeAligner(object):
 
         >>> t1 = ('a', ('b',), ('c', ('b', ('a',)), ('e',)), ('e',))
         >>> t2 = ('a', ('b',), ('c', ('b', ('a',)), ('e',)), ('d',))
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         6
         >>> [get_root(align.first) for align in alignment.subs]
@@ -232,7 +229,7 @@ class SimpleTreeAligner(object):
         >>> t1 = ('p', ('a',), ('b',), ('e',))
         >>> t2 = ('p', ('b',), ('c',), ('d',), ('e',))
 
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         3
 
@@ -247,7 +244,7 @@ class SimpleTreeAligner(object):
         ('div', 4, 'h3')
 
         >>> sta = SimpleTreeAligner()
-        >>> alignment = sta._single_align(t1, t2)
+        >>> alignment = sta.single_align(t1, t2)
         >>> alignment.score
         3
 
@@ -274,7 +271,7 @@ class SimpleTreeAligner(object):
                 else:
                     matrix[i][j] = matrix[i - 1][j]
                     trace[i - 1][j - 1] = TreeAlignment.TRACE_UP
-                alignment_matrix[i - 1][j - 1] = self._single_align(self.get_child(t1, i - 1), self.get_child(t2, j - 1))
+                alignment_matrix[i - 1][j - 1] = self.single_align(self.get_child(t1, i - 1), self.get_child(t2, j - 1))
                 score = matrix[i - 1][j - 1] + alignment_matrix[i - 1][j - 1].score
                 if score > matrix[i][j]:
                     matrix[i][j] = score
@@ -343,63 +340,7 @@ class PartialTreeAligner(object):
         self.sta = aligner
         self.options = options
 
-    def align_records(self, *records):
-        """
-        partial align data records
-        """
-        if records[0].size == 1:
-            trees = [record.element for record in records]
-            self.align(*trees)
-
-    def align(self, *trees):
-        """
-        partial align multiple lxml trees.
-
-        for example (from Web Data Extraction Based on Partial Tree Alignment):
-        >>> from lxml.html import fragment_fromstring
-        >>> t1 = fragment_fromstring("<p> <x1></x1> <x2></x2> <x3></x3> <x>hello</x> <b>world</b> <d>python</d> </p>")
-        >>> t2 = fragment_fromstring("<p> <b></b> <n></n> <c></c> <k></k> <g></g> </p>")
-        >>> t3 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
-        >>> sta = SimpleTreeAligner()
-        >>> pta = PartialTreeAligner(sta)
-        >>> seed, _ = pta.align(t1, t2, t3)
-        >>> [e.tag for e in seed]
-        ['x1', 'x2', 'x3', 'x', 'b', 'n', 'c', 'd', 'h', 'k', 'g']
-        >>> [e.tag for e in t1]
-        ['x1', 'x2', 'x3', 'x', 'b', 'd']
-        """
-        # sort by the tree size
-        sorted_trees = sorted(trees, key=tree_size)
-
-        # seed is the largest tree
-        seed = sorted_trees.pop()
-
-        # a dict like {'t2': {}, 't3': {}, etc}
-        # the nested dictionary is like {'seed_element' : 'original_element'}
-        mappings = defaultdict(dict)
-        seed_copy = self._copy_element(seed)
-        mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
-
-        R = []
-        while len(sorted_trees):
-            next = sorted_trees.pop()
-            insertion, mapping = self._single_align(seed_copy, next)
-            if insertion:
-                sorted_trees.extend(R)
-                R = []
-                mappings.setdefault(next, mapping)
-            else:
-                # add it back to try it later since seed might change
-                R.append(next)
-
-        for tree in trees:
-            mapping = mappings.get(tree, {})
-            print mapping
-            text = self._extract_data_field(seed_copy, mapping)
-
-        return seed_copy, mappings
-
-    def _single_align(self, t1, t2):
+    def single_align(self, t1, t2):
         """
         partial align lxml tree (t2) to another lxml tree (t1).
 
@@ -411,7 +352,7 @@ class PartialTreeAligner(object):
         "flanked by 2 sibling nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")
-        >>> _, mapping = pta._single_align(t1, t2)
+        >>> _, _, mapping = pta.single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'c', 'd', 'e']
         >>> [e.tag for e in mapping.itervalues()]
@@ -420,41 +361,41 @@ class PartialTreeAligner(object):
         "rightmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <e></e> <f></f> <g></g> </p>")
-        >>> _, mapping = pta._single_align(t1, t2)
+        >>> _, _, mapping = pta.single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'e', 'f', 'g']
 
         "leftmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <f></f> <g></g> <a></a> </p>")
-        >>> _, mapping = pta._single_align(t1, t2)
+        >>> _, _, mapping = pta.single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['f', 'g', 'a', 'b', 'e']
 
         "no alignment"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <a></a> <g></g> <e></e> </div>")
-        >>> _, mapping = pta._single_align(t1, t2)
+        >>> _, _, mapping = pta.single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['a', 'b', 'e']
 
         "multiple unaligned nodes"
         >>> t1 = fragment_fromstring("<p> <x></x> <b></b> <d></d> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
-        >>> _, mapping = pta._single_align(t1, t2)
+        >>> _, _, mapping = pta.single_align(t1, t2)
         >>> [e.tag for e in t1]
         ['x', 'b', 'c', 'd', 'h', 'k']
 
         """
-        mapping = {}
-        aligned = dict((align.first, align.second) for align in self.sta._single_align(t1, t2).subs)
+        aligned = dict((align.first, align.second) for align in self.sta.single_align(t1, t2).subs)
 
         # add reverse mapping too
-        aligned.update([reversed(i) for i in aligned.items()])
+        reverse_aligned = dict(reversed(i) for i in aligned.items())
 
-        any_insertion = False
+        modified = False
 
-        for l in self.find_unaligned_elements(aligned, t2):
+        unaligned_elments = self.find_unaligned_elements(aligned, t2)
+        for l in unaligned_elments:
             left_most = l[0]
             right_most = l[-1]
 
@@ -464,27 +405,27 @@ class PartialTreeAligner(object):
             if prev_sibling is None:
                 if next_sibling is not None:
                     # leftmost alignment
-                    next_sibling_match = aligned.get(next_sibling, None)
+                    next_sibling_match = reverse_aligned.get(next_sibling, None)
                     for i, element in enumerate(l):
-                        element_copy = self._copy_element(element)
+                        element_copy = copy.deepcopy(element)
                         next_sibling_match.getparent().insert(i, element_copy)
-                        mapping.update({element_copy: element})
-                    any_insertion = True
+                        aligned.update({element_copy: element})
+                    modified = True
 
             elif next_sibling is None:
                 # rightmost alignment
-                prev_sibling_match = aligned.get(prev_sibling, None)
+                prev_sibling_match = reverse_aligned.get(prev_sibling, None)
                 previous_match_index = self._get_index(prev_sibling_match)
                 # unique insertion
                 for i, element in enumerate(l):
-                    element_copy = self._copy_element(element)
+                    element_copy = copy.deepcopy(element)
                     prev_sibling_match.getparent().insert(previous_match_index + 1 + i, element_copy)
-                    mapping.update({element_copy: element})
-                any_insertion = True
+                    aligned.update({element_copy: element})
+                modified = True
             else:
                 # flanked by two sibling elements
-                prev_sibling_match = aligned.get(prev_sibling, None)
-                next_sibling_match = aligned.get(next_sibling, None)
+                prev_sibling_match = reverse_aligned.get(prev_sibling, None)
+                next_sibling_match = reverse_aligned.get(next_sibling, None)
 
                 if prev_sibling_match is not None and next_sibling_match is not None:
                     next_match_index = self._get_index(next_sibling_match)
@@ -492,11 +433,11 @@ class PartialTreeAligner(object):
                     if next_match_index - previous_match_index == 1:
                         # unique insertion
                         for i, element in enumerate(l):
-                            element_copy = self._copy_element(element)
+                            element_copy = copy.deepcopy(element)
                             prev_sibling_match.getparent().insert(previous_match_index + 1 + i, element_copy)
-                            mapping.update({element_copy: element})
-                        any_insertion = True
-        return any_insertion, mapping
+                            aligned.update({element_copy: element})
+                        modified = True
+        return modified, len(unaligned_elments) > 0, aligned
 
     def find_unaligned_elements(self, aligned, element):
         """
@@ -517,39 +458,13 @@ class PartialTreeAligner(object):
 
         current_level = find_subsequence(element, predicted)
         unaligned.extend(current_level)
+
         for child in element:
-            sublevel = find_subsequence(child, predicted)
-            unaligned.extend(sublevel)
+            unaligned.extend(find_subsequence(child, predicted))
         return unaligned
-
-    def _create_seed_mapping(self, seed_copy, seed):
-        d = {}
-        for _copy, _original in itertools.izip(seed_copy, seed):
-            d[_copy] = _original
-
-        for i in range(len(seed)):
-            d.update(self._create_seed_mapping(seed_copy[i], seed[i]))
-
-        return d
 
     def _get_index(self, element):
         """
         get the position of the element within the parent.
         """
         return element.getparent().index(element)
-
-    def _copy_element(self, element):
-        return copy.deepcopy(element)
-
-    def _extract_data_field(self, seed, d):
-        """
-        extract data field from tree.
-        `seed`: the seed tree
-        `d`: a seed element -> original element dictionary
-        """
-        text = []
-        if seed in d:
-            text.append(seed.text)
-        for child in seed:
-            text.extend(self._extract_data_field(child, d))
-        return text

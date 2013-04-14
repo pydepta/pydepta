@@ -1,5 +1,7 @@
-from collections import namedtuple
-from trees import SimpleTreeMatch, tree_depth
+from collections import namedtuple, defaultdict
+import copy
+import itertools
+from trees import SimpleTreeMatch, tree_depth, tree_size, PartialTreeAligner, SimpleTreeAligner
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 DataRecord = namedtuple('DataRecord', ['element', 'size'])
@@ -173,3 +175,91 @@ class MiningDataRecord(object):
             records.append(DataRecord(element=gn[0], size=len(gn)))
         return records
 
+class MiningDataField(object):
+    """
+    Mining the data field from data records with tree alignment.
+    """
+    def __init__(self):
+        self.pta = PartialTreeAligner(SimpleTreeAligner())
+
+    def align_records(self, *records):
+        """
+        partial align data records
+        """
+        if records[0].size == 1:
+            trees = [record.element for record in records]
+            self.align_trees(*trees)
+
+    def align_trees(self, *trees):
+        """
+        partial align multiple lxml trees.
+
+        for example (from Web Data Extraction Based on Partial Tree Alignment):
+        >>> from lxml.html import fragment_fromstring
+        >>> t1 = fragment_fromstring("<p> <x1></x1> <x2></x2> <x3></x3> <x></x> <b></b> <d></d> </p>")
+        >>> t2 = fragment_fromstring("<p> <b></b> <n></n> <c></c> <k></k> <g></g> </p>")
+        >>> t3 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
+        >>> mdf = MiningDataField()
+        >>> seed, _ = mdf.align_trees(t1, t2, t3)
+        >>> [e.tag for e in seed]
+        ['x1', 'x2', 'x3', 'x', 'b', 'n', 'c', 'd', 'h', 'k', 'g']
+        >>> [e.tag for e in t1]
+        ['x1', 'x2', 'x3', 'x', 'b', 'd']
+        """
+        # sort by the tree size
+        sorted_trees = sorted(trees, key=tree_size)
+
+        # seed is the largest tree
+        seed = sorted_trees.pop()
+
+        # a dict like {'t2': {}, 't3': {}, etc}
+        # the nested dictionary is like {'seed_element' : 'original_element'}
+        mappings = defaultdict(dict)
+        seed_copy = copy.deepcopy(seed)
+        mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
+
+        R = []
+        while len(sorted_trees):
+            next = sorted_trees.pop()
+            modified, partial_match, aligned = self.pta.single_align(seed_copy, next)
+            if modified:
+                mappings.update({next: aligned})
+                sorted_trees.extend(R)
+                R = []
+            else:
+                # add it back to try it later since seed might change
+                if partial_match:
+                    R.append(next)
+                else:
+                    mappings.update({next: aligned})
+
+        for tree in trees:
+            aligned = mappings[tree]
+            text = self._extract_data_field(seed_copy, aligned)
+
+        return seed_copy, mappings
+
+    def _create_seed_mapping(self, seed_copy, seed):
+        d = {}
+        for _copy, _original in itertools.izip(seed_copy, seed):
+            d[_copy] = _original
+
+        for i in range(len(seed)):
+            d.update(self._create_seed_mapping(seed_copy[i], seed[i]))
+
+        return d
+
+
+    def _extract_data_field(self, seed, d):
+        """
+        extract data field from tree.
+        `seed`: the seed tree
+        `d`: a seed element -> original element dictionary
+        """
+        text = []
+        element = d.get(seed, None)
+        if element is not None:
+            text.append(u'{}: {}'.format(element.tag, element.text))
+        for child in seed:
+            text.extend(self._extract_data_field(child, d))
+        return text
