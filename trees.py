@@ -126,9 +126,11 @@ class TreeAlignment(object):
         self.subs = []
 
     def add(self, alignment):
-        self.subs.append(alignment)
-        if len(alignment.subs):
-            self.subs.extend(alignment.subs)
+        if self.first is None and self.second is None:
+            self.first, self.second = alignment.first, alignment.second
+        else:
+            self.subs.append(alignment)
+        self.subs.extend(alignment.subs)
 
     @property
     def tag(self):
@@ -136,7 +138,7 @@ class TreeAlignment(object):
         return self.first.tag
 
     def __str__(self):
-        return '{}/{}: {}'.format(self.first, self.second, self.score)
+        return '{} {}: {}'.format(self.first, self.subs, self.score)
 
 
 class SimpleTreeAligner(object):
@@ -149,6 +151,25 @@ class SimpleTreeAligner(object):
         self.get_child = get_child
 
     def align(self, l1, l2):
+        """
+        align 2 lists of trees
+
+        for example:
+        >>> get_root = lambda x: x[0]
+        >>> get_children_count = lambda x: len(x) - 1
+        >>> get_child = lambda x, i: x[i+1]
+        >>> sta = SimpleTreeAligner(get_root, get_children_count, get_child)
+
+        >>> l1 = [('a', ('b',), ('c',), ('e',))]
+        >>> l2 = [('a', ('b',), ('c',), ('d',))]
+        >>> alignment = sta.align(l1, l2)
+        >>> get_root(alignment.first)
+        'a'
+        >>> alignment.score
+        4
+        >>> [get_root(align.first) for align in alignment.subs]
+        ['c', 'b']
+        """
         alignment = TreeAlignment()
         matrix = _create_2d_matrix(len(l1) + 1, len(l2) + 1)
         alignment_matrix = _create_2d_matrix(len(l1), len(l2))
@@ -163,7 +184,7 @@ class SimpleTreeAligner(object):
                     matrix[i][j] = matrix[i-1][j]
                     trace[i-1][j-1] = TreeAlignment.TRACE_UP
 
-                alignment_matrix[i-1][j-1] = self.single_align(l1[i-1], l2[j-1])
+                alignment_matrix[i-1][j-1] = self.single_align(l1[i - 1], l2[j - 1])
                 score = matrix[i-1][j-1] + alignment_matrix[i-1][j-1].score
 
                 if score > matrix[i-1][j-1]:
@@ -197,6 +218,8 @@ class SimpleTreeAligner(object):
         >>> t1 = ('a', ('b',), ('c',), ('e',))
         >>> t2 = ('a', ('b',), ('c',), ('d',))
         >>> alignment = sta.single_align(t1, t2)
+        >>> (get_root(alignment.first), get_root(alignment.second))
+        ('a', 'a')
         >>> alignment.score
         3
         >>> [get_root(align.first) for align in alignment.subs]
@@ -305,7 +328,7 @@ def _create_2d_matrix(rows, cols):
     """
     return [[0 for _ in range(cols)] for _ in range(rows)]
 
-def find_subsequence(iterable, predicted):
+def find_subsequence(iterable, predicate):
     """
     find the subsequence in iterable which predicted return true
 
@@ -321,7 +344,7 @@ def find_subsequence(iterable, predicted):
     seq = []
     continuous = False
     for i in iterable:
-        if predicted(i):
+        if predicate(i):
             if continuous:
                 seq.append(i)
             else:
@@ -340,62 +363,61 @@ class PartialTreeAligner(object):
         self.sta = aligner
         self.options = options
 
-    def single_align(self, t1, t2):
+    def align(self, l1, l2):
         """
-        partial align lxml tree (t2) to another lxml tree (t1).
+        partial align lxml tree list (l2) to another lxml tree list (l1).
 
         for example (from Web Data Extraction Based on Partial Tree Alignment):
-        >>> from lxml.html import fragment_fromstring
+        >>> from lxml.html import fragment_fromstring, tostring
         >>> sta = SimpleTreeAligner()
         >>> pta = PartialTreeAligner(sta)
 
         "flanked by 2 sibling nodes"
-        >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
-        >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")
-        >>> _, _, mapping = pta.single_align(t1, t2)
-        >>> [e.tag for e in t1]
+        >>> l1 = [fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")]
+        >>> l2 = [fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")]
+        >>> _, _, mapping = pta.align(l1, l2)
+        >>> [e.tag for e in l1[0]]
         ['a', 'b', 'c', 'd', 'e']
-        >>> [e.tag for e in mapping.itervalues()]
-        ['d', 'c']
+        >>> sorted([e.tag for e in mapping.itervalues()])
+        ['b', 'c', 'd', 'e']
 
         "rightmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <e></e> <f></f> <g></g> </p>")
-        >>> _, _, mapping = pta.single_align(t1, t2)
+        >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['a', 'b', 'e', 'f', 'g']
 
         "leftmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <f></f> <g></g> <a></a> </p>")
-        >>> _, _, mapping = pta.single_align(t1, t2)
+        >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['f', 'g', 'a', 'b', 'e']
 
         "no alignment"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
         >>> t2 = fragment_fromstring("<p> <a></a> <g></g> <e></e> </div>")
-        >>> _, _, mapping = pta.single_align(t1, t2)
+        >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['a', 'b', 'e']
 
         "multiple unaligned nodes"
         >>> t1 = fragment_fromstring("<p> <x></x> <b></b> <d></d> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
-        >>> _, _, mapping = pta.single_align(t1, t2)
+        >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['x', 'b', 'c', 'd', 'h', 'k']
 
         """
-        aligned = dict((align.first, align.second) for align in self.sta.single_align(t1, t2).subs)
-
+        aligned = dict((align.first, align.second) for align in self.sta.align(l1, l2).subs)
         # add reverse mapping too
         reverse_aligned = dict(reversed(i) for i in aligned.items())
 
         modified = False
 
-        unaligned_elments = self.find_unaligned_elements(aligned, t2)
-        for l in unaligned_elments:
+        unaligned_elements = self.find_unaligned_elements(aligned, l2)
+        for l in unaligned_elements:
             left_most = l[0]
             right_most = l[-1]
 
@@ -437,30 +459,32 @@ class PartialTreeAligner(object):
                             prev_sibling_match.getparent().insert(previous_match_index + 1 + i, element_copy)
                             aligned.update({element_copy: element})
                         modified = True
-        return modified, len(unaligned_elments) > 0, aligned
+        return modified, len(unaligned_elements) > 0, aligned
 
-    def find_unaligned_elements(self, aligned, element):
+    def find_unaligned_elements(self, aligned, elements):
         """
-        find the unaligned elements recursively from element.
+        find the unaligned elements recursively from elements.
 
         >>> from lxml.html import fragment_fromstring
         >>> t1 = fragment_fromstring("<div> <h1></h1> <h2></h2> <h5></h5> </div>")
         >>> t2 = fragment_fromstring("<div> <h2></h2> <h3></h3> <h4></h4> <h5></h5> <h6></h6></div>")
 
+        >>> sta = SimpleTreeAligner()
         >>> pta = PartialTreeAligner(None)
-        >>> aligned = {t1[1]:t2[0], t1[2]:t2[3]}
-        >>> unaligned = pta.find_unaligned_elements(aligned, t2)
+        >>> aligned = dict((align.first, align.second) for align in sta.align([t1], [t2]).subs)
+        >>> unaligned = pta.find_unaligned_elements(aligned, [t2])
         >>> [[e.tag for e in l] for l in unaligned]
         [['h3', 'h4'], ['h6']]
         """
-        predicted = lambda x: x not in aligned.values()
+        predicate = lambda x: x not in aligned.values()
         unaligned = []
 
-        current_level = find_subsequence(element, predicted)
-        unaligned.extend(current_level)
+        for element in elements:
+            current_level = find_subsequence(element, predicate)
+            unaligned.extend(current_level)
 
-        for child in element:
-            unaligned.extend(find_subsequence(child, predicted))
+            for child in element:
+                unaligned.extend(find_subsequence(child, predicate))
         return unaligned
 
     def _get_index(self, element):
