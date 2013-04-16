@@ -21,18 +21,15 @@ class DomTreeBuilder(object):
         parser = etree.HTMLParser(encoding='utf-8')
         return etree.fromstring(self.html, parser)
 
-def annotate(regions):
+def annotate(id, elements):
     """
-    annotate the regions with PyQuery. quite neat!
+    annotate the HTML elements with PyQuery.
     """
     colors = ['#ffff42', '#ff0000', '#00ff00', '#ff00ff']
-
-    for i, region in enumerate(regions):
-        p = pq(region.parent[region.start])
-        others = [region.parent[j] for j in xrange(region.start + 1, region.start + region.covered)]
-        div = p.wrap('<div class="mdr_region" id={} style="color:{}; border:solid 5px"></div>'.format(i, choice(colors)))
-        for e in others:
-            div.append(e)
+    p = pq(elements[0])
+    div = p.wrap('<div class="mdr_region" id={} style="color:{}; border:solid 5px"></div>'.format(id, choice(colors)))
+    for e in elements[1:]:
+        div.append(e)
 
 def main(html=None):
     builder = DomTreeBuilder(html, debug=False)
@@ -41,7 +38,7 @@ def main(html=None):
     with open('verbose.html', 'w') as f:
         print >>f, tostring(root, pretty_print=True)
 
-    region_m = MiningDataRegion(root, threshold=0.3, debug=False)
+    region_m = MiningDataRegion(root, threshold=0.8, debug=False)
     regions = region_m.find_regions(root)
 
     for i, region in enumerate(regions):
@@ -57,12 +54,16 @@ def main(html=None):
     mdf = MiningDataField()
 
     for i, records in enumerate(records_list):
+        print '----------------------------------------------------------------'
         print 'records #{} length: {} elements/record: {} elements: {}'.format(i, len(records), len(records[0]), records[0])
-        _, texts = mdf.align_records(*records)
-        print texts
+        _, fields = mdf.align_records(*records)
+        for field in fields:
+            print len(field), "|".join(text for text in field)
 
     # always annotate at last to avoid modify the DOM tree
-    annotate(regions)
+    for i, records in enumerate(records_list):
+        for record in records:
+            annotate(i, record)
 
     with open('output.html', 'w') as f:
         print >> f, tostring(root, pretty_print=True)

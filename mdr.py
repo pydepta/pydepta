@@ -1,6 +1,7 @@
 from collections import namedtuple, defaultdict
 import copy
 from trees import SimpleTreeMatch, tree_depth, tree_size, PartialTreeAligner, SimpleTreeAligner
+from pyquery import PyQuery as pq
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
@@ -9,7 +10,7 @@ class DataRegion(object):
         self.__dict__.update(dict)
 
     def __str__(self):
-        return 'parent {}, start {}, k {} covered {} length {}'.format(self.parent, self.start, self.k, self.covered,
+        return "parent {}, start {}, k {} covered {} parent'size {}".format(self.parent, self.start, self.k, self.covered,
                                                                        len(self.parent))
 
     def iter(self, k):
@@ -30,6 +31,10 @@ class DataRegion(object):
         """
         for i in xrange(self.start, self.start + self.covered, k):
             yield self.parent[i:i + k]
+
+    def elements(self):
+        for element in self.iter(1):
+            yield element[0]
 
 class DataRecord(object):
     def __init__(self, *elements):
@@ -53,6 +58,19 @@ class DataRecord(object):
         for element in record.elements:
             s += tree_size(element)
         return s
+
+class DataField(object):
+    def __init__(self, texts):
+        self.texts = texts
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, item):
+        return self.texts[item]
+
+    def __iter__(self):
+        return iter(self.texts)
 
 def pairwise(a, K, start=0):
     """
@@ -119,8 +137,7 @@ class MiningDataRegion(object):
                             cur_region.covered += k
                     elif not flag:  # doesn't match but previous match
                         break
-
-                if max_region.covered < cur_region.covered and (
+                if max_region.covered <= cur_region.covered and (
                         max_region.start == 0 or cur_region.start <= max_region.start):
                     max_region.k = cur_region.k
                     max_region.start = cur_region.start
@@ -233,7 +250,7 @@ class MiningDataField(object):
         mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
 
         R = []
-        texts = []
+        items = []
         while len(sorted_records):
             next = sorted_records.pop()
             modified, partial_match, aligned = self.pta.align(seed_copy, next)
@@ -250,9 +267,9 @@ class MiningDataField(object):
 
         for record in records:
             aligned = mappings[record]
-            texts.append(self._extract_data_field(seed_copy, aligned))
+            items.append(self._extract_data_field(seed_copy, aligned))
 
-        return seed_copy, texts
+        return seed_copy, items
 
     def _create_seed_mapping(self, copy_record, original_record):
         """
@@ -279,11 +296,8 @@ class MiningDataField(object):
         `d`: a seed element -> original element dictionary
         """
         texts = []
-        element = d.get(seed, None)
-        if element is not None:
-            texts.append(u'{}: {}'.format(element.tag, element.text))
-        for child in seed:
-            subtexts = self._extract_data_field(child, d)
-            if len(subtexts):
-                texts.extend(subtexts)
-        return texts
+        for element in seed:
+            origin = d.get(element, None)
+            if origin is not None:
+                texts.append(pq(origin).text())
+        return DataField(texts)

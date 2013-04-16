@@ -410,7 +410,11 @@ class PartialTreeAligner(object):
         ['x', 'b', 'c', 'd', 'h', 'k']
 
         """
-        aligned = dict((align.first, align.second) for align in self.sta.align(l1, l2).subs)
+        alignment = self.sta.align(l1, l2)
+        aligned = dict({alignment.first: alignment.second})
+        for sub in alignment.subs:
+            aligned.update({sub.first: sub.second})
+
         # add reverse mapping too
         reverse_aligned = dict(reversed(i) for i in aligned.items())
 
