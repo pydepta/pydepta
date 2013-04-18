@@ -10,7 +10,7 @@ class DataRegion(object):
         self.__dict__.update(dict)
 
     def __str__(self):
-        return "parent {}, start {}, k {} covered {} parent'size {}".format(self.parent, self.start, self.k, self.covered,
+        return "parent {}, start {}, k {} covered {} parent's size {}".format(self.parent, self.start, self.k, self.covered,
                                                                        len(self.parent))
 
     def iter(self, k):
@@ -166,13 +166,7 @@ class MiningDataRegion(object):
             gn1 = GeneralizedNode(a[0], len(a))
             gn2 = GeneralizedNode(b[0], len(b))
             scores.setdefault((gn1, gn2), score)
-            if self.options.get('debug'):
-                print self._format_generalized_node(gn1, gn2), score
         return scores
-
-    def _format_generalized_node(self, gn1, gn2):
-        assert gn1.length == gn2.length, 'must be have same K generalized nodes'
-        return "{}:{} {}:{}".format(gn1.element.tag, gn1.length, gn2.element.tag, gn1.length)
 
 
 class MiningDataRecord(object):
@@ -225,7 +219,7 @@ class MiningDataField(object):
         """
         partial align multiple lxml trees.
 
-        for example (from Web Data Extraction Based on Partial Tree Alignment):
+        for example (from paper Web Data Extraction Based on Partial Tree Alignment):
         >>> from lxml.html import fragment_fromstring
         >>> t1 = fragment_fromstring("<p> <x1></x1> <x2></x2> <x3></x3> <x></x> <b></b> <d></d> </p>")
         >>> t2 = fragment_fromstring("<p> <b></b> <n></n> <c></c> <k></k> <g></g> </p>")
@@ -250,7 +244,7 @@ class MiningDataField(object):
         mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
 
         R = []
-        items = []
+        fields = []
         while len(sorted_records):
             next = sorted_records.pop()
             modified, partial_match, aligned = self.pta.align(seed_copy, next)
@@ -267,9 +261,9 @@ class MiningDataField(object):
 
         for record in records:
             aligned = mappings[record]
-            items.append(self._extract_data_field(seed_copy, aligned))
+            fields.append(self._extract_data_field(seed_copy, aligned))
 
-        return seed_copy, items
+        return seed_copy, fields
 
     def _create_seed_mapping(self, copy_record, original_record):
         """

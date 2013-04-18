@@ -373,13 +373,13 @@ class PartialTreeAligner(object):
         >>> pta = PartialTreeAligner(sta)
 
         "flanked by 2 sibling nodes"
-        >>> l1 = [fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")]
-        >>> l2 = [fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")]
-        >>> _, _, mapping = pta.align(l1, l2)
-        >>> [e.tag for e in l1[0]]
+        >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
+        >>> t2 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <e></e> </p>")
+        >>> _, _, mapping = pta.align([t1], [t2])
+        >>> [e.tag for e in t1]
         ['a', 'b', 'c', 'd', 'e']
         >>> sorted([e.tag for e in mapping.itervalues()])
-        ['b', 'c', 'd', 'e']
+        ['b', 'c', 'd', 'e', 'p']
 
         "rightmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
@@ -387,6 +387,8 @@ class PartialTreeAligner(object):
         >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['a', 'b', 'e', 'f', 'g']
+        >>> sorted([e.tag for e in mapping.itervalues()])
+        ['e', 'f', 'g', 'p']
 
         "leftmost nodes"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
@@ -394,13 +396,17 @@ class PartialTreeAligner(object):
         >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['f', 'g', 'a', 'b', 'e']
+        >>> sorted([e.tag for e in mapping.itervalues()])
+        ['a', 'f', 'g', 'p']
 
-        "no alignment"
+        "no unique insertion"
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> <e></e> </p>")
-        >>> t2 = fragment_fromstring("<p> <a></a> <g></g> <e></e> </div>")
+        >>> t2 = fragment_fromstring("<p> <a></a> <g></g> <e></e> </p>")
         >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['a', 'b', 'e']
+        >>> sorted([e.tag for e in mapping.itervalues()])
+        ['a', 'e', 'p']
 
         "multiple unaligned nodes"
         >>> t1 = fragment_fromstring("<p> <x></x> <b></b> <d></d> </p>")
@@ -408,6 +414,8 @@ class PartialTreeAligner(object):
         >>> _, _, mapping = pta.align([t1], [t2])
         >>> [e.tag for e in t1]
         ['x', 'b', 'c', 'd', 'h', 'k']
+        >>> sorted([e.tag for e in mapping.itervalues()])
+        ['b', 'c', 'd', 'h', 'k', 'p']
 
         """
         alignment = self.sta.align(l1, l2)
