@@ -7,11 +7,46 @@ Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it 
 
 ### Usage
 
-simply run the depta.py with url you want to extract. Also there will be a output.html generated which annonated the data
-records with colors.
+- extract from html page
+
+```
+>>> import depta
+>>> from urllib2 import urlopen
+>>> d = depta.Depta()
+>>> html = urlopen('http://www.amazon.com').read()
+>>> d.extract(html)
+```
+
+- extract from url
+
+```
+>>> import depta
+>>> d = depta.Depta()
+>>> d.extract(url='http://www.amazon.com')
+```
+
+- extract and annoate the data records with colors
+
+```
+>>> import depta
+>>> d = depta.Depta()
+>>> d.extract(url='http://www.amazon.com', annotate='1.html')
+```
+
+- get the data fields
+
+```
+>>> import depta
+>>> depta = Depta()
+>>> items = depta.extract(url=sys.argv[1])
+>>> for item in items:
+>>>     for field in item.fields:
+>>>         print " ".join(field.texts)
+```
 
 1. [Web Data Extraction Based on Partial Tree Alignment](http://dl.acm.org/citation.cfm?id=1060761)
 2. [SDE](https://github.com/seagatesoft/sde)
 3. [Mining Data Records in Web Pages](http://dl.acm.org/citation.cfm?id=956826)
 
-tpeng <pengtaoo@gmail.com>
+### AUTHOR
+pengtaoo AT gmail.com

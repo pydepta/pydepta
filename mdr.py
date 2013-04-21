@@ -1,30 +1,32 @@
 from collections import namedtuple, defaultdict
 import copy
-from trees import SimpleTreeMatch, tree_depth, tree_size, PartialTreeAligner, SimpleTreeAligner
+from trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 from pyquery import PyQuery as pq
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
-class DataRegion(object):
+class Region(object):
     def __init__(self, **dict):
         self.__dict__.update(dict)
+        self._records = []
+        self._fields = []
 
     def __str__(self):
         return "parent {}, start {}, k {} covered {} parent's size {}".format(self.parent, self.start, self.k, self.covered,
-                                                                       len(self.parent))
+                                                                              len(self.parent))
 
     def iter(self, k):
         """
         >>> root = [1, 2, 3, 4, 5]
-        >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
+        >>> region = Region(parent=root, start=1, k=1, covered=4)
         >>> list(region.iter(1))
         [[2], [3], [4], [5]]
 
-        >>> region = DataRegion(parent=root, start=1, k=2, covered=4)
+        >>> region = Region(parent=root, start=1, k=2, covered=4)
         >>> list(region.iter(2))
         [[2, 3], [4, 5]]
 
-        >>> region = DataRegion(parent=root, start=1, k=1, covered=4)
+        >>> region = Region(parent=root, start=1, k=1, covered=4)
         >>> list(region.iter(2))
         [[2, 3], [4, 5]]
 
@@ -36,7 +38,7 @@ class DataRegion(object):
         for element in self.iter(1):
             yield element[0]
 
-class DataRecord(object):
+class Record(object):
     def __init__(self, *elements):
         self.elements = elements
 
@@ -59,19 +61,6 @@ class DataRecord(object):
             s += tree_size(element)
         return s
 
-class DataField(object):
-    def __init__(self, texts):
-        self.texts = texts
-
-    def __len__(self):
-        return len(self.texts)
-
-    def __getitem__(self, item):
-        return self.texts[item]
-
-    def __iter__(self):
-        return iter(self.texts)
-
 def pairwise(a, K, start=0):
     """
     A generator to return the comparison pair.
@@ -93,12 +82,11 @@ def pairwise(a, K, start=0):
                 yield slice_a, slice_b
 
 class MiningDataRegion(object):
-    def __init__(self, root, max_generalized_nodes=3, threshold=0.3, **options):
+    def __init__(self, root, max_generalized_nodes=3, threshold=0.3):
         self.root = root
         self.max_generalized_nodes = max_generalized_nodes
         self.threshold = threshold
         self.stm = SimpleTreeMatch()
-        self.options = options
 
     def find_regions(self, root):
         data_regions = []
@@ -117,8 +105,8 @@ class MiningDataRegion(object):
 
 
     def identify_regions(self, start, root, max_generalized_nodes, threshold, scores):
-        cur_region = DataRegion(parent=root, start=0, k=0, covered=0)
-        max_region = DataRegion(parent=root, start=0, k=0, covered=0)
+        cur_region = Region(parent=root, start=0, k=0, covered=0)
+        max_region = Region(parent=root, start=0, k=0, covered=0)
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
@@ -194,7 +182,7 @@ class MiningDataRecord(object):
                 else:
                     # each child of generalized node is a data record
                     for gn in region.iter(1):
-                        records.extend([DataRecord(c) for c in gn])
+                        records.extend([Record(c) for c in gn])
 
         return self.slice_region(region)
 
@@ -205,19 +193,19 @@ class MiningDataRecord(object):
         records = []
         for gn in region.iter(region.k):
             elements = [element for element in gn]
-            records.append(DataRecord(*elements))
+            records.append(Record(*elements))
         return records
 
 class MiningDataField(object):
     """
-    Mining the data field from data records with tree alignment.
+    Mining the data item from data records with tree alignment.
     """
     def __init__(self):
         self.pta = PartialTreeAligner(SimpleTreeAligner())
 
-    def align_records(self, *records):
+    def align_records(self, records):
         """
-        partial align multiple lxml trees.
+        partial align multiple records.
 
         for example (from paper Web Data Extraction Based on Partial Tree Alignment):
         >>> from lxml.html import fragment_fromstring
@@ -225,14 +213,14 @@ class MiningDataField(object):
         >>> t2 = fragment_fromstring("<p> <b></b> <n></n> <c></c> <k></k> <g></g> </p>")
         >>> t3 = fragment_fromstring("<p> <b></b> <c></c> <d></d> <h></h> <k></k> </p>")
         >>> mdf = MiningDataField()
-        >>> seed, _ = mdf.align_records(DataRecord(t1), DataRecord(t2), DataRecord(t3))
+        >>> _, seed = mdf.align_records([Record(t1), Record(t2), Record(t3)])
         >>> [e.tag for e in seed[0]]
         ['x1', 'x2', 'x3', 'x', 'b', 'n', 'c', 'd', 'h', 'k', 'g']
         >>> [e.tag for e in t1]
         ['x1', 'x2', 'x3', 'x', 'b', 'd']
         """
         # sort by the tree size
-        sorted_records = sorted(records, key=DataRecord.size)
+        sorted_records = sorted(records, key=Record.size)
 
         # seed is the largest tree
         seed = sorted_records.pop()
@@ -244,7 +232,7 @@ class MiningDataField(object):
         mappings.setdefault(seed, self._create_seed_mapping(seed_copy, seed))
 
         R = []
-        fields = []
+        items = []
         while len(sorted_records):
             next = sorted_records.pop()
             modified, partial_match, aligned = self.pta.align(seed_copy, next)
@@ -261,15 +249,15 @@ class MiningDataField(object):
 
         for record in records:
             aligned = mappings[record]
-            fields.append(self._extract_data_field(seed_copy, aligned))
+            items.append(self._extract_item(seed_copy, aligned))
 
-        return seed_copy, fields
+        return items, seed_copy
 
     def _create_seed_mapping(self, copy_record, original_record):
         """
         >>> from lxml.html import fragment_fromstring
         >>> t1 = fragment_fromstring("<p> <a></a> <b></b> </p>")
-        >>> d1 = DataRecord(t1)
+        >>> d1 = Record(t1)
         >>> d1_copy = copy.deepcopy(d1)
         >>> mdr = MiningDataField()
         >>> d = mdr._create_seed_mapping(d1_copy, d1)
@@ -283,15 +271,26 @@ class MiningDataField(object):
 
         return d
 
-    def _extract_data_field(self, seed, d):
+    def _extract_item(self, seed, d):
         """
-        extract data field from tree.
+        extract data item from the tree.
         `seed`: the seed tree
         `d`: a seed element -> original element dictionary
         """
-        texts = []
-        for element in seed:
-            origin = d.get(element, None)
-            if origin is not None:
-                texts.append(pq(origin).text())
-        return DataField(texts)
+        from depta import Item
+        fields = self._extract_field(seed, d)
+        return Item(fields)
+
+    def _extract_field(self, iterable, d):
+        """
+        extract from the iterable recursively
+        """
+        r = []
+        from depta import Field
+        for i in iterable:
+            if i in d:
+                e = d.get(i)
+                field = Field(e.text or '', pq(e).html())
+                r.append(field)
+            r.extend(self._extract_field(i, d))
+        return r
