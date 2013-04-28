@@ -12,8 +12,8 @@ class Region(object):
         self._fields = []
 
     def __str__(self):
-        return "parent {}, start {}, k {} covered {} parent's size {}".format(self.parent, self.start, self.k, self.covered,
-                                                                              len(self.parent))
+        return "parent {}, start {}, k {},  covered {}, " \
+               "parent's size {}".format(self.parent, self.start, self.k, self.covered, len(self.parent))
 
     def iter(self, k):
         """
@@ -290,7 +290,13 @@ class MiningDataField(object):
         for i in iterable:
             if i in d:
                 e = d.get(i)
-                field = Field(e.text or '', pq(e).html())
-                r.append(field)
+                text = e.text or ''
+                text = self._normalize_text(text)
+                if len(text):
+                    field = Field(text, pq(e).html())
+                    r.append(field)
             r.extend(self._extract_field(i, d))
         return r
+
+    def _normalize_text(self, text):
+        return text.replace('\n', '').strip()

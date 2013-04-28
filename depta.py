@@ -30,7 +30,7 @@ class Field(object):
         self.html = html
 
 class Depta(object):
-    def __init__(self, threshold=0.3, k=3):
+    def __init__(self, threshold=0.6, k=3):
         self.threshold = threshold
         self.k = k
 
@@ -60,8 +60,7 @@ class Depta(object):
             region_records.update({region: records})
 
             if 'verbose' in kwargs:
-                print 'region {}: {}[{}], {}, {}, {}'.format(i, region.parent.tag, region.start,
-                                                             region.parent[region.start].tag, region.k, region.covered)
+                print region
                 for record in records:
                     print '\t', record
 

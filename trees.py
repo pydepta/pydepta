@@ -72,13 +72,24 @@ class SimpleTreeMatch(object):
     def match(self, l1, l2):
         """
         match two trees list.
+
+        >>> get_root = lambda x: x[0]
+        >>> get_children_count = lambda x: len(x) - 1
+        >>> get_child = lambda x, i: x[i+1]
+        >>> stm = SimpleTreeMatch(get_root, get_children_count, get_child)
+        >>> t1 = ('tr', ('td',), ('td',))
+        >>> t2 = ('tr', ('td',), ('tr',))
+        >>> get_children_count(t1)
+        2
+        >>> stm.match([t1], [t2])
+        2
         """
         matrix = _create_2d_matrix(len(l1) + 1, len(l2) + 1)
         for i in xrange(1, len(matrix)):
             for j in xrange(1, len(matrix[0])):
                 matrix[i][j] = max(matrix[i][j - 1], matrix[i - 1][j])
                 matrix[i][j] = max(matrix[i][j], matrix[i - 1][j - 1] + self._single_match(l1[i - 1], l2[j - 1]))
-        return 1 + matrix[i][j]
+        return matrix[i][j]
 
     def normalized_match_score(self, t1, t2):
         t1size = sum([tree_size(e) for e in t1]) + 1
@@ -166,7 +177,7 @@ class SimpleTreeAligner(object):
         >>> get_root(alignment.first)
         'a'
         >>> alignment.score
-        4
+        3
         >>> [get_root(align.first) for align in alignment.subs]
         ['c', 'b']
         """
@@ -204,7 +215,7 @@ class SimpleTreeAligner(object):
             elif trace[row][col] == TreeAlignment.TRACE_LEFT:
                 col -= 1
 
-        alignment.score = 1 + matrix[len(matrix)-1][len(matrix[0]) - 1]
+        alignment.score = matrix[len(matrix)-1][len(matrix[0]) - 1]
         return alignment
 
     def single_align(self, t1, t2):

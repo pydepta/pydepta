@@ -39,14 +39,13 @@ Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it 
 >>> import depta
 >>> depta = Depta()
 >>> items = depta.extract(url=sys.argv[1])
->>> for item in items:
->>>     for field in item.fields:
->>>         print " ".join(field.texts)
+>>> for item in enumerate(items):
+        print ' | '.join(map(lambda x: x.text, item.fields))
 ```
 
 1. [Web Data Extraction Based on Partial Tree Alignment](http://dl.acm.org/citation.cfm?id=1060761)
 2. [SDE](https://github.com/seagatesoft/sde)
 3. [Mining Data Records in Web Pages](http://dl.acm.org/citation.cfm?id=956826)
 
-### AUTHOR
+### Author
 pengtaoo AT gmail.com
