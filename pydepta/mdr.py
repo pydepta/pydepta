@@ -1,7 +1,10 @@
 from collections import namedtuple, defaultdict
 import copy
-from trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
+
 from pyquery import PyQuery as pq
+
+from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
+
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
@@ -277,7 +280,7 @@ class MiningDataField(object):
         `seed`: the seed tree
         `d`: a seed element -> original element dictionary
         """
-        from depta import Item
+        from pydepta.depta import Item
         fields = self._extract_field(seed, d)
         return Item(fields)
 
@@ -286,7 +289,7 @@ class MiningDataField(object):
         extract from the iterable recursively
         """
         r = []
-        from depta import Field
+        from pydepta.depta import Field
         for i in iterable:
             if i in d:
                 e = d.get(i)

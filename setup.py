@@ -1,7 +1,4 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(name='pydepta',
       version='0.1',
@@ -10,5 +7,5 @@ setup(name='pydepta',
       author="Terry Peng",
       author_email="pengtaoo@gmail.com",
       install_requires=['w3lib', 'pyquery'],
-      py_modules=['depta', 'mdr', 'htmls', 'trees']
+      package=find_packages()
 )

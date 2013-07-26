@@ -10,25 +10,25 @@ Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it 
 - extract from html page
 
 ```
->>> import depta
+>>> from pydepta import depta
 >>> from urllib2 import urlopen
 >>> d = depta.Depta()
->>> html = urlopen('http://www.amazon.com').read()
+>>> html = "<html></html>"
 >>> d.extract(html)
 ```
 
 - extract from url
 
 ```
->>> import depta
+>>> from pydepta import depta
 >>> d = depta.Depta()
 >>> d.extract(url='http://www.amazon.com')
 ```
 
-- extract and annoate the data records with colors
+- extract and write the annotated data records to local HTML file.
 
 ```
->>> import depta
+>>> from pydepta import depta
 >>> d = depta.Depta()
 >>> d.extract(url='http://www.amazon.com', annotate='1.html')
 ```
@@ -36,7 +36,7 @@ Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it 
 - get the data fields
 
 ```
->>> import depta
+>>> from pydepta import depta
 >>> depta = Depta()
 >>> items = depta.extract(url=sys.argv[1])
 >>> for item in enumerate(items):

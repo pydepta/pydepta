@@ -8,8 +8,8 @@ from lxml.html import tostring
 from w3lib import encoding
 from pyquery import PyQuery as pq
 
-from htmls import DomTreeBuilder
-from mdr import MiningDataRegion, MiningDataRecord, MiningDataField
+from pydepta.htmls import DomTreeBuilder
+from pydepta.mdr import MiningDataRegion, MiningDataRecord, MiningDataField
 
 class Item(object):
     def __init__(self, fields):
