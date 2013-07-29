@@ -26,17 +26,19 @@ class Item(object):
 
 class Field(object):
     def __init__(self, text, html):
-        self.text = text.strip()
+        self.text = text
         self.html = html
 
 class Depta(object):
-    def __init__(self, threshold=0.6, k=3):
+    def __init__(self, threshold=0.7, k=3):
         self.threshold = threshold
         self.k = k
 
     def extract(self, html='', **kwargs):
         """
-        extract data regions from raw html or from a url.
+        extract data field from raw html or from a url.
+
+        return a list of data field.
         """
         if 'url' in kwargs:
             info = urlopen(kwargs.pop('url'))
@@ -44,18 +46,18 @@ class Depta(object):
         builder = DomTreeBuilder(html)
         root = builder.build()
 
-        mining_region = MiningDataRegion(root, self.k, self.threshold)
-        regions = mining_region.find_regions(root)
+        region_finder = MiningDataRegion(root, self.k, self.threshold)
+        regions = region_finder.find_regions(root)
 
-        mining_record = MiningDataRecord()
-        mining_field = MiningDataField()
+        record_finder = MiningDataRecord()
+        field_finder = MiningDataField()
 
         region_records = {}
-        all_items = []
+        region_items = []
         for i, region in enumerate(regions):
-            records = mining_record.find_records(region)
-            items, _ = mining_field.align_records(records)
-            all_items.extend(items)
+            records = record_finder.find_records(region)
+            items, _ = field_finder.align_records(records)
+            region_items.append(items)
             assert len(items) == len(records)
             region_records.update({region: records})
 
@@ -73,7 +75,7 @@ class Depta(object):
             with open(kwargs.pop('annotate'), 'w') as f:
                 print >> f, tostring(root, pretty_print=True)
 
-        return all_items
+        return region_items
 
     def annotate(self, region, record, elements):
         """
@@ -87,10 +89,16 @@ class Depta(object):
 
 if __name__ == '__main__':
     import sys
+    from lxml.html import document_fromstring
     info = urlopen(sys.argv[1])
     _, html = encoding.html_to_unicode(info.headers.get('content_type'), info.read())
     depta = Depta()
 
-    items = depta.extract(html, annotate='output.html', verbose=True)
-    for i, item in enumerate(items):
-        print i, ' | '.join(map(lambda x: x.text, item.fields))
+    region_items = depta.extract(html, verbose=True)
+    for i, items in enumerate(region_items):
+        for item in items:
+            for field in item.fields:
+                root = document_fromstring(field.html)
+                texts = [text.strip() for text in root.xpath('//text()') if text.strip()]
+                print texts
+        print

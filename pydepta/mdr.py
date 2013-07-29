@@ -15,7 +15,7 @@ class Region(object):
         self._fields = []
 
     def __str__(self):
-        return "parent {}, start {}, k {},  covered {}, " \
+        return "Region: parent {}, start {}, k {},  covered {}, " \
                "parent's size {}".format(self.parent, self.start, self.k, self.covered, len(self.parent))
 
     def iter(self, k):
@@ -49,7 +49,7 @@ class Record(object):
         return len(self.elements)
 
     def __str__(self):
-        return 'DataRecord: %s' % " ".join(element.tag for element in self.elements)
+        return 'DataRecord: %s' % ", ".join('<%s #%s .%s>' %(e.tag, e.get('class') or '', e.get('id') or '') for e in self.elements)
 
     def __iter__(self):
         return iter(self.elements)
@@ -85,7 +85,7 @@ def pairwise(a, K, start=0):
                 yield slice_a, slice_b
 
 class MiningDataRegion(object):
-    def __init__(self, root, max_generalized_nodes=3, threshold=0.3):
+    def __init__(self, root, max_generalized_nodes=3, threshold=0.7):
         self.root = root
         self.max_generalized_nodes = max_generalized_nodes
         self.threshold = threshold
@@ -170,7 +170,7 @@ class MiningDataRecord(object):
     otherwise children are individual data record.
     """
 
-    def __init__(self, threshold=0.3):
+    def __init__(self, threshold=0.7):
         self.stm = SimpleTreeMatch()
         self.threshold = threshold
 
@@ -201,7 +201,7 @@ class MiningDataRecord(object):
 
 class MiningDataField(object):
     """
-    Mining the data item from data records with tree alignment.
+    Mining the data item from data records with partial tree alignment.
     """
     def __init__(self):
         self.pta = PartialTreeAligner(SimpleTreeAligner())
@@ -256,22 +256,30 @@ class MiningDataField(object):
 
         return items, seed_copy
 
-    def _create_seed_mapping(self, copy_record, original_record):
+    def _create_seed_mapping(self, seed, record):
         """
+        create a mapping from seed record to data record.
+
+        for example:
         >>> from lxml.html import fragment_fromstring
-        >>> t1 = fragment_fromstring("<p> <a></a> <b></b> </p>")
+        >>> t1 = fragment_fromstring("<p id='1'> <a></a> <b></b> </p>")
         >>> d1 = Record(t1)
-        >>> d1_copy = copy.deepcopy(d1)
+        >>> p1 = t1
+
+        >>> t2 = fragment_fromstring("<p id='2'> <a></a> <b></b> </p>")
+        >>> d2 = Record(t2)
+        >>> p2 = t2
+
         >>> mdr = MiningDataField()
-        >>> d = mdr._create_seed_mapping(d1_copy, d1)
-        >>> len(d)
-        3
+        >>> d = mdr._create_seed_mapping(d1, d2)
+        >>> d[p1] == p2
+        True
+
         """
         d = {}
-        for _copy, _original in zip(copy_record, original_record):
-            d[_copy] = _original
-            d.update(self._create_seed_mapping(_copy, _original))
-
+        for s, e in zip(seed, record):
+            d[s] = e
+            d.update(self._create_seed_mapping(s, e))
         return d
 
     def _extract_item(self, seed, d):
@@ -284,22 +292,12 @@ class MiningDataField(object):
         fields = self._extract_field(seed, d)
         return Item(fields)
 
-    def _extract_field(self, iterable, d):
-        """
-        extract from the iterable recursively
-        """
+    def _extract_field(self, seed, record):
         r = []
         from pydepta.depta import Field
-        for i in iterable:
-            if i in d:
-                e = d.get(i)
-                text = e.text or ''
-                text = self._normalize_text(text)
-                if len(text):
-                    field = Field(text, pq(e).html())
-                    r.append(field)
-            r.extend(self._extract_field(i, d))
+        for s in seed:
+            e = record.get(s, None)
+            if e is not None:
+                field = Field(pq(e).text(), pq(e).html())
+                r.append(field)
         return r
-
-    def _normalize_text(self, text):
-        return text.replace('\n', '').strip()
