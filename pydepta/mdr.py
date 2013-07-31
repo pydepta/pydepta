@@ -253,16 +253,15 @@ class MiningDataField(object):
         while len(sorted_records):
             next = sorted_records.pop()
             modified, partial_match, aligned = self.pta.align(seed_copy, next)
+            mappings.update({next: aligned})
+
             if modified:
-                mappings.update({next: aligned})
                 sorted_records.extend(R)
                 R = []
             else:
                 # add it back to try it later since seed might change
                 if partial_match:
                     R.append(next)
-                else:
-                    mappings.update({next: aligned})
 
         for record in records:
             aligned = mappings[record]
