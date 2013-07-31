@@ -29,7 +29,7 @@ class Field(object):
         self.html = html
 
 class Depta(object):
-    def __init__(self, threshold=0.8, k=5):
+    def __init__(self, threshold=0.75, k=5):
         self.threshold = threshold
         self.k = k
 
@@ -67,23 +67,24 @@ class Depta(object):
 
         # always annotate at last to avoid modify the DOM tree
         if 'annotate' in kwargs:
+            colors = ['#ffff42', '#ff0000', '#00ff00', '#ff00ff']
             for i, region in enumerate(regions):
+                color = choice(colors)
                 for j, record in enumerate(region_records.get(region)):
-                    self.annotate(i, j, record.elements)
+                    self.annotate(i, j, record.elements, color)
 
             with open(kwargs.pop('annotate'), 'w') as f:
                 print >> f, tostring(root, pretty_print=True)
 
         return regions, region_items
 
-    def annotate(self, region, record, elements):
+    def annotate(self, region, record, elements, color):
         """
         annotate the HTML elements with PyQuery.
         """
         from pyquery import PyQuery as pq
-        colors = ['#ffff42', '#ff0000', '#00ff00', '#ff00ff']
         p = pq(elements[0])
-        div = p.wrap('<div class="mdr_region" region_id={} record_id={} style="color:{}; border:solid 5px"></div>'.format(region, record, choice(colors)))
+        div = p.wrap('<div class="mdr_region" region_id={} record_id={} style="border:solid 1px {}"></div>'.format(region, record, color))
         for e in elements[1:]:
             div.append(e)
 
@@ -94,12 +95,15 @@ if __name__ == '__main__':
     _, html = html_to_unicode(info.headers.get('content_type'), info.read())
     depta = Depta()
 
-    regions, region_items = depta.extract(html, verbose=True, annotate='output.html')
+    regions, region_items = depta.extract(html, annotate='output.html')
+    from lxml.html import document_fromstring
     for i, items in enumerate(region_items):
-        for item in items:
+        print '====================== region {} ====================== '.format(i)
+        for j, item in enumerate(items):
+            print '------------- record {} ------------------'.format(j)
             for field in item.fields:
                 if field.html:
                     root = document_fromstring(field.html)
                     texts = [text.strip() for text in root.xpath('//text()') if text.strip()]
-                    print texts
-        print
+                    print " | ".join(texts)
+            print

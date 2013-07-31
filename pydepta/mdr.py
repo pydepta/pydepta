@@ -8,7 +8,7 @@ from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, Simpl
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
-def _format_element(e):
+def element_repr(e):
     return '<%s #%s .%s>' %(e.tag, e.get('class') or '', e.get('id') or '')
 
 class Region(object):
@@ -18,9 +18,9 @@ class Region(object):
         self._fields = []
 
     def __str__(self):
-        return "<Region: parent {}, start {}:{}, k {}, covered {}>".format(_format_element(self.parent),
+        return "<Region: parent {}, start {}:{}, k {}, covered {}>".format(element_repr(self.parent),
                                                                                      self.start,
-                                                                                     _format_element(self.parent[self.start]),
+                                                                                     element_repr(self.parent[self.start]),
                                                                                     self.k,
                                                                                     self.covered)
 
@@ -50,9 +50,6 @@ class Region(object):
         for element in self.iter(1):
             yield element[0]
 
-    def get_start_element(self):
-        return _format_element(self.parent[self.start])
-
 class Record(object):
     def __init__(self, *elements):
         self.elements = elements
@@ -61,7 +58,7 @@ class Record(object):
         return len(self.elements)
 
     def __str__(self):
-        return 'DataRecord: %s' % ", ".join(_format_element(e) for e in self.elements)
+        return 'DataRecord: %s' % ", ".join(element_repr(e) for e in self.elements)
 
     def __iter__(self):
         return iter(self.elements)
@@ -126,9 +123,9 @@ class MiningDataRegion(object):
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
-            for i in xrange(start, k + start):
+            for i in xrange(0, max_generalized_nodes):
                 flag = True
-                for j in xrange(i, len(root) - k, k):
+                for j in xrange(start + i, len(root) - k, k):
                     pair = GeneralizedNode(root[j], k), GeneralizedNode(root[j + k], k)
                     score = scores.get(pair)
                     if score >= threshold:
