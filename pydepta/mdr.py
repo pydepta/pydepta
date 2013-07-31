@@ -8,6 +8,9 @@ from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, Simpl
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
+def _format_element(e):
+    return '<%s #%s .%s>' %(e.tag, e.get('class') or '', e.get('id') or '')
+
 class Region(object):
     def __init__(self, **dict):
         self.__dict__.update(dict)
@@ -15,8 +18,14 @@ class Region(object):
         self._fields = []
 
     def __str__(self):
-        return "Region: parent {}, start {}, k {},  covered {}, " \
-               "parent's size {}".format(self.parent, self.start, self.k, self.covered, len(self.parent))
+        return "<Region: parent {}, start {}:{}, k {}, covered {}>".format(_format_element(self.parent),
+                                                                                     self.start,
+                                                                                     _format_element(self.parent[self.start]),
+                                                                                    self.k,
+                                                                                    self.covered)
+
+    def __repr__(self):
+        return str(self)
 
     def iter(self, k):
         """
@@ -41,6 +50,9 @@ class Region(object):
         for element in self.iter(1):
             yield element[0]
 
+    def get_start_element(self):
+        return _format_element(self.parent[self.start])
+
 class Record(object):
     def __init__(self, *elements):
         self.elements = elements
@@ -49,7 +61,7 @@ class Record(object):
         return len(self.elements)
 
     def __str__(self):
-        return 'DataRecord: %s' % ", ".join('<%s #%s .%s>' %(e.tag, e.get('class') or '', e.get('id') or '') for e in self.elements)
+        return 'DataRecord: %s' % ", ".join(_format_element(e) for e in self.elements)
 
     def __iter__(self):
         return iter(self.elements)
@@ -70,22 +82,23 @@ def pairwise(a, K, start=0):
 
     for example:
     >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3))
-    [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10]), ([1, 2, 3], [4, 5, 6]), ([4, 5, 6], [7, 8, 9])]
+    [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10]), ([1, 2, 3], [4, 5, 6]), ([4, 5, 6], [7, 8, 9]), ([2, 3], [4, 5]), ([4,5], [6,7])]
     >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2))
     [([1], [2]), ([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([1, 2], [3, 4]), ([3, 4], [5, 6]), ([5, 6], [7, 8]), ([7, 8], [9, 10])]
     >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, 1))
     [([2], [3]), ([3], [4]), ([4], [5]), ([5], [6]), ([6], [7]), ([7], [8]), ([8], [9]), ([9], [10]), ([2, 3], [4, 5]), ([4, 5], [6, 7]), ([6, 7], [8, 9]), ([2, 3, 4], [5, 6, 7]), ([5, 6, 7], [8, 9, 10])]
     """
     for k in xrange(1, K + 1):
-        for i in xrange(start, len(a), k):
-            slice_a = a[i:i + k]
-            slice_b = a[i + k: i + 2 * k]
+        for i in xrange(0, K):
+            for j in xrange(start+i, len(a), k):
+                slice_a = a[j:j + k]
+                slice_b = a[j + k: j + 2 * k]
 
-            if len(slice_a) >= k and len(slice_b) >= k:
-                yield slice_a, slice_b
+                if len(slice_a) >= k and len(slice_b) >= k:
+                    yield slice_a, slice_b
 
 class MiningDataRegion(object):
-    def __init__(self, root, max_generalized_nodes=3, threshold=0.7):
+    def __init__(self, root, max_generalized_nodes, threshold):
         self.root = root
         self.max_generalized_nodes = max_generalized_nodes
         self.threshold = threshold
@@ -128,7 +141,7 @@ class MiningDataRegion(object):
                             cur_region.covered += k
                     elif not flag:  # doesn't match but previous match
                         break
-                if max_region.covered <= cur_region.covered and (
+                if cur_region.covered > max_region.covered and (
                         max_region.start == 0 or cur_region.start <= max_region.start):
                     max_region.k = cur_region.k
                     max_region.start = cur_region.start
@@ -153,10 +166,11 @@ class MiningDataRegion(object):
         """
         scores = {}
         for a, b in pairwise(parent, k):
-            score = self.stm.normalized_match_score(a, b)
             gn1 = GeneralizedNode(a[0], len(a))
             gn2 = GeneralizedNode(b[0], len(b))
-            scores.setdefault((gn1, gn2), score)
+            if (gn1, gn2) not in scores:
+                score = self.stm.normalized_match_score(a, b)
+                scores.setdefault((gn1, gn2), score)
         return scores
 
 
@@ -170,7 +184,7 @@ class MiningDataRecord(object):
     otherwise children are individual data record.
     """
 
-    def __init__(self, threshold=0.7):
+    def __init__(self, threshold):
         self.stm = SimpleTreeMatch()
         self.threshold = threshold
 
