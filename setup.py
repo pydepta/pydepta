@@ -7,5 +7,5 @@ setup(name='pydepta',
       author="Terry Peng",
       author_email="pengtaoo@gmail.com",
       install_requires=['w3lib', 'pyquery'],
-      package=find_packages()
+      packages=find_packages()
 )
