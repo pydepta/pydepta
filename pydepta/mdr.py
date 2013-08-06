@@ -292,22 +292,16 @@ class MiningDataField(object):
             d.update(self._create_seed_mapping(s, e))
         return d
 
-    def _extract_item(self, seed, d):
+    def _extract_item(self, seed, record):
         """
         extract data item from the tree.
+
         `seed`: the seed tree
         `d`: a seed element -> original element dictionary
         """
-        from pydepta.depta import Item
-        fields = self._extract_field(seed, d)
-        return Item(fields)
-
-    def _extract_field(self, seed, record):
-        r = []
-        from pydepta.depta import Field
+        div = pq('<div class="record"></div>')
         for s in seed:
             e = record.get(s, None)
             if e is not None:
-                field = Field(pq(e).text(), pq(e).html())
-                r.append(field)
-        return r
+                div.append(copy.deepcopy(e))
+        return div.html()

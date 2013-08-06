@@ -10,24 +10,6 @@ from w3lib.encoding import html_to_unicode
 from pydepta.htmls import DomTreeBuilder
 from pydepta.mdr import MiningDataRegion, MiningDataRecord, MiningDataField
 
-class Item(object):
-    def __init__(self, fields):
-        self.fields = fields
-
-    def __len__(self):
-        return len(self.fields)
-
-    def __getitem__(self, item):
-        return self.fields[item]
-
-    def __iter__(self):
-        return iter(self.fields)
-
-class Field(object):
-    def __init__(self, text, html):
-        self.text = text
-        self.html = html
-
 class Depta(object):
     def __init__(self, threshold=0.75, k=5):
         self.threshold = threshold
@@ -100,10 +82,6 @@ if __name__ == '__main__':
     for i, items in enumerate(region_items):
         print '====================== region {} ====================== '.format(i)
         for j, item in enumerate(items):
-            print '------------- record {} ------------------'.format(j)
-            for field in item.fields:
-                if field.html:
-                    root = document_fromstring(field.html)
-                    texts = [text.strip() for text in root.xpath('//text()') if text.strip()]
-                    print " | ".join(texts)
-            print
+            root = document_fromstring(item)
+            texts = [text.strip() for text in root.xpath('//text()') if text.strip()]
+            print " | ".join(texts)
