@@ -1,10 +1,7 @@
 from collections import namedtuple, defaultdict
 import copy
 
-from pyquery import PyQuery as pq
-
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
-
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
@@ -72,6 +69,24 @@ class Record(object):
         for element in record.elements:
             s += tree_size(element)
         return s
+
+class Item(object):
+    def __init__(self, fields):
+        self.fields = fields
+
+    def __len__(self):
+        return len(self.fields)
+
+    def __getitem__(self, item):
+        return self.fields[item]
+
+    def __iter__(self):
+        return iter(self.fields)
+
+class Field(object):
+    def __init__(self, text, html):
+        self.text = text
+        self.html = html
 
 def pairwise(a, K, start=0):
     """
@@ -292,16 +307,43 @@ class MiningDataField(object):
             d.update(self._create_seed_mapping(s, e))
         return d
 
-    def _extract_item(self, seed, record):
+    def _extract_item(self, seed, d):
         """
         extract data item from the tree.
-
         `seed`: the seed tree
         `d`: a seed element -> original element dictionary
         """
-        div = pq('<div class="record"></div>')
-        for s in seed:
-            e = record.get(s, None)
-            if e is not None:
-                div.append(copy.deepcopy(e))
-        return div.html()
+        fields = self._extract_field(seed, d)
+        return Item(fields)
+
+    def _extract_field(self, seed, record):
+        r = []
+        for element in seed:
+            r.extend(self._extract_element(element, record))
+        return r
+
+    def _extract_element(self, element, record):
+        r = []
+        e = record.get(element, None)
+
+        # handle text
+        if e is not None:
+            if e.text and element.text and len(element.text.strip()) > 0:
+                r.append(Field(e.text.strip(), ''))
+        else:
+            if element.text and len(element.text.strip()) > 0:
+                r.append(Field('', ''))
+
+        # handle children
+        for child in element:
+            r.extend(self._extract_element(child, record))
+
+        # handle tail
+        if e is not None:
+            if e.tail and element.tail and len(element.tail.strip()) > 0:
+                r.append(Field(e.tail.strip(), ''))
+        else:
+            if element.tail and len(element.tail.strip()) > 0:
+                r.append(Field('', ''))
+
+        return r

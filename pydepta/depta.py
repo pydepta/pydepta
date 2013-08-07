@@ -1,6 +1,3 @@
-"""
-DEPTA main driver
-"""
 from random import choice
 from urllib2 import urlopen
 
@@ -69,19 +66,3 @@ class Depta(object):
         div = p.wrap('<div class="mdr_region" region_id={} record_id={} style="border:solid 1px {}"></div>'.format(region, record, color))
         for e in elements[1:]:
             div.append(e)
-
-if __name__ == '__main__':
-    import sys
-    from lxml.html import document_fromstring
-    info = urlopen(sys.argv[1])
-    _, html = html_to_unicode(info.headers.get('content_type'), info.read())
-    depta = Depta()
-
-    regions, region_items = depta.extract(html, annotate='output.html')
-    from lxml.html import document_fromstring
-    for i, items in enumerate(region_items):
-        print '====================== region {} ====================== '.format(i)
-        for j, item in enumerate(items):
-            root = document_fromstring(item)
-            texts = [text.strip() for text in root.xpath('//text()') if text.strip()]
-            print " | ".join(texts)
