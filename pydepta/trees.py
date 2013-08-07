@@ -198,7 +198,7 @@ class SimpleTreeAligner(object):
                 alignment_matrix[i-1][j-1] = self.single_align(l1[i - 1], l2[j - 1])
                 score = matrix[i-1][j-1] + alignment_matrix[i-1][j-1].score
 
-                if score > matrix[i-1][j-1]:
+                if score > matrix[i][j]:
                     matrix[i][j] = score
                     trace[i-1][j-1] = TreeAlignment.TRACE_DIAG
 
