@@ -246,7 +246,7 @@ class MiningDataField(object):
     def __init__(self):
         self.pta = PartialTreeAligner(SimpleTreeAligner())
 
-    def align_records(self, records):
+    def align_records(self, records, seed=None):
         """
         partial align multiple records.
 
@@ -262,11 +262,14 @@ class MiningDataField(object):
         >>> [e.tag for e in t1]
         ['x1', 'x2', 'x3', 'x', 'b', 'd']
         """
-        # sort by the tree size
-        sorted_records = sorted(records, key=Record.size)
+        if seed:
+            sorted_records = copy.copy(records)
+        else:
+            # sort by the tree size
+            sorted_records = sorted(records, key=Record.size)
 
-        # seed is the largest tree
-        seed = sorted_records.pop()
+            # seed is the largest tree
+            seed = sorted_records.pop()
 
         # a dict like {'t2': {}, 't3': {}, etc}
         # the nested dictionary is like {'seed_element' : 'original_element'}
