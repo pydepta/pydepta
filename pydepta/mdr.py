@@ -1,4 +1,5 @@
-from collections import namedtuple, defaultdict
+from __future__ import division
+from collections import namedtuple, defaultdict, Counter
 import copy
 
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
@@ -6,13 +7,11 @@ from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, Simpl
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
 def element_repr(e):
-    return '<%s #%s .%s>' %(e.tag, e.get('class') or '', e.get('id') or '')
+    return '<%s #%s .%s>' %(e.tag, e.get('class', ''), e.get('id', ''))
 
 class Region(object):
     def __init__(self, **dict):
         self.__dict__.update(dict)
-        self._records = []
-        self._fields = []
 
     def __str__(self):
         return "<Region: parent {}, start {}:{}, k {}, covered {}>".format(element_repr(self.parent),
@@ -201,19 +200,30 @@ class MiningDataRecord(object):
         self.threshold = threshold
 
     def find_records(self, region):
-        records = []
         if region.k == 1:
+            records = []
+            # if all the individual node of children node of Generalized node are similar
             for i in xrange(region.start, region.start + region.covered):
-                for child1, child2 in pairwise(region.parent, 1, region.start):
-                    similarity = self.stm.normalized_match_score(child1, child2)
-                    if similarity < self.threshold:
+                for child1, child2 in pairwise(region.parent[i], 1, 0):
+                    sim = self.stm.normalized_match_score(child1, child2)
+                    if sim < self.threshold:
                         return self.slice_region(region)
-                else:
-                    # each child of generalized node is a data record
-                    for gn in region.iter(1):
-                        records.extend([Record(c) for c in gn])
-
-        return self.slice_region(region)
+            else:
+                # each child of generalized node is a data record
+                for gn in region.iter(1):
+                    records.extend([Record(c) for c in gn])
+            return records
+        else:
+            # if almost all the individual node in Generalized Node are similar
+            children = [region.parent[region.start + i] for i in range(region.covered)]
+            sizes = Counter([tree_size(child) for child in children])
+            most_common_size, _= sizes.most_common(1)[0]
+            most_typical_child = [child for child in children if tree_size(child) == most_common_size][0]
+            similarities = dict([child, self.stm.normalized_match_score([most_typical_child], [child])] for child in children)
+            if self.almost_similar(similarities.values(), self.threshold):
+                return [Record(child) for child in children if similarities[child] > self.threshold]
+            else:
+                return self.slice_region(region)
 
     def slice_region(self, region):
         """
@@ -224,6 +234,10 @@ class MiningDataRecord(object):
             elements = [element for element in gn]
             records.append(Record(*elements))
         return records
+
+    def almost_similar(self, similarities, threshold):
+        sims = [1 for sim in similarities if sim >= threshold]
+        return len(sims) / len(similarities) > 0.8
 
 class MiningDataField(object):
     """
