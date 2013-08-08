@@ -221,7 +221,7 @@ class MiningDataRecord(object):
             most_typical_child = [child for child in children if tree_size(child) == most_common_size][0]
             similarities = dict([child, self.stm.normalized_match_score([most_typical_child], [child])] for child in children)
             if self.almost_similar(similarities.values(), self.threshold):
-                return [Record(child) for child in children if similarities[child] > self.threshold]
+                return [Record(child) for child in children if similarities[child] >= self.threshold]
             else:
                 return self.slice_region(region)
 
