@@ -1,6 +1,7 @@
 from __future__ import division
 import copy
 
+from .trees_cython import create_2d_matrix, tree_match
 
 def tree_size(root):
     """
@@ -84,7 +85,7 @@ class SimpleTreeMatch(object):
         >>> stm.match([t1], [t2])
         2
         """
-        matrix = _create_2d_matrix(len(l1) + 1, len(l2) + 1)
+        matrix = create_2d_matrix(len(l1) + 1, len(l2) + 1)
         for i in xrange(1, len(matrix)):
             for j in xrange(1, len(matrix[0])):
                 matrix[i][j] = max(matrix[i][j - 1], matrix[i - 1][j])
@@ -97,32 +98,7 @@ class SimpleTreeMatch(object):
         return self.match(t1, t2) / ((t1size + t2size) / 2)
 
     def _single_match(self, t1, t2):
-        """
-        match two single trees.
-        >>> get_root = lambda x: x[0]
-        >>> get_children_count = lambda x: len(x) - 1
-        >>> get_child = lambda x, i: x[i+1]
-        >>> stm = SimpleTreeMatch(get_root, get_children_count, get_child)
-        >>> t1 = ('tr', ('td',), ('td',))
-        >>> t2 = ('tr', ('td',), ('tr',))
-        >>> get_children_count(t1)
-        2
-        >>> stm._single_match(t1, t2)
-        2
-        """
-        if self.get_root(t1) is None or self.get_root(t2) is None:
-            return 0
-        if self.get_root(t1) != self.get_root(t2):
-            return 0
-        matrix = _create_2d_matrix(self.get_children_count(t1) + 1, self.get_children_count(t2) + 1)
-        for i in xrange(1, len(matrix)):
-            for j in xrange(1, len(matrix[0])):
-                matrix[i][j] = max(matrix[i][j - 1], matrix[i - 1][j])
-                matrix[i][j] = max(matrix[i][j], matrix[i - 1][j - 1] + \
-                                                 self._single_match(self.get_child(t1, i - 1),
-                                                                    self.get_child(t2, j - 1)))
-        return 1 + matrix[len(matrix) - 1][len(matrix[0]) - 1]
-
+        return tree_match(t1, t2)
 
 class TreeAlignment(object):
 
@@ -182,9 +158,9 @@ class SimpleTreeAligner(object):
         ['c', 'b']
         """
         alignment = TreeAlignment()
-        matrix = _create_2d_matrix(len(l1) + 1, len(l2) + 1)
-        alignment_matrix = _create_2d_matrix(len(l1), len(l2))
-        trace = _create_2d_matrix(len(l1), len(l2))
+        matrix = create_2d_matrix(len(l1) + 1, len(l2) + 1)
+        alignment_matrix = create_2d_matrix(len(l1), len(l2))
+        trace = create_2d_matrix(len(l1), len(l2))
 
         for i in xrange(1, len(matrix)):
             for j in xrange(1, len(matrix[0])):
@@ -293,9 +269,9 @@ class SimpleTreeAligner(object):
         t1_len = self.get_children_count(t1)
         t2_len = self.get_children_count(t2)
 
-        matrix = _create_2d_matrix(t1_len + 1, t2_len + 1)
-        alignment_matrix = _create_2d_matrix(t1_len, t2_len)
-        trace = _create_2d_matrix(t1_len, t2_len)
+        matrix = create_2d_matrix(t1_len + 1, t2_len + 1)
+        alignment_matrix = create_2d_matrix(t1_len, t2_len)
+        trace = create_2d_matrix(t1_len, t2_len)
 
         for i in xrange(1, len(matrix)):
             for j in xrange(1, len(matrix[0])):
@@ -331,9 +307,9 @@ class SimpleTreeAligner(object):
         alignment.score = 1 + matrix[len(matrix) - 1][len(matrix[0]) - 1]
         return alignment
 
-def _create_2d_matrix(rows, cols):
+def create_2d_matrix(rows, cols):
     """
-    >>> m = _create_2d_matrix(2, 3)
+    >>> m = create_2d_matrix(2, 3)
     >>> (len(m), len(m[0]))
     (2, 3)
     """
