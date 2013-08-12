@@ -307,14 +307,6 @@ class SimpleTreeAligner(object):
         alignment.score = 1 + matrix[len(matrix) - 1][len(matrix[0]) - 1]
         return alignment
 
-def create_2d_matrix(rows, cols):
-    """
-    >>> m = create_2d_matrix(2, 3)
-    >>> (len(m), len(m[0]))
-    (2, 3)
-    """
-    return [[0 for _ in range(cols)] for _ in range(rows)]
-
 def find_subsequence(iterable, predicate):
     """
     find the subsequence in iterable which predicted return true

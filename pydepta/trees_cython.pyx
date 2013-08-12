@@ -4,7 +4,7 @@ def _get_root(e):
     return e.tag if e is not None else None
 
 def _get_child(e, i):
-    return e[i] if i < len(e) else None
+    return e[i]
 
 def _get_children_count(e):
     return len(e)
@@ -18,19 +18,20 @@ def tree_match(t1, t2):
     if _get_root(t1) != _get_root(t2):
         return 0
 
-    m = create_2d_matrix(_get_children_count(t1) + 1, _get_children_count(t2) + 1)
+    cdef int rows = _get_children_count(t1) + 1
+    cdef int cols = _get_children_count(t2) + 1
     cdef int i
     cdef int j
-    cdef int rows = len(m)
-    cdef int cols = len(m[0])
+
+    m = create_2d_matrix(rows, cols)
 
     for i from 1 <= i < rows:
         for j from 1 <= j < cols:
             m[i][j] = max(m[i][j - 1], m[i - 1][j])
-            m[i][j] = max(m[i][j], m[i - 1][j - 1] + \
-                                             tree_match(_get_child(t1, i - 1),
-                                                        _get_child(t2, j - 1)))
-    return 1 + m[len(m) - 1][len(m[0]) - 1]
+            m[i][j] = max(m[i][j], m[i - 1][j - 1] + tree_match(_get_child(t1, i - 1), _get_child(t2, j - 1)))
+
+    return 1 + m[rows-1][cols-1]
+
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
