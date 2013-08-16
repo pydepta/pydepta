@@ -375,7 +375,7 @@ class MiningDataField(object):
         # handle text
         if e is not None:
             if e.text and element.text and len(element.text.strip()) > 0:
-                r.append(Field(e.text.strip(), ''))
+                r.append(Field(e.text, ''))
         else:
             if element.text and len(element.text.strip()) > 0:
                 r.append(Field('', ''))
@@ -387,7 +387,7 @@ class MiningDataField(object):
         # handle tail
         if e is not None:
             if e.tail and element.tail and len(element.tail.strip()) > 0:
-                r.append(Field(e.tail.strip(), ''))
+                r.append(Field(e.tail, ''))
         else:
             if element.tail and len(element.tail.strip()) > 0:
                 r.append(Field('', ''))
