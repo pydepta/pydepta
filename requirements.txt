@@ -1,3 +1,4 @@
 lxml
 w3lib
 pyquery
+numpy

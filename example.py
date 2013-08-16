@@ -7,7 +7,7 @@ from pydepta.depta import Depta
 
 if __name__ == '__main__':
     depta = Depta()
-    regions = depta.extract(url=sys.argv[1], verbose=True)
+    regions = depta.extract(url=sys.argv[1])
     with open(sys.argv[2], 'w') as f:
 
         print >> f, '<html><head><title>Extraction Result</title>'
@@ -16,13 +16,5 @@ if __name__ == '__main__':
 
         for i, region in enumerate(regions):
             print >> f, '<h2>Table %s</h2>' %i
-            print >> f, '<table>'
-            items = region.items
-            for j, item in enumerate(items):
-                print >> f, '<tr>'
-                print >> f, '<td>Item %s</td>' %j
-                for field in item.fields:
-                    print >> f, '<td>%s</td>' %field.text.encode('utf8')
-                print >> f, '</tr>'
-            print >> f, '</table>'
+            print >> f, region.as_html_table()
         print >> f, '</body></html>'

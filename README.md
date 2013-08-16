@@ -5,10 +5,42 @@ The basic idea is to extract the data region with tree match algorithm (see Bing
 
 Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it with Python with some improvement.
 
+### Usage
+
+- extract from html page
+
+```
+>>> from pydepta import depta
+>>> from urllib2 import urlopen
+>>> d = depta.Depta()
+>>> html = "<html></html>"
+>>> regions = d.extract(html)
+```
+
+- extract from url
+
+```
+>>> from pydepta import depta
+>>> d = depta.Depta()
+>>> regions = d.extract(url='http://www.amazon.com')
+```
+
+- convert region to other format
+
+```
+>>> from pydepta import depta
+>>> d = depta.Depta()
+>>> regions = d.extract(url='http://www.amazon.com')
+>>> print regions[0].as_html_table()
+>>> print regions[0].as_numpy_array()
+>>> print regions[0].as_plain_texts()
+```
+
+
 ## Example Output:
 
 ### <http://www.diningcity.com/en/zeeland/restaurant_oesterbeurs>
-<table>
+<table width="600">
 <tbody><tr>
 <td>Item 0</td>
 <td>Service</td>
@@ -68,7 +100,7 @@ De rest? Zie de punten. Dat zegt genoeg! In Yerseke zijn we er trots op!</td>
 
 ### <http://www.iens.nl/restaurant/12229/nijmegen-pasta-e-fagioli>
 
-<table>
+<table width="600">
 <tbody><tr>
 <td>Item 0</td>
 <td>De laatste recensies</td>
