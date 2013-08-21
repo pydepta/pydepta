@@ -1,7 +1,6 @@
 from __future__ import division
 from collections import namedtuple, defaultdict, Counter
 import copy
-import numpy as np
 from cStringIO import StringIO
 
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
@@ -48,13 +47,6 @@ class Region(object):
         for element in self.iter(1):
             yield element[0]
 
-    def as_numpy_array(self):
-        """
-        convert the region to a numpy 2d matrix.
-        """
-        table = [[field.text for field in item.fields] for item in self.items]
-        return np.array(table)
-
     def as_html_table(self):
         """
         convert the region to a HTML table
@@ -71,9 +63,9 @@ class Region(object):
 
     def as_plain_texts(self):
         """
-        convert the region to a list of plain text
+        convert the region to a 2d plain text
         """
-        return ["\t".join([field.text for field in item.fields]) for item in self.items]
+        return [[field.text for field in item.fields] for item in self.items]
 
 class Record(object):
     def __init__(self, *elements):
