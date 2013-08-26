@@ -360,28 +360,28 @@ class MiningDataField(object):
             r.extend(self._extract_element(element, record))
         return r
 
-    def _extract_element(self, element, record):
+    def _extract_element(self, seed, record):
         r = []
-        e = record.get(element, None)
+        e = record.get(seed, None)
 
         # handle text
         if e is not None:
-            if e.text and element.text and len(element.text.strip()) > 0:
-                r.append(Field(e.text, ''))
+            if seed.text and seed.text.strip():
+                r.append(Field(e.text or '', ''))
         else:
-            if element.text and len(element.text.strip()) > 0:
+            if seed.text and seed.text.strip():
                 r.append(Field('', ''))
 
         # handle children
-        for child in element:
+        for child in seed:
             r.extend(self._extract_element(child, record))
 
         # handle tail
         if e is not None:
-            if e.tail and element.tail and len(element.tail.strip()) > 0:
-                r.append(Field(e.tail, ''))
+            if seed.tail and seed.tail.strip():
+                r.append(Field(e.tail or '', ''))
         else:
-            if element.tail and len(element.tail.strip()) > 0:
+            if seed.tail and seed.tail.strip():
                 r.append(Field('', ''))
 
         return r
