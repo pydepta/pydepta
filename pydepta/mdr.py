@@ -47,18 +47,32 @@ class Region(object):
         for element in self.iter(1):
             yield element[0]
 
-    def as_html_table(self):
+    def as_html_table(self, headers=None):
         """
         convert the region to a HTML table
         """
         f = StringIO()
         print >> f, '<table>'
+
+        # print headers
+        if headers:
+            print >> f, '<tr>'
+            if isinstance(headers, dict):
+                for i in range(len(self.items[0].fields)):
+                    print >> f, '<th>%s</th>' %headers.get(i, '')
+            elif isinstance(headers, list):
+                for h in headers:
+                    print >> f, '<th>%s</th>' %h
+            print >> f, '</tr>'
+
+        # print content
         for item in self.items:
             print >> f, '<tr>'
             for field in item.fields:
                 print >> f, '<td>%s</td>' %field.text.encode('utf8')
             print >> f, '</tr>'
         print >> f, '</table>'
+
         return f.getvalue()
 
     def as_plain_texts(self):
