@@ -61,7 +61,7 @@ class Region(object):
             return elements
         return []
 
-    def as_html_table(self, headers=None):
+    def as_html_table(self, headers=None, show_id=False):
         """
         convert the region to a HTML table
         """
@@ -72,16 +72,22 @@ class Region(object):
         if headers:
             print >> f, '<tr>'
             if isinstance(headers, dict):
+                if show_id:
+                    print >> f, '<th></th>'
                 for i in range(len(self.items[0].fields)):
                     print >> f, '<th>%s</th>' %headers.get(i, '')
             elif isinstance(headers, list):
+                if show_id:
+                    print >> f, '<th></th>'
                 for h in headers:
                     print >> f, '<th>%s</th>' %h
             print >> f, '</tr>'
 
         # print content
-        for item in self.items:
+        for i, item in enumerate(self.items):
             print >> f, '<tr>'
+            if show_id:
+                print >> f, '<td>%s</td>' %i+1
             for field in item.fields:
                 print >> f, '<td>%s</td>' %field.text
             print >> f, '</tr>'
