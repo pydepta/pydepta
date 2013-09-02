@@ -2,6 +2,7 @@ from __future__ import division
 from collections import namedtuple, defaultdict, Counter
 import copy
 from cStringIO import StringIO
+import itertools
 
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 
@@ -18,11 +19,10 @@ class Region(object):
         return "<Region: parent {}, start {}:{}, k {}, covered {}>".format(element_repr(self.parent),
                                                                                      self.start,
                                                                                      element_repr(self.parent[self.start]),
-                                                                                    self.k,
-                                                                                    self.covered)
+                                                                                     self.k,
+                                                                                     self.covered)
 
-    def __repr__(self):
-        return str(self)
+    __repr__ = __str__
 
     def iter(self, k):
         """
@@ -43,9 +43,23 @@ class Region(object):
         for i in xrange(self.start, self.start + self.covered, k):
             yield self.parent[i:i + k]
 
-    def elements(self):
-        for element in self.iter(1):
-            yield element[0]
+    def get_elements_after_generalized_node(self, tag="*"):
+        """
+        Gets the elements inside the current region.
+        """
+        if (self.start + self.covered) < len(self.parent):
+            start = self.parent[self.start + self.covered]
+            region_elements = set(e for e in self.parent.iter(tag))
+            elements = []
+            # no following-or-self::?
+            for e in itertools.chain(start.iter(tag), start.xpath('following::%s' %tag)):
+                if e in region_elements:
+                    elements.append(e)
+                else:
+                    # end of the region
+                    break
+            return elements
+        return []
 
     def as_html_table(self, headers=None):
         """
