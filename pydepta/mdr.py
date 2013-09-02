@@ -69,7 +69,7 @@ class Region(object):
         for item in self.items:
             print >> f, '<tr>'
             for field in item.fields:
-                print >> f, '<td>%s</td>' %field.text.encode('utf8')
+                print >> f, '<td>%s</td>' %field.text
             print >> f, '</tr>'
         print >> f, '</table>'
 
@@ -381,7 +381,7 @@ class MiningDataField(object):
         # handle text
         if e is not None:
             if seed.text and seed.text.strip():
-                r.append(Field(e.text or '', ''))
+                r.append(Field(self._get_text(e.text), ''))
         else:
             if seed.text and seed.text.strip():
                 r.append(Field('', ''))
@@ -393,9 +393,16 @@ class MiningDataField(object):
         # handle tail
         if e is not None:
             if seed.tail and seed.tail.strip():
-                r.append(Field(e.tail or '', ''))
+                r.append(Field(self._get_text(e.tail) or '', ''))
         else:
             if seed.tail and seed.tail.strip():
                 r.append(Field('', ''))
 
         return r
+
+    def _get_text(self, text):
+        if text != None:
+            if isinstance(text, unicode):
+                return text.encode('utf8')
+            return text
+        return ''

@@ -44,7 +44,7 @@ CASES = [
     ]
 
 def normalize_text(text):
-    return re.sub(r'\s+', ' ', text.replace(u'\u00a0', ' ')).strip()
+    return re.sub(r'\s+', ' ', text.decode('utf8' ,'ignore').replace(u'\u00a0', ' ')).strip()
 
 class DeptaTest(unittest.TestCase):
     def _get_html(self, fn):
@@ -70,7 +70,7 @@ class DeptaTest(unittest.TestCase):
                             texts.append(text)
                         records_texts.append(texts)
                     for v in vs:
-                        self.assertTrue(v in records_texts, '%s record failed' %fn)
+                        self.assertTrue(v in records_texts, '%s not seen in %s.' %(v, fn))
 
 if __name__ == '__main__':
     unittest.main()
