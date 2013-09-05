@@ -1,4 +1,4 @@
-from urllib2 import urlopen
+from urllib import urlopen
 from lxml.html import document_fromstring
 
 from w3lib.encoding import html_to_unicode
@@ -18,7 +18,7 @@ class Depta(object):
         """
         extract data field from raw html or from a url.
         """
-        if 'url' in kwargs:
+        if not html and 'url' in kwargs:
             info = urlopen(kwargs.pop('url'))
             _, html = html_to_unicode(info.headers.get('content_type'), info.read())
         builder = DomTreeBuilder(html)
