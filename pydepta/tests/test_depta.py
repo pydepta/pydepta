@@ -35,13 +35,17 @@ CASES = [
     ]
 
 INFER_CASES = [
+    ('1_infer', 'http://www.diningcity.com/en/zeeland/restaurant_nelsons', {
+        'seed': '2',
+        }),
+
     ('2_infer', 'http://www.diningcity.com/en/zeeland/restaurant_hetbadpaviljoen', {
         'seed': '2',
         'regions': [('<div #review_content .>', 3, 1, 4)],
-        'region-index': 10
     }),
 
-]
+    ]
+
 def normalize_text(text):
     return re.sub(r'\s+', ' ', text.decode('utf8' ,'ignore').replace(u'\u00a0', ' ')).strip()
 
@@ -77,7 +81,6 @@ class DeptaTest(unittest.TestCase):
                 if 'region-index' in case:
                     region_index = case['region-index']
                     self.assertEquals(self._normalize_region_text(regions[region_index]), texts)
-
                 if k == 'regions':
                     start_elements = [(element_repr(region.parent[region.start]), region.start, region.k, region.covered) for region in regions]
                     for v in vs:
@@ -88,3 +91,23 @@ class DeptaTest(unittest.TestCase):
                         anchors.extend(anchor.get('href') for anchor in region.get_elements_after_generalized_node('a'))
                     for v in vs:
                         self.assertTrue(v in anchors, '%s not sees in %s.' %(v, fn))
+
+    def test_depta_infer(self):
+        for fn, url, case in INFER_CASES:
+            depta = Depta()
+            body = self._get_html(fn)
+            texts = self._get_texts(fn)
+            seed = self._get_html(case['seed'])
+            region = depta.extract(seed)[9]
+            inferred_region = depta.infer(region, body)
+
+            for k, vs in case.iteritems():
+                if 'regions' in case:
+                    self.assertEquals(self._normalize_region_text(inferred_region), texts)
+                    if k == 'regions':
+                        start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
+                                           inferred_region.start, inferred_region.k, inferred_region.covered)]
+                        for v in vs:
+                            self.assertTrue(v in start_elements, '%s region failed' %fn)
+                else:
+                    self.assertIsNone(inferred_region)

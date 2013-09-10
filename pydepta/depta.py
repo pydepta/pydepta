@@ -1,3 +1,4 @@
+from copy import copy
 from urllib import urlopen
 from lxml.html import document_fromstring
 
@@ -41,33 +42,37 @@ class Depta(object):
 
         return regions
 
-    def infer(self, region, html='', **kwargs):
+    def infer(self, seed_region, html='', **kwargs):
         """
         extract the page has single record interested from with given region.
         """
         if 'url' in kwargs:
             info = urlopen(kwargs.pop('url'))
             _, html = html_to_unicode(info.headers.get('content_type'), info.read())
+
+        stm = SimpleTreeMatch()
+        field_finder = MiningDataField()
+
         document = document_fromstring(html)
-        xpath = self._get_anchor_xpath(region)
-        anchors = document.xpath(xpath)
+        xpath = self._get_anchor_xpath(seed_region)
+        elements = document.xpath(xpath)
 
-        if len(anchors) > 0:
-            l1 = [region.parent[region.start+i] for i in range(region.k)]
-            l2 = self._populate_siblings(anchors[0], region.k)
+        items = []
 
-            seed = Record(*l1)
-            record = Record(*l2)
-
-            stm = SimpleTreeMatch()
-            sim =  stm.normalized_match_score(l1, l2)
-
+        for element in elements:
+            l1 = [seed_region.parent[seed_region.start+i] for i in range(seed_region.k)]
+            l2 = self._populate_siblings(element, seed_region.k)
+            sim = stm.normalized_match_score(l1, l2)
             if sim > self.threshold:
-                field_finder = MiningDataField()
-                items, _ = field_finder.align_records([record], seed=seed)
-                return items
+                seed = Record(*l1)
+                record = Record(*l2)
+                item, _ = field_finder.align_records([record], seed=seed)
+                items.append(item[0])
 
-        return []
+        if items:
+            region = copy(seed_region)
+            region.items = items
+            return region
 
     def _get_anchor_xpath(self, region):
         start = region.start
