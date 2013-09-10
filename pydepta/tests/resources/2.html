@@ -219,7 +219,7 @@ setDatepickerDate(dateText);
 });
 
 var date = new Date();
-date.setTime('1375259064897');
+date.setTime('1378891966483');
 if ($("#datepicker").length > 0)
 $("#datepicker").datepicker( "setDate" , date );
 
@@ -496,10 +496,10 @@ var disabledDays = [""];
 function updateCalendar() {
 
 var closedDinner = [""
-,"7-1-2013","7-2-2013","7-8-2013","7-9-2013","7-15-2013","7-16-2013","7-22-2013","7-23-2013","7-29-2013","7-30-2013","8-5-2013","8-6-2013","8-12-2013","8-13-2013","8-19-2013","8-20-2013","8-26-2013","8-27-2013","9-2-2013","9-3-2013","9-9-2013","9-10-2013","9-16-2013","9-17-2013","9-23-2013","9-24-2013","9-30-2013","10-1-2013","10-7-2013","10-8-2013","10-14-2013","10-15-2013","10-21-2013","10-22-2013","10-28-2013","10-29-2013","11-4-2013","11-5-2013","11-11-2013","11-12-2013","11-18-2013","11-19-2013","11-25-2013","11-26-2013","12-2-2013","12-3-2013","12-9-2013","12-10-2013","12-16-2013","12-17-2013","12-23-2013","12-24-2013","12-30-2013","12-31-2013","1-6-2014","1-7-2014","1-13-2014","1-14-2014","1-20-2014","1-21-2014","1-27-2014","1-28-2014","2-3-2014","2-4-2014","2-10-2014","2-11-2014","2-17-2014","2-18-2014","2-24-2014","2-25-2014","3-3-2014","3-4-2014","3-10-2014","3-11-2014","3-17-2014","3-18-2014","3-24-2014","3-25-2014","3-31-2014","4-1-2014","4-7-2014","4-8-2014","4-14-2014","4-15-2014","4-21-2014","4-22-2014","4-28-2014","4-29-2014","5-5-2014","5-6-2014","5-12-2014","5-13-2014","5-19-2014","5-20-2014","5-26-2014","5-27-2014"
+,"9-2-2013","9-3-2013","9-9-2013","9-10-2013","9-16-2013","9-17-2013","9-23-2013","9-24-2013","9-30-2013","10-1-2013","10-7-2013","10-8-2013","10-14-2013","10-15-2013","10-21-2013","10-22-2013","10-28-2013","10-29-2013","11-4-2013","11-5-2013","11-11-2013","11-12-2013","11-18-2013","11-19-2013","11-25-2013","11-26-2013","12-2-2013","12-3-2013","12-9-2013","12-10-2013","12-16-2013","12-17-2013","12-23-2013","12-24-2013","12-30-2013","12-31-2013","1-6-2014","1-7-2014","1-13-2014","1-14-2014","1-20-2014","1-21-2014","1-27-2014","1-28-2014","2-3-2014","2-4-2014","2-10-2014","2-11-2014","2-17-2014","2-18-2014","2-24-2014","2-25-2014","3-3-2014","3-4-2014","3-10-2014","3-11-2014","3-17-2014","3-18-2014","3-24-2014","3-25-2014","3-31-2014","4-1-2014","4-7-2014","4-8-2014","4-14-2014","4-15-2014","4-21-2014","4-22-2014","4-28-2014","4-29-2014","5-5-2014","5-6-2014","5-12-2014","5-13-2014","5-19-2014","5-20-2014","5-26-2014","5-27-2014","6-2-2014","6-3-2014","6-9-2014","6-10-2014","6-16-2014","6-17-2014","6-23-2014","6-24-2014","6-30-2014","7-1-2014","7-7-2014","7-8-2014","7-14-2014","7-15-2014","7-21-2014","7-22-2014","7-28-2014","7-29-2014"
 ];
 var closedLunch = [""
-,"7-1-2013","7-2-2013","7-8-2013","7-9-2013","7-15-2013","7-16-2013","7-22-2013","7-23-2013","7-29-2013","7-30-2013","8-5-2013","8-6-2013","8-12-2013","8-13-2013","8-19-2013","8-20-2013","8-26-2013","8-27-2013","9-2-2013","9-3-2013","9-9-2013","9-10-2013","9-16-2013","9-17-2013","9-23-2013","9-24-2013","9-30-2013","10-1-2013","10-7-2013","10-8-2013","10-14-2013","10-15-2013","10-21-2013","10-22-2013","10-28-2013","10-29-2013","11-4-2013","11-5-2013","11-11-2013","11-12-2013","11-18-2013","11-19-2013","11-25-2013","11-26-2013","12-2-2013","12-3-2013","12-9-2013","12-10-2013","12-16-2013","12-17-2013","12-23-2013","12-24-2013","12-30-2013","12-31-2013","1-6-2014","1-7-2014","1-13-2014","1-14-2014","1-20-2014","1-21-2014","1-27-2014","1-28-2014","2-3-2014","2-4-2014","2-10-2014","2-11-2014","2-17-2014","2-18-2014","2-24-2014","2-25-2014","3-3-2014","3-4-2014","3-10-2014","3-11-2014","3-17-2014","3-18-2014","3-24-2014","3-25-2014","3-31-2014","4-1-2014","4-7-2014","4-8-2014","4-14-2014","4-15-2014","4-21-2014","4-22-2014","4-28-2014","4-29-2014","5-5-2014","5-6-2014","5-12-2014","5-13-2014","5-19-2014","5-20-2014","5-26-2014","5-27-2014"
+,"9-2-2013","9-3-2013","9-9-2013","9-10-2013","9-16-2013","9-17-2013","9-23-2013","9-24-2013","9-30-2013","10-1-2013","10-7-2013","10-8-2013","10-14-2013","10-15-2013","10-21-2013","10-22-2013","10-28-2013","10-29-2013","11-4-2013","11-5-2013","11-11-2013","11-12-2013","11-18-2013","11-19-2013","11-25-2013","11-26-2013","12-2-2013","12-3-2013","12-9-2013","12-10-2013","12-16-2013","12-17-2013","12-23-2013","12-24-2013","12-30-2013","12-31-2013","1-6-2014","1-7-2014","1-13-2014","1-14-2014","1-20-2014","1-21-2014","1-27-2014","1-28-2014","2-3-2014","2-4-2014","2-10-2014","2-11-2014","2-17-2014","2-18-2014","2-24-2014","2-25-2014","3-3-2014","3-4-2014","3-10-2014","3-11-2014","3-17-2014","3-18-2014","3-24-2014","3-25-2014","3-31-2014","4-1-2014","4-7-2014","4-8-2014","4-14-2014","4-15-2014","4-21-2014","4-22-2014","4-28-2014","4-29-2014","5-5-2014","5-6-2014","5-12-2014","5-13-2014","5-19-2014","5-20-2014","5-26-2014","5-27-2014","6-2-2014","6-3-2014","6-9-2014","6-10-2014","6-16-2014","6-17-2014","6-23-2014","6-24-2014","6-30-2014","7-1-2014","7-7-2014","7-8-2014","7-14-2014","7-15-2014","7-21-2014","7-22-2014","7-28-2014","7-29-2014"
 ];
 
 if($('#dinner').hasClass('left_button_down')) {
@@ -1289,7 +1289,7 @@ $('input[name="event_sdate"]').val();
             <li><a id="menu1" href="/en/zeeland/restaurant_oesterbeurs">Overview</a></li>
             <li><a id="menu2" href="/en/zeeland/restaurant_oesterbeurs/menu">Menu</a></li>
 
-            <li><a id="menu3" href="/en/zeeland/restaurant_oesterbeurs/reviews">Reviews (43)</a></li>
+            <li><a id="menu3" href="/en/zeeland/restaurant_oesterbeurs/reviews">Reviews (51)</a></li>
 
 
             <li><a id="menu5" href="/en/zeeland/restaurant_oesterbeurs/map">Map &amp; route</a></li>
@@ -1835,7 +1835,7 @@ $('input[name="event_sdate"]').val();
 
 
 
-		                                                                <a href="/en/zeeland/search?sopt=477">€€€€</a>
+		                                                                <a href="/en/zeeland/search?sopt=476">€€€</a>
 
 
 
@@ -1966,7 +1966,7 @@ $('input[name="event_sdate"]').val();
 
 
 
-		                                                                <a href="/en/zeeland/search?sopt=2824">Top 5/a>
+		                                                                <a href="/en/zeeland/search?sopt=2824">Top 5</a>
 
 
 
@@ -1984,13 +1984,13 @@ $('input[name="event_sdate"]').val();
 <li id="inf_13" ><em>Payment</em>
                                             <span>
 
-                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Visa7.jpg" alt="" /></a>
-
-                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/MasterCard6.jpg" alt="" /></a>
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/AmericanExpress8.jpg" alt="" /></a>
 
                                                     <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Pin11.gif" alt="Pin" /></a>
 
-                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/AmericanExpress8.jpg" alt="" /></a>
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Visa7.jpg" alt="" /></a>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/MasterCard6.jpg" alt="" /></a>
 
                                             </span>
 </li>
@@ -2104,7 +2104,7 @@ $('input[name="event_sdate"]').val();
     <a name="review_label" ></a>
 
     <div id="reviews" class="review">
-        <h4 id="reviewnumber">43 Reviews</h4>
+        <h4 id="reviewnumber">51 Reviews</h4>
         <p class="black_txt"></p>
         <div class="visitor_review">
             <div class="review_mid">
@@ -2122,7 +2122,7 @@ $('input[name="event_sdate"]').val();
 	                                                        </span></li>
 
                                 <li><em>Atmosphere</em><span>
-	                                                        	8.2
+	                                                        	8.1
 	                                                        </span></li>
 
                             </ul>
@@ -2148,21 +2148,18 @@ $('input[name="event_sdate"]').val();
                                 </div>
 
                                 <div class="service">Atmosphere
-                                    <em style="font-weight: bold; font-style: normal;"> 6.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 7.0</em>
                                 </div>
 
                                 <div class="service">Cuisine
-                                    <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 9.0</em>
                                 </div>
 
-                                <div class="num">7.3</div>
+                                <div class="num">8.0</div>
                             </div>
-                            <p>Wij hebben een heerlijke avond gehad. En het eten was heel erg lekker.
-                                Dus bijzonder genoten.
-                                Alleen de drankjes waren vonden wij veel te duur. Bij binnenkomst werd ons gevraagd of we een aperitiefje van het huis wilde.Ja dat wilde wij wel.
-                                Het is maar hoe je het bekijkt. Van het huis of toch betalen. Het koste ons 34 euro. 7 glazen wijn 45,75 euro. We waren alles bij elkaar 86.50 kwijt aan drank en water. Ik vind dit eigenlijk wel een domper op deze leuke avond.
-                                Je denkt lekker uit eten te gaan, maar dan krijg je rekening en is de drank de helft meer dan je 4 gangen dinee.</p>
-                            <p><em>georgina de winter, 13 Mar 2013, 12:30</em></p>
+                            <p>Heerlijk gegeten. Fantastisch. Zeker voor herhaling vatbaar.
+                                Jammer dat we getuige moesten zijn van een behoorlijke ruzie in de keuken dat zeer luid in het restaurant te horen was.</p>
+                            <p><em>06 Sep 2013, 17:59</em></p>
                         </div>
                     </div>
                 </div>
@@ -2177,23 +2174,22 @@ $('input[name="event_sdate"]').val();
                             <div class="heading">
 
                                 <div class="service">Service
-                                    <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 8.0</em>
                                 </div>
 
                                 <div class="service">Atmosphere
-                                    <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 8.0</em>
                                 </div>
 
                                 <div class="service">Cuisine
                                     <em style="font-weight: bold; font-style: normal;"> 8.0</em>
                                 </div>
 
-                                <div class="num">7.3</div>
+                                <div class="num">8.0</div>
                             </div>
-                            <p>Het dnig wat jammer was dat ik niet wist dat je van te voren aan moest geven of je een vis of vlees menu wilde.
-                                Wat ook jammer was dat je als laatste koffie bestelde dat men niet vroeg of je alleen koffie wilde of koffie compleet.
-                                Je kreeg gewoon compleet (zonder te vragen) maar daar moest je dan ook gelijk bijna 7 euro voor betalen. Terwijl je alleen koffie besteld had. Men had dit eerst moeten aangeven!!</p>
-                            <p><em>12 Mar 2013, 20:41</em></p>
+                            <p>We hebben heerlijk gegeten. Het zag er ook prachtig uit.
+                                Elk gerecht was een schilderijtje op je bord en elke hap een streling voor de tong.</p>
+                            <p><em>06 Sep 2013, 17:23</em></p>
                         </div>
                     </div>
                 </div>
@@ -2208,7 +2204,7 @@ $('input[name="event_sdate"]').val();
                             <div class="heading">
 
                                 <div class="service">Service
-                                    <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 8.0</em>
                                 </div>
 
                                 <div class="service">Atmosphere
@@ -2219,10 +2215,14 @@ $('input[name="event_sdate"]').val();
                                     <em style="font-weight: bold; font-style: normal;"> 9.0</em>
                                 </div>
 
-                                <div class="num">8.0</div>
+                                <div class="num">8.3</div>
                             </div>
-                            <p></p>
-                            <p><em>11 Mar 2013, 10:58</em></p>
+                            <p>Zoals altijd hebben we genoten van het lekkere eten.
+                                Proficiat voor de samenstelling van het menu.
+                                Dit is zeker een van de beste restaurants die we bezocht hebben.
+                                doe zo voort Maurice alsook heel het team rond hem.
+                            </p>
+                            <p><em>trees en gie van looveren, 06 Sep 2013, 11:59</em></p>
                         </div>
                     </div>
                 </div>
@@ -2237,22 +2237,24 @@ $('input[name="event_sdate"]').val();
                             <div class="heading">
 
                                 <div class="service">Service
-                                    <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 8.0</em>
                                 </div>
 
                                 <div class="service">Atmosphere
-                                    <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 9.0</em>
                                 </div>
 
                                 <div class="service">Cuisine
-                                    <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                                    <em style="font-weight: bold; font-style: normal;"> 9.0</em>
                                 </div>
 
-                                <div class="num">10.0</div>
+                                <div class="num">8.7</div>
                             </div>
-                            <p>In de Oesterbeurs is het genieten in een ontspannen sfeer. Alles is goed uitgebalanceerd. Genoeg zit- en bewegingsruimte bijvoorbeeld. Vaak is dat aan de krappe kant. Bij de Oesterbeurs zitten ook mensen met lange benen ontspannen.
-                                De rest? Zie de punten. Dat zegt genoeg! In Yerseke zijn we er trots op! </p>
-                            <p><em>Andries Jumelet, 11 Mar 2013, 09:38</em></p>
+                            <p>Wij hebben een schitterende maaltijd gehad.  Mooie, verzorgde borden!
+                                Wij hadden gekozen voor het 4-gangendiner en hebben daar zeker geen spijt van gehad.De
+                                zeeuwse mosselen met safraan waren zalig.  Echt een topper en voor herhaling vatbaar!
+                            </p>
+                            <p><em>Dina Loos, 03 Sep 2013, 09:52</em></p>
                         </div>
                     </div>
                 </div>
@@ -2278,28 +2280,28 @@ $('input[name="event_sdate"]').val();
     <ul>
 
         <li>
-            <p><a href="/en/zeeland/cafesoif"><img src="http://media.diningcity.com/restaurantpictures/soif151172_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>Café Soif</span>
+            <p><a href="/en/zeeland/restaurant_deossehut"><img src="http://media.diningcity.com/restaurantpictures/m_rest26286_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>De Ossehut</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_nelsons"><img src="http://media.diningcity.com/restaurantpictures/33033_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>Nelsons</span>
+            <p><a href="/en/zeeland/restaurant_vlasbloemeken"><img src="http://media.diningcity.com/restaurantpictures/m_rest7175_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>'t Vlasbloemeken</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_dekleinetorenvanbaarland"><img src="http://media.diningcity.com/restaurantpictures/m_rest26264_logo.bmp" alt="" width="150px" height="106px" /></a></p>
-            <span>De Kleine Toren van Baarland</span>
+            <p><a href="/en/zeeland/restaurant_latrinite"><img src="http://media.diningcity.com/restaurantpictures/restaurantlatrinitesluispic436738_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>La Trinité</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_delausanne"><img src="http://media.diningcity.com/restaurantpictures/33365_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>Delausanne</span>
+            <p><a href="/en/zeeland/restaurant_kaaigat"><img src="http://media.diningcity.com/restaurantpictures/kaaigat46855_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Brasserie 't Kaaigat</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_deoudesluis"><img src="http://media.diningcity.com/restaurantpictures/32470_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>De Oude Sluis</span>
+            <p><a href="/en/zeeland/restaurant_halvemaentje"><img src="http://media.diningcity.com/restaurantpictures/m_rest26294_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Strandpaviljoen 't Halve Maentje</span>
         </li>
 
     </ul>

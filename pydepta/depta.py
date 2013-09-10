@@ -3,9 +3,9 @@ from lxml.html import document_fromstring
 
 from w3lib.encoding import html_to_unicode
 
-from pydepta.htmls import DomTreeBuilder
-from pydepta.mdr import MiningDataRegion, MiningDataRecord, MiningDataField, Record
-from pydepta.trees import SimpleTreeMatch
+from .htmls import DomTreeBuilder
+from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField, Record, Region
+from .trees import SimpleTreeMatch
 
 
 class Depta(object):

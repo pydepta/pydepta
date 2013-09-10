@@ -73,17 +73,6 @@ class SimpleTreeMatch(object):
     def match(self, l1, l2):
         """
         match two trees list.
-
-        >>> get_root = lambda x: x[0]
-        >>> get_children_count = lambda x: len(x) - 1
-        >>> get_child = lambda x, i: x[i+1]
-        >>> stm = SimpleTreeMatch(get_root, get_children_count, get_child)
-        >>> t1 = ('tr', ('td',), ('td',))
-        >>> t2 = ('tr', ('td',), ('tr',))
-        >>> get_children_count(t1)
-        2
-        >>> stm.match([t1], [t2])
-        2
         """
         matrix = create_2d_matrix(len(l1) + 1, len(l2) + 1)
         for i in xrange(1, len(matrix)):
