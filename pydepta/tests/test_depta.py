@@ -111,3 +111,31 @@ class DeptaTest(unittest.TestCase):
                             self.assertTrue(v in start_elements, '%s region failed' %fn)
                 else:
                     self.assertIsNone(inferred_region)
+
+    def test_depta_infer_from_pickle(self):
+        import cPickle as pickle
+        from cStringIO import StringIO
+
+        for fn, url, case in INFER_CASES:
+            depta = Depta()
+            body = self._get_html(fn)
+            texts = self._get_texts(fn)
+            seed = self._get_html(case['seed'])
+            region = depta.extract(seed)[9]
+            buffer = StringIO()
+            pickle.dump(region, buffer)
+
+            buffer.seek(0)
+            pickled_region = pickle.load(buffer)
+            inferred_region = depta.infer(pickled_region, body)
+
+            for k, vs in case.iteritems():
+                if 'regions' in case:
+                    self.assertEquals(self._normalize_region_text(inferred_region), texts)
+                    if k == 'regions':
+                        start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
+                                           inferred_region.start, inferred_region.k, inferred_region.covered)]
+                        for v in vs:
+                            self.assertTrue(v in start_elements, '%s region failed' %fn)
+                else:
+                    self.assertIsNone(inferred_region)

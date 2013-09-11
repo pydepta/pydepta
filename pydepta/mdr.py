@@ -3,7 +3,7 @@ from collections import namedtuple, defaultdict, Counter
 import copy
 from cStringIO import StringIO
 import itertools
-
+from lxml.html import tostring, fragment_fromstring
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
@@ -21,8 +21,16 @@ class Region(object):
                                                                                      element_repr(self.parent[self.start]),
                                                                                      self.k,
                                                                                      self.covered)
-
     __repr__ = __str__
+
+    def __getstate__(self):
+        odict = self.__dict__.copy()
+        odict['parent'] = tostring(odict['parent'])
+        return odict
+
+    def __setstate__(self, dict):
+        dict['parent'] = fragment_fromstring(dict['parent'])
+        self.__dict__.update(dict)
 
     def iter(self, k):
         """
