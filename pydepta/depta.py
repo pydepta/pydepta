@@ -1,11 +1,10 @@
 from copy import copy
 from urllib import urlopen
-from lxml.html import document_fromstring
 
 from w3lib.encoding import html_to_unicode
 
 from .htmls import DomTreeBuilder
-from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField, Record, Region
+from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField, Record
 from .trees import SimpleTreeMatch
 
 
@@ -22,6 +21,7 @@ class Depta(object):
         if not html and 'url' in kwargs:
             info = urlopen(kwargs.pop('url'))
             _, html = html_to_unicode(info.headers.get('content_type'), info.read())
+
         builder = DomTreeBuilder(html)
         root = builder.build()
 
@@ -53,26 +53,35 @@ class Depta(object):
         stm = SimpleTreeMatch()
         field_finder = MiningDataField()
 
-        document = document_fromstring(html)
+        builder = DomTreeBuilder(html)
+        document = builder.build()
+
         xpath = self._get_anchor_xpath(seed_region)
         elements = document.xpath(xpath)
+        regions = []
 
-        items = []
-
-        for element in elements:
+        if len(elements):
+            items = []
+            parent = elements[0].getparent()
+            start = parent.index(elements[0])
             l1 = [seed_region.parent[seed_region.start+i] for i in range(seed_region.k)]
-            l2 = self._populate_siblings(element, seed_region.k)
-            sim = stm.normalized_match_score(l1, l2)
-            if sim > self.threshold:
-                seed = Record(*l1)
-                record = Record(*l2)
-                item, _ = field_finder.align_records([record], seed=seed)
-                items.append(item[0])
+            seed = Record(*l1)
 
-        if items:
-            region = copy(seed_region)
-            region.items = items
-            return region
+            while start < len(parent):
+                l2 = self._populate_siblings(parent[start], seed_region.k)
+                sim = stm.normalized_match_score(l1, l2)
+                if sim > self.threshold:
+                    record = Record(*l2)
+                    item, _ = field_finder.align_records([record], seed=seed)
+                    items.append(item[0])
+                start += seed_region.k
+
+            if items:
+                region = copy(seed_region)
+                region.items = items
+                regions.append(region)
+
+        return regions
 
     def _get_anchor_xpath(self, region):
         start = region.start
@@ -84,6 +93,5 @@ class Depta(object):
 
     def _populate_siblings(self, anchor, size):
         r = [anchor]
-        for _ in range(size-1):
-            r.append(anchor.itersiblings())
+        r.extend(list(anchor.itersiblings())[:size-1])
         return r

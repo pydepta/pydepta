@@ -3,11 +3,11 @@ run DEPTA from command line.
 e.g. http://www.iens.nl/restaurant/10545/enschede-rhodos output.html
 """
 import sys
-from pydepta.depta import Depta
+from pydepta import Depta
 
 if __name__ == '__main__':
     depta = Depta()
-    regions = depta.extract(url=sys.argv[1])
+    regions = depta.extract(url=sys.argv[1], verbose=True)
     with open(sys.argv[2], 'w') as f:
 
         print >> f, '<html><head><title>Extraction Result</title>'

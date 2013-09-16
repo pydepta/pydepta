@@ -3,6 +3,8 @@ from __future__ import absolute_import
 import unittest
 import os
 import re
+import cPickle as pickle
+from cStringIO import StringIO
 from ..depta import Depta
 from ..mdr import element_repr
 
@@ -37,13 +39,21 @@ CASES = [
 INFER_CASES = [
     ('1_infer', 'http://www.diningcity.com/en/zeeland/restaurant_nelsons', {
         'seed': '2',
+        'seed-index': 9,
         }),
 
     ('2_infer', 'http://www.diningcity.com/en/zeeland/restaurant_hetbadpaviljoen', {
         'seed': '2',
+        'seed-index': 9,
         'regions': [('<div #review_content .>', 3, 1, 4)],
     }),
 
+    ('3_infer', 'http://www.iens.nl/restaurant/31144/leiden-olive-land', {
+        'seed': '3',
+        'seed-index': 5,
+        'regions': [('<hr #greyBreak .>', 8, 4, 20)],
+        'sep': '|'
+        }),
     ]
 
 def normalize_text(text):
@@ -55,12 +65,12 @@ class DeptaTest(unittest.TestCase):
         path = os.path.join(os.path.dirname(__file__), 'resources', fn + '.html')
         return open(path, 'rb').read().decode('utf-8')
 
-    def _get_texts(self, fn):
+    def _get_texts(self, fn, sep='\t'):
         path = os.path.join(os.path.dirname(__file__), 'resources', fn + '.txt')
         lines = open(path, 'r').readlines()
         texts = []
         for line in lines:
-            rows = [normalize_text(text) for text in line.split('\t')]
+            rows = [normalize_text(text) for text in line.split(sep)]
             texts.append(rows)
         return texts
 
@@ -96,13 +106,15 @@ class DeptaTest(unittest.TestCase):
         for fn, url, case in INFER_CASES:
             depta = Depta()
             body = self._get_html(fn)
-            texts = self._get_texts(fn)
+            texts = self._get_texts(fn, case.get('sep', '\t'))
             seed = self._get_html(case['seed'])
-            region = depta.extract(seed)[9]
-            inferred_region = depta.infer(region, body)
 
             for k, vs in case.iteritems():
+                region = depta.extract(seed)[case['seed-index']]
+                inferred_regions = depta.infer(region, body)
                 if 'regions' in case:
+                    self.assertEqual(1, len(inferred_regions), msg='A region should be inferred from %s' %fn)
+                    inferred_region = inferred_regions[0]
                     self.assertEquals(self._normalize_region_text(inferred_region), texts)
                     if k == 'regions':
                         start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
@@ -110,27 +122,26 @@ class DeptaTest(unittest.TestCase):
                         for v in vs:
                             self.assertTrue(v in start_elements, '%s region failed' %fn)
                 else:
-                    self.assertIsNone(inferred_region)
+                    self.assertEqual([], inferred_regions, msg='no region inferred from %s' %fn)
 
     def test_depta_infer_from_pickle(self):
-        import cPickle as pickle
-        from cStringIO import StringIO
-
         for fn, url, case in INFER_CASES:
             depta = Depta()
             body = self._get_html(fn)
-            texts = self._get_texts(fn)
+            texts = self._get_texts(fn, case.get('sep', '\t'))
             seed = self._get_html(case['seed'])
-            region = depta.extract(seed)[9]
-            buffer = StringIO()
-            pickle.dump(region, buffer)
-
-            buffer.seek(0)
-            pickled_region = pickle.load(buffer)
-            inferred_region = depta.infer(pickled_region, body)
 
             for k, vs in case.iteritems():
+                region = depta.extract(seed)[case['seed-index']]
+                buffer = StringIO()
+                pickle.dump(region, buffer)
+
+                buffer.seek(0)
+                pickled_region = pickle.load(buffer)
+                inferred_regions = depta.infer(pickled_region, body)
+
                 if 'regions' in case:
+                    inferred_region = inferred_regions[0]
                     self.assertEquals(self._normalize_region_text(inferred_region), texts)
                     if k == 'regions':
                         start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
@@ -138,4 +149,4 @@ class DeptaTest(unittest.TestCase):
                         for v in vs:
                             self.assertTrue(v in start_elements, '%s region failed' %fn)
                 else:
-                    self.assertIsNone(inferred_region)
+                    self.assertEqual([], inferred_regions)

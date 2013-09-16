@@ -9,27 +9,27 @@ Special thanks to SDE[2] a Java implementation of DEPTA. I basically rewrote it 
 
 - extract from html page
 
-```
->>> from pydepta import depta
+```python
+>>> from pydepta import Depta
 >>> from urllib2 import urlopen
->>> d = depta.Depta()
+>>> d = Depta()
 >>> html = "<html></html>"
 >>> regions = d.extract(html)
 ```
 
 - extract from url
 
-```
->>> from pydepta import depta
->>> d = depta.Depta()
+```python
+>>> from pydepta import Depta
+>>> d = Depta()
 >>> regions = d.extract(url='http://www.amazon.com')
 ```
 
 - convert region to other format
 
-```
->>> from pydepta import depta
->>> d = depta.Depta()
+```python
+>>> from pydepta import Depta
+>>> d = Depta()
 >>> regions = d.extract(url='http://www.amazon.com')
 >>> print regions[0].as_html_table()
 >>> print regions[0].as_plain_texts()
