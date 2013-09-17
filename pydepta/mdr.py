@@ -308,8 +308,9 @@ class MiningDataField(object):
     """
     def __init__(self):
         self.pta = PartialTreeAligner(SimpleTreeAligner())
+        self.sta = SimpleTreeAligner()
 
-    def align_records(self, records, seed=None):
+    def align_records(self, records):
         """
         partial align multiple records.
 
@@ -325,14 +326,12 @@ class MiningDataField(object):
         >>> [e.tag for e in t1]
         ['x1', 'x2', 'x3', 'x', 'b', 'd']
         """
-        if seed:
-            sorted_records = copy.copy(records)
-        else:
-            # sort by the tree size
-            sorted_records = sorted(records, key=Record.size)
 
-            # seed is the largest tree
-            seed = sorted_records.pop()
+        # sort by the tree size
+        sorted_records = sorted(records, key=Record.size)
+
+        # seed is the largest tree
+        seed = sorted_records.pop()
 
         # a dict like {'t2': {}, 't3': {}, etc}
         # the nested dictionary is like {'seed_element' : 'original_element'}
@@ -360,6 +359,16 @@ class MiningDataField(object):
             items.append(self._extract_item(seed_copy, aligned))
 
         return items, seed_copy
+
+    def align_record(self, seed, record):
+        """
+        simple align the given record with given seed
+        """
+        alignment = self.sta.align(seed, record)
+        aligned = dict({alignment.first: alignment.second})
+        for sub in alignment.subs:
+            aligned.update({sub.first: sub.second})
+        return self._extract_item(seed, aligned)
 
     def _create_seed_mapping(self, seed, record):
         """

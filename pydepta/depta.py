@@ -72,8 +72,8 @@ class Depta(object):
                 sim = stm.normalized_match_score(l1, l2)
                 if sim > self.threshold:
                     record = Record(*l2)
-                    item, _ = field_finder.align_records([record], seed=seed)
-                    items.append(item[0])
+                    aligned_item = field_finder.align_record(seed, record)
+                    items.append(aligned_item)
                 start += seed_region.k
 
             if items:
