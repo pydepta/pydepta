@@ -48,10 +48,16 @@ INFER_CASES = [
         'regions': [('<div #review_content .>', 3, 1, 4)],
     }),
 
+    ('4_infer', 'http://www.diningcity.com/en/zeeland/restaurant_interscaldes/reviews', {
+        'seed': '2',
+        'seed-index': 9,
+        'regions': [('<div #review_content .>', 2, 1, 80)],
+        }),
+
     ('3_infer', 'http://www.iens.nl/restaurant/31144/leiden-olive-land', {
         'seed': '3',
         'seed-index': 5,
-        'regions': [('<hr #greyBreak .>', 8, 4, 20)],
+        'regions': [('<hr #greyBreak .>', 3, 4, 20)],
         'sep': '|'
         }),
     ]

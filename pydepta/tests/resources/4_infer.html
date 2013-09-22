@@ -1,0 +1,4381 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+<title>Restaurant Inter Scaldes Zeeland - Review and Rating - DiningCity</title>
+<meta name="geo.position" content="51.457695;4.020029"/>
+<meta name="description" content="Restaurant Inter Scaldes,  " />
+<meta name="keywords" content="Restaurant Inter Scaldes, Kruiningen, Zeeland, Restaurant Kruiningen DiningCity.com | DiningCity.com" />
+<meta name="Content Language" content="en"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="SHORTCUT ICON" href="http://c754417.r17.cf2.rackcdn.com/images/favicon.ico">
+
+
+
+<link rel="stylesheet" type="text/css" href="http://c754417.r17.cf2.rackcdn.com/css/general.22f91a17f404174292214cdccfdffac069999c0e.min.css" />
+<link rel="stylesheet" type="text/css" href="http://c754417.r17.cf2.rackcdn.com/css/restaurant.22f91a17f404174292214cdccfdffac069999c0e.min.css" />
+
+
+
+
+
+
+
+
+
+
+<!-- ISOCODE "nl -->
+
+<script type="text/javascript"	src="https://apis.google.com/js/plusone.js"></script>
+
+<script type="text/javascript"	src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+
+
+<script type="text/javascript" src="http://c754417.r17.cf2.rackcdn.com/js/general.22f91a17f404174292214cdccfdffac069999c0e.min.js"></script>
+<script type="text/javascript" src="http://c754417.r17.cf2.rackcdn.com/js/restaurant.22f91a17f404174292214cdccfdffac069999c0e.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+var timeblocks = [];
+var restaurant_id = '2317';
+var restaurant_name = 'Inter Scaldes';
+var locale = 'en_NL';
+var localeLng = 'en';
+
+
+$(document).ready(function () {
+// after reload of page, ensure the correct menu is active.
+setMenuActive('menu3');
+
+if (('menu3' == 'menu3') || ('menu3' == 'menu5')) {
+showMediaTab('');
+}
+
+$('.ad-gallery').adGallery({
+thumb_opacity: 0.4,
+effect: 'fade',
+slideshow: {
+start_label: '',
+stop_label: '',
+stop_on_scroll: true, // Should the slideshow stop if the user scrolls the thumb list?
+countdown_prefix: '', // Wrap around the countdown
+countdown_sufix: ''
+}
+});
+
+if ( $.browser.msie ) {
+if($.browser.version == 7.0) {
+$('.ad-nav').css('margin-top', '17px');
+$('input#lunch').css('margin-bottom', '0px');
+$('#error_nl').css('margin-top', '-22px');
+}
+}
+
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+if(is_chrome)  $('#error_nl2').css('margin-top','-20px');
+
+$('#description_opener').click(function() {
+
+showTab1();
+$('#description_dialog').dialog('open');
+$(".ui-dialog-titlebar").hide();
+return false;
+});
+
+$("div.textmore").hide();
+
+
+var no = 0;
+for(i = 1; i < 20; i++) {
+if($('#inf_' + i).length) { // exist
+if(no == 0) {
+no = i;
+}
+}
+}
+
+j = 1;
+for(i = no; i < 20; i++) {
+
+if($('#inf_' + i).length) { // exist
+
+if(j%2==1)
+{
+$('#inf_' + i).addClass('light_blue');
+
+}
+j++;
+}
+}
+
+
+// media box tab click handler
+$('.tabbing ul:first li a').click(function() {
+$('.tabbing ul li a').removeClass('select');
+$(this).addClass('select');
+$(this).parent().parent().parent().children('div').hide();
+$('#conten'+$(this).attr('rel')).show();
+});
+
+// lunch dinner tab click handler; shows the openings times for dinner and lunch
+$('.tabbing_below ul li a').click(function() {
+$('.tabbing_below ul li a').removeClass('active');
+$(this).addClass('active');
+$(this).parent().parent().parent().parent().children('div').hide();
+$(this).parent().parent().parent().parent().find('.tabbing_below').show();
+//$(this).parent().parent().parent().children('div').show();
+$('#conten'+$(this).attr('rel')).show();
+});
+
+
+/* tab width in % */
+mvt = 0;
+movie = 'false';
+vt = 'false';
+ismovie = true;
+isvt = true;
+
+if(movie != 'true') {
+mvt++;
+ismovie = false;
+}
+
+if(vt != 'true') {
+mvt++;
+isvt = false;
+}
+
+if(mvt != 0) {
+if(mvt == 1) {
+width = 33; // %
+for(i = 1; i <= 4; i++) {
+
+$('#lt' + i ).css('width', width + '%');
+$('#at' + i ).css('width', '100%');
+$('#st' + i ).css('width', '71%');
+$('#st' + i ).css('text-align', 'center');
+if(i == 1) {
+$('#st' + i ).css('width', '94px');
+}
+if(i == 4) {
+$('#st' + i ).css('width', '99px');
+$('#st' + i ).css('white-space', 'nowrap');
+$('#st' + i ).removeClass('last_span');
+$('#st' + i ).addClass('last_span33');
+
+}
+}
+}
+
+if(mvt == 2) {
+width = 50; // %
+
+for(i = 1; i <= 4; i++) {
+
+$('#lt' + i ).css('width', width + '%');
+$('#at' + i ).css('width', '100%');
+$('#st' + i ).css('width', '162px');
+$('#st' + i ).css('text-align', 'center');
+if(i == 4) {
+$('#st' + i ).css('width', '162px');
+$('#st' + i ).css('white-space', 'nowrap');
+
+}
+}
+}
+}
+
+// calendar reservation
+$(function() {
+if ($("#datepicker").length > 0)
+$("#datepicker").datepicker({
+minDate: 0,
+showOn: 'button',
+buttonImage: 'common/images/calendar.gif',
+buttonImageOnly: true,
+showOtherMonths: true,
+selectOtherMonths: false,
+constrainInput: true,
+beforeShowDay: noWeekends,
+buttonText: 'Select date',
+onSelect: function(dateText, inst) {
+setDatepickerDate(dateText);
+}
+});
+
+var date = new Date();
+date.setTime('1379828650746');
+if ($("#datepicker").length > 0)
+$("#datepicker").datepicker( "setDate" , date );
+
+setDatepickerDate();
+
+$('#dinner').css('color', 'white');
+$('#event_dinner').css('color', 'white');
+
+if ($("#datepicker").length > 0) {
+$.datepicker.setDefaults($.datepicker.regional[localeLng]);
+}
+
+if ($("#datepicker").length > 0)
+$("#datepicker").datepicker( "setDate" , date );
+
+fdate = "";
+if ($("#datepicker").length > 0)
+fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+
+$('#pickdate').html(fdate);
+if ($("#datepicker").length > 0)
+fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+
+$('#reservdate').val(fdate);
+$('#error_rd').hide();
+
+var day;
+if ($("#datepicker").length > 0)
+day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+
+$.cookie('selectedDay', day, {path: '/', expires: 1});
+if($('#lunch').hasClass('right_button_down'))
+addDayLunch(day);
+else
+addDayDinner(day);
+});
+
+// event date picker
+
+$("#event_datepicker").datepicker({
+minDate: 0,
+showOtherMonths: true,
+selectOtherMonths: false,
+constrainInput: true,
+beforeShowDay: checkTimeblockDate,
+buttonText: 'Select date',
+onSelect: updateEventDate
+});
+if ($("#event_datepicker").length > 0) {
+$.datepicker.setDefaults($.datepicker.regional[localeLng]);
+}
+
+// set aal setting for the event.
+showEvent();
+
+// validation rules...
+$("#saveReview").validate({
+rules: {
+review_firstname: {
+required: true
+},
+review_lastname: {
+required: true
+},
+review_email: {// compound rule
+required: true,
+email: true
+},
+review_text: {
+required: true,
+minlength: 10
+},
+j_captcha_response: {
+required: true
+}
+},
+messages: {
+// TODO: from bundles
+review_firstname: 'required',
+review_lastname: 'required',
+review_text: {
+required: 'required',
+minlength: 'Review is too short'
+},
+review_email: {
+required: 'required',
+email: 'emailformat'
+},
+j_captcha_response: 'required'
+}
+});
+
+
+$("#saveReservation").validate({
+rules: {
+//  reservdate: "required",// simple rule, converted to {required:true}
+email: {// compound rule
+required: true,
+email: true
+},
+firstname: {
+required: true
+},
+lastname: {
+required: true
+},
+numberofpeople: {
+required: true,
+min: 1,
+digits: true
+},
+mobilenumber: {
+required: true
+}
+},
+messages: {
+//   reservdate: error.date.required,
+firstname: 'required',
+lastname: 'required',
+mobilenumber: 'required',
+email: 'required',
+numberofpeople: 'required'
+}
+});
+
+
+$("#event_saveReservation").validate({
+rules: {
+//  reservdate: "required",// simple rule, converted to {required:true}
+event_email: {// compound rule
+required: true,
+email: true
+},
+event_hour: {
+required: true
+},
+event_firstname: {
+required: true
+},
+event_lastname: {
+required: true
+},
+event_numberofpeople: {
+required: true,
+min: 1,
+max:8,
+digits: true
+},
+event_mobilenumber: {
+required: true
+//   digits: true
+}
+},
+messages: {
+//   reservdate: error.date.required,
+event_firstname: 'required',
+event_mobilenumber: 'required',
+event_numberofpeople: '',
+event_email: 'required'
+}
+});
+
+
+// hide title bar..
+$(".ui-dialog-titlebar").hide();
+
+var placereservation = location.getQueryString("placereservation");
+if (placereservation == "yes") {
+$('img[name="captcha"]').attr('src', '/captcha/jcaptcha.jpg?i=' + (Math.floor(Math.random()*1000000)+1));
+$('.tour').hide();
+$('#reservation_dialog').dialog('open');
+}
+updateCalendar();
+});
+
+// set menu highlight
+function setMenuActive(a) {
+if (a != null) {
+$('#menu1').removeClass('active');
+$('#menu2').removeClass('active');
+$('#menu3').removeClass('active');
+$('#menu4').removeClass('active');
+$('#menu5').removeClass('active');
+$('#menu7').removeClass('active');
+$('#reservation_opener5').removeClass('active');
+
+$('#calendar').removeClass('active');
+$('#event_').removeClass('active');
+$('#' + a).addClass('active');
+}
+}
+
+
+
+function getMediaContent(restId, content) {
+var loader =  "<img  style=\"position: relative; left: 170px; top: 150px;\" src=\"/common/images/review-loader.gif\" alt=\"\" />";
+
+if(content == 'ipix') {
+$('#ipixHtml').html(loader);
+}
+
+if(content == 'movie') {
+$('#movieHtml').html(loader);
+}
+
+$.ajax({
+type : "GET",
+url : "/en/zeeland/restaurant_interscaldes/getmediacontent?restId=" + restId + '&content=' + content,
+
+success: function (text) {
+
+if(content == 'ipix') {
+$('#ipixHtml').html(text.toString());
+}
+
+if(content == 'movie') {
+$('#movieHtml').html(text.toString());
+}
+}
+}
+);
+}
+
+
+
+
+/* MAPS */
+var mapbig;
+var mapitems = new Array();
+var city = 'amsterdam';
+
+var streetview = null;
+function load() {
+position = new google.maps.LatLng(51.457695, 4.0200287);
+myPOV = {pitch:-20};
+svOpts = {latlng:position, pov:myPOV};
+loadRestaurantMap('restaurant_interscaldes', 51.457695, 4.0200287);
+}
+
+function resize() {
+//console.log("resize");
+loadRestaurantMap('restaurant_interscaldes', 51.457695, 4.0200287);
+}
+
+// slider for reviews
+
+
+
+function validateReviewForm() {
+$("input[name='review_newsletter']").rules("add", {
+required: true,
+messages: {
+required: ''
+}
+});
+
+$("textarea[name='review_text']").rules("add", {
+required: true,
+minlength: 10,
+messages: {
+required: 'required',
+minlength: 'Review is too short'
+}
+});
+
+var validate = $("#saveReview").valid();
+if(validate) {
+return true;
+} else { return false; }
+}
+
+var disabledDays = [""];
+
+function updateCalendar() {
+
+var closedDinner = [""
+,"9-2-2013","9-3-2013","9-9-2013","9-10-2013","9-16-2013","9-17-2013","9-23-2013","9-24-2013","9-30-2013","10-1-2013","10-7-2013","10-8-2013","10-14-2013","10-15-2013","10-21-2013","10-22-2013","10-28-2013","10-29-2013","11-4-2013","11-5-2013","11-11-2013","11-12-2013","11-18-2013","11-19-2013","11-25-2013","11-26-2013","12-2-2013","12-3-2013","12-9-2013","12-10-2013","12-16-2013","12-17-2013","12-23-2013","12-24-2013","12-30-2013","12-31-2013","1-6-2014","1-7-2014","1-13-2014","1-14-2014","1-20-2014","1-21-2014","1-27-2014","1-28-2014","2-3-2014","2-4-2014","2-10-2014","2-11-2014","2-17-2014","2-18-2014","2-24-2014","2-25-2014","3-3-2014","3-4-2014","3-10-2014","3-11-2014","3-17-2014","3-18-2014","3-24-2014","3-25-2014","3-31-2014","4-1-2014","4-7-2014","4-8-2014","4-14-2014","4-15-2014","4-21-2014","4-22-2014","4-28-2014","4-29-2014","5-5-2014","5-6-2014","5-12-2014","5-13-2014","5-19-2014","5-20-2014","5-26-2014","5-27-2014","6-2-2014","6-3-2014","6-9-2014","6-10-2014","6-16-2014","6-17-2014","6-23-2014","6-24-2014","6-30-2014","7-1-2014","7-7-2014","7-8-2014","7-14-2014","7-15-2014","7-21-2014","7-22-2014","7-28-2014","7-29-2014"
+];
+var closedLunch = [""
+,"9-2-2013","9-3-2013","9-7-2013","9-9-2013","9-10-2013","9-14-2013","9-16-2013","9-17-2013","9-21-2013","9-23-2013","9-24-2013","9-28-2013","9-30-2013","10-1-2013","10-5-2013","10-7-2013","10-8-2013","10-12-2013","10-14-2013","10-15-2013","10-19-2013","10-21-2013","10-22-2013","10-26-2013","10-28-2013","10-29-2013","11-2-2013","11-4-2013","11-5-2013","11-9-2013","11-11-2013","11-12-2013","11-16-2013","11-18-2013","11-19-2013","11-23-2013","11-25-2013","11-26-2013","11-30-2013","12-2-2013","12-3-2013","12-7-2013","12-9-2013","12-10-2013","12-14-2013","12-16-2013","12-17-2013","12-21-2013","12-23-2013","12-24-2013","12-28-2013","12-30-2013","12-31-2013","1-4-2014","1-6-2014","1-7-2014","1-11-2014","1-13-2014","1-14-2014","1-18-2014","1-20-2014","1-21-2014","1-25-2014","1-27-2014","1-28-2014","2-1-2014","2-3-2014","2-4-2014","2-8-2014","2-10-2014","2-11-2014","2-15-2014","2-17-2014","2-18-2014","2-22-2014","2-24-2014","2-25-2014","3-1-2014","3-3-2014","3-4-2014","3-8-2014","3-10-2014","3-11-2014","3-15-2014","3-17-2014","3-18-2014","3-22-2014","3-24-2014","3-25-2014","3-29-2014","3-31-2014","4-1-2014","4-5-2014","4-7-2014","4-8-2014","4-12-2014","4-14-2014","4-15-2014","4-19-2014","4-21-2014","4-22-2014","4-26-2014","4-28-2014","4-29-2014","5-3-2014","5-5-2014","5-6-2014","5-10-2014","5-12-2014","5-13-2014","5-17-2014","5-19-2014","5-20-2014","5-24-2014","5-26-2014","5-27-2014","5-31-2014","6-2-2014","6-3-2014","6-7-2014","6-9-2014","6-10-2014","6-14-2014","6-16-2014","6-17-2014","6-21-2014","6-23-2014","6-24-2014","6-28-2014","6-30-2014","7-1-2014","7-5-2014","7-7-2014","7-8-2014","7-12-2014","7-14-2014","7-15-2014","7-19-2014","7-21-2014","7-22-2014","7-26-2014","7-28-2014","7-29-2014"
+];
+
+if($('#dinner').hasClass('left_button_down')) {
+disabledDays = closedDinner;
+if ($("#datepicker").length > 0)
+$('#datepicker').datepicker('refresh');
+
+} else {
+disabledDays = closedLunch;
+if ($("#datepicker").length > 0)
+$('#datepicker').datepicker('refresh');
+}
+}
+
+function event_updateCalendar() {
+$('#event_datepicker').datepicker('refresh');
+updateEventDate();
+}
+
+
+/* utility functions */
+function checkTimeblockDate( date ) {
+var number_of_people =  $('#event_amount').val();
+
+for (var i = 0 ; i < timeblocks.length ; i++ ) {
+var from = new Date(timeblocks[i].from_date);
+
+if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people) {
+
+if($('#event_dinner').hasClass('left_button_down')) {
+
+if (timeblocks[i].type == 3 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+return [true];
+} else {
+if (timeblocks[i].type == 2 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+return [true];
+}
+}
+}
+return [false,'ui-datepicker-closed'];
+}
+
+function nationalDays(date) {
+var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+for (i = 0; i < disabledDays.length; i++) {
+if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 ) {
+return [false,'ui-datepicker-closed'];
+}
+}
+return [true];
+}
+
+function noWeekends(date) {
+return  nationalDays(date);
+}
+
+function setDatepickerDate(dateText) {
+if ($("#datepicker").length <= 0)
+return;
+fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+$('#pickdate').html(fdate);
+fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+$('#reservdate').val(fdate);
+$('#error_rd').hide();
+
+var day;
+day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+$.cookie('selectedDay', day, {path: '/', expires: 1});
+
+if($('#lunch').hasClass('right_button_down')) {
+addDayLunch(day);
+} else {
+addDayDinner(day);
+}
+}
+
+function updateEventDate() {
+fdate = $.datepicker.formatDate('DD, d MM, yy', $("#event_datepicker").datepicker('getDate'));
+$('#event_pickdate').html(fdate);
+fdate = $.datepicker.formatDate('dd/mm/yy', $("#event_datepicker").datepicker('getDate'));
+$('#event_reservdate').val(fdate);
+$('#event_error_rd').hide();
+
+if($('#event_lunch').hasClass('right_button_down')) {
+setEventTimes($("#event_datepicker").datepicker('getDate'),2); // lunch type
+} else {
+setEventTimes($("#event_datepicker").datepicker('getDate'),3); // dinner type
+}
+}
+
+function addDayLunch(day) {
+if(day == 'Mon') {
+addToSelect('');
+}
+if(day == 'Tue') {
+addToSelect('');
+}
+if(day == 'Wed') {
+addToSelect('12:00 - 14:00');
+}
+if(day == 'Thu') {
+addToSelect('12:00 - 14:00');
+}
+if(day == 'Fri') {
+addToSelect('12:00 - 14:00');
+}
+if(day == 'Sat') {
+addToSelect('');
+}
+if(day == 'Sun') {
+addToSelect('12:00 - 14:00');
+}
+}
+
+function addDayDinner(day) {
+if(day == 'Mon') {
+addToSelect('');
+}
+if(day == 'Tue') {
+addToSelect('');
+}
+if(day == 'Wed') {
+addToSelect('18:00 - 21:00');
+}
+if(day == 'Thu') {
+addToSelect('18:00 - 21:00');
+}
+if(day == 'Fri') {
+addToSelect('18:00 - 21:00');
+}
+if(day == 'Sat') {
+addToSelect('18:00 - 21:00');
+}
+if(day == 'Sun') {
+addToSelect('18:00 - 21:00');
+}
+}
+
+function addToSelect(inHours) {
+
+if(inHours.toString().indexOf("-") < 0) {
+if ($("#datepicker").length > 0)
+$("#datepicker").datepicker();
+$('#hour').children().remove();
+return;
+}
+var hours, begin, end, bh, eh, bm, em;
+hours = inHours.toString();
+begin = hours.split('-')[0].toString();
+end = hours.split('-')[1].toString();
+bh = begin.split(':')[0].toString();
+eh = end.split(':')[0].toString();
+bm = begin.split(':')[1].toString();
+em = end.split(':')[1].toString();
+
+$('#hour').children().remove();
+startHour = parseInt(bh);
+endHour =  parseInt(eh);
+
+if (startHour > endHour)
+endHour = endHour + 24;
+
+var startMinute = parseInt(bm);
+var endMinute =  parseInt(em);
+
+// put openinghours in selectbox
+for(var h = startHour; h <= endHour; h++)  {
+for(var m = (h == startHour ? (startMinute/30) : 0 ) ; m <= (h == endHour ? (endMinute/30) : 1) ; m++ ) {
+var timeStr = h%24+ ":" + (m*30 == 0 ? "00" : m*30) + " Hour";
+$('#hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+}
+}
+}
+
+
+function setEventTimes( date, type ) {
+$('#event_hour').children().remove();
+var number_of_people =  $('#event_amount').val();
+
+for (var i = 0 ; i < timeblocks.length ; i++ ) {
+
+var fdatetime = timeblocks[i].from_dateformatted.split(" ");
+var fdate = fdatetime[0].split("-");
+var ftime = fdatetime[1].split(":");
+
+if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people && timeblocks[i].type == type && date.getDate() == fdate[0] && (date.getMonth()+1) == fdate[1] && date.getFullYear() == fdate[2]) {
+
+var tdatetime = timeblocks[i].to_dateformatted.split(" ");
+var ttime = tdatetime[1].split(":");
+
+var startHour = ftime[0];
+var startMinute = ftime[1];
+var endHour = ttime[0];
+var endMinute = ttime[1];
+
+if (startHour > endHour)
+endHour = endHour + 24;
+
+for(var h = startHour; h <= endHour; h++)  {
+for(var m = (h == startHour ? (startMinute/15) : 0 ) ; m <= (h == endHour ? (endMinute/15) : 3) ; m++ ) {
+var timeStr = h%24+ ":" + (m*15 == 0 ? "00" : m*15) + " Hour";
+$('#event_hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+}
+}
+
+}
+}
+}
+
+function displayRestaurantContent() {
+param = "";
+if(param == null || param == '' || isNaN(param)) {
+$('.middle_content').show();
+$('#image_section').show();
+$('.mid_secton').show();
+$('.right_secton').show();
+}
+}
+
+function validateReservationForm() {
+$("#amount").rules("add", {
+required: true,
+min: 1,
+digits: true,
+messages: {
+required: "",
+min: "",
+digits: ""
+}
+});
+
+$("input[name='reservation_newsletter']").rules("add", {
+required: true,
+messages: {
+required: ""
+}
+});
+
+var ok_nop = $("#saveReservation").validate().element("#amount");
+if(!ok_nop) {
+$('#error_nop').show();
+} else {
+$('#error_nop').hide();
+}
+
+var ok_nl = $("#saveReservation").validate().element("input[name='reservation_newsletter']");
+if(!ok_nl) {
+$('#error_nl').show();
+} else {
+$('#error_nl').hide();
+}
+
+var other = $("#saveReservation").valid();
+var validate = ok_nop && other && ok_nl;
+return validate;
+}
+
+function saveNewReservation() {
+var validate = true;
+if(validate) {
+return true;
+}
+}
+
+
+function sendGuestsEmail() {
+var validate = true;
+
+if(validate) {
+return true;
+}
+}
+
+
+// event reservation form
+function event_validateReservationForm() {
+
+$("#event_amount").rules("add", {
+required: true,
+min: 1,
+digits: true,
+messages: {
+required: "",
+min: "",
+digits: ""
+}
+});
+$("input[name='event_reservation_newsletter']").rules("add", {
+required: true,
+messages: {
+required: ""
+}
+});
+$("select[name='event_hour']").rules("add", {
+required: true,
+messages: {
+required: "required"
+}
+});
+var ok_nop = $("#event_saveReservation").validate().element("#event_amount");
+// alert(ok);
+
+if(!ok_nop) {
+$('#event_error_nop').show();
+} else {
+$('#event_error_nop').hide();
+}
+var ok_nl = $("#event_saveReservation").validate().element("input[name='event_reservation_newsletter']");
+
+if(!ok_nl) {
+$('#event_error_nl').show();
+} else {
+$('#event_error_nl').hide();
+}
+var other = $("#event_saveReservation").valid();
+var validate = ok_nop && other && ok_nl;
+return validate;
+}
+
+
+function event_saveNewReservation() {
+var validate =  event_validateReservationForm();
+$("#event_reservation_dialog").parent().css('z-index', '1000');
+$('#event_srLoader').css('display', 'block');
+}
+
+
+function validateContactForm() {
+$("textarea[name='message']").keyup(function() {
+$('#sendContact').validate().element(this)==false ? $('#error_m').show() : $('#error_m').hide()
+});
+$("#sendContact").validate({
+rules: {
+name_surname: {
+required: true
+},
+email_address: {// compound rule
+required: true,
+email: true
+}
+},
+messages: {
+name_surname: 'required',
+email_address: 'required'
+}
+});
+var other =  $("#sendContact").valid();
+$("textarea[name='message']").rules("add", {
+required: true,
+messages: {
+required: ""
+}
+});
+var ok_m = $("#sendContact").validate().element("textarea[name='message']");
+if(!ok_m) {
+$('#error_m').show();
+} else {
+$('#error_m').hide();
+}
+var validate =  other && ok_m;
+if(validate) {
+$("#contact_dialog").parent().css('z-index', '1000');
+}
+}
+
+String.prototype.startsWith = function(str){
+return (this.indexOf(str) == 0);
+}
+
+
+$("#tabs").tabs();
+$("a#readmore").click(function () {
+if($("a").hasClass("readmore")) {
+$("div.text").hide();
+$("div.textmore").show();
+$("a.readmore").text("read less");
+$("a.readmore").addClass("readless");
+$("a.readmore").removeClass("readmore");
+$('div.mid_secton').css('left', $('div.mid_secton').position().left);
+$('div.mid_secton').addClass('overlay');
+}
+else {
+$("div.textmore").hide();
+$("div.text").show();
+$("a.readless").text("Read more");
+$("a.readless").addClass("readmore");
+$("a.readless").removeClass("readless");
+$('div.mid_secton').removeClass('overlay');
+}
+});
+
+function showTab1() {
+$('#popup11').show();
+$('#popup22').hide();
+$('#p1tab2').removeClass('active');
+$('#p1tab1').addClass('active');
+
+$("#reservation_dialog").dialog("option", "height", 600);
+
+if($("#iframe").length > 0) {
+//$("#reservation_dialog").parent().css("height", "360px");
+$("#reservation_dialog").dialog("option", "width", 380);
+$("#reservation_dialog").dialog("option", "height", 500);
+//$("#reservation_dialog").css("height", 455);
+
+}
+}
+
+function showTab2() {
+
+var validate = validateReservationForm();
+
+if(validate) {
+updateTab2();
+$('#popup11').hide();
+$('#popup22').show();
+$('#p2tab1').removeClass('active');
+$('#p2tab2').addClass('active');
+
+$("#reservation_dialog").dialog("option", "height", 392);
+}
+}
+
+function updateTab2() {
+var hour = $('select#hour').val();
+//alert(hour);
+$('#tab2hour').html(hour);read
+
+var nop = $('#amount').val();
+$('#tab2person').html(nop + " ");
+
+
+if ($("#datepicker").length > 0)
+fdate = $.datepicker.formatDate('d M yy', $("#datepicker").datepicker('getDate'));
+//   $('#pickdate').html(fdate);
+//var date = $('#reservdate').val();
+$('#tab2date').html(fdate);
+
+// update popup 3
+$('#popup3date').html(fdate);
+$('#popup3hour').html(hour);
+$('#popup3person').html(nop);
+
+var name = $('input[name="firstname"]').val();
+$('#popup3name').html(name);
+var surname = $('input[name="lastname"]').val();
+$('#popup3surname').html(surname);
+var email = $('input[name="email"]').val();
+$('#popup3email').html(email);
+var mobile_number = $('input[name="mobilenumber"]').val();
+$('#popup3mnumber').html(mobile_number);
+}
+
+// event fns
+function event_showTab1() {
+$('#event_popup11').show();
+$('#event_popup22').hide();
+$('#event_p1tab2').removeClass('active');
+$('#event_p1tab1').addClass('active');
+
+$("#event_reservation_dialog").dialog("option", "height", 600);
+}
+
+function event_showTab2() {
+
+var validate = event_validateReservationForm();
+
+if(validate) {
+event_updateTab2();
+$('#event_popup11').hide();
+$('#event_popup22').show();
+$('#event_p2tab1').removeClass('active');
+$('#event_p2tab2').addClass('active');
+
+$("#event_reservation_dialog").dialog("option", "height", 392);
+}
+}
+
+function event_updateTab2() {
+var hour = $('select#event_hour').val();
+//alert(hour);
+$('#event_tab2hour').html(hour);
+
+var nop = $('#event_amount').val();
+$('#event_tab2person').html(nop + " ");
+
+
+fdate = $.datepicker.formatDate('d M yy', $("#event_datepicker").datepicker('getDate'));
+//   $('#pickdate').html(fdate);
+//var date = $('#reservdate').val();
+$('#event_tab2date').html(fdate);
+
+// update popup 3
+$('#popup3date').html(fdate);
+$('#popup3hour').html(hour);
+$('#popup3person').html(nop);
+
+var name = $('input[name="event_firstname"]').val();
+$('#popup3name').html(name);
+var surname = $('input[name="event_lastname"]').val();
+$('#popup3surname').html(surname);
+var email = $('input[name="event_email"]').val();
+$('#popup3email').html(email);
+var mobile_number = $('input[name="event_mobilenumber"]').val();
+$('#popup3mnumber').html(mobile_number);
+
+
+}
+
+function openMessage() {
+
+$('#send_message_dialog').dialog('open');
+$("#send_message_dialog").parent().css('height', '588px');
+}
+
+function showDescription() {
+
+$('html,body').animate({scrollTop:$('html').offset().top}, 0,
+
+function() {
+var y = $('.readmore').offset().top;
+var x = $('.readmore').offset().left;
+//alert(x)
+$('.tour').hide();
+$("#description_dialog").dialog("option", "position", [x - 13, y - 100]);
+$('#description_dialog').dialog('open');
+}
+);
+}
+
+
+function showEvent() {
+//alert(id);
+$('input[name="event_id"]').val();
+$('input[name="event_edate"]').val();
+$('input[name="event_sdate"]').val();
+
+// set timeblocks
+
+}
+
+</script>
+
+
+
+
+</head>
+<body>
+<div id="layout">
+<div class="layout_inner png">
+<!-- Header  start here -->
+
+
+
+
+<div id="header">
+    <span class="logo">
+  	  
+	    
+	    
+		    
+		    
+		        <a href="/en/zeeland" >
+
+
+
+                    <img src="http://c754417.r17.cf2.rackcdn.com/common/images/logo.png" alt="logo" class="png" /></a>
+    </span>
+    <div>
+        <div>
+            <ul>
+
+                <li style="cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;" class="nl">
+
+
+                    <a class="menuflag" href="/nl/zeeland/restaurant_interscaldes/reviews">&nbsp;&nbsp;&nbsp;</a>
+
+                </li>
+
+                <li style="cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;" class="en">
+
+
+                    <a class="menuflag" href="/en/zeeland/restaurant_interscaldes/reviews">&nbsp;&nbsp;&nbsp;</a>
+
+                </li>
+
+                <li style="color: #FFFFFF;cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="color: #FFFFFF;cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;">DiningCity has over 100.000 restaurant reviews!</li>
+            </ul>
+        </div>
+        <div class="country" style="clear:right">
+
+
+            Restaurants in Zeeland
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    a.menuflag:link {text-decoration: none}      /* unvisited link */
+    a.menuflag:visited {text-decoration: none}  /* visited link */
+    a.menuflag:hover {text-decoration: none}  /* mouse over link */
+    a.menuflag:active {text-decoration: none}  /* selected link */
+</style>
+<!-- Header  end here -->
+
+<!--menu start-->
+
+
+
+
+<div class="menu_shadow">
+
+    <div id="menu_box">
+        <div class="menu">
+            <ul>
+                <li><a href="/countries" class="png">
+                    <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                    <span style="float:left">DiningCity Home</span>
+                </a></li>
+                <li><a href="/en/the+netherlands">
+                    <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                    <span style="float:left">The Netherlands</span>
+                </a></li>
+
+
+
+
+
+                <li>
+
+
+
+
+                    <a href="/en/zeeland">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;" ></span>
+                        <span  style="float: left;">Zeeland</span>
+                    </a>
+
+
+                </li>
+
+
+
+
+                <li>
+
+
+
+                    <a href="/en/zeeland/search">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                        <span  style="float: left;">Search results</span>
+                    </a>
+
+
+
+                </li>
+
+
+
+
+                <li>
+
+
+
+
+                    <a href="/en/zeeland/restaurant_interscaldes/reviews">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;" ></span>
+                        <span  style="float: left;">Inter Scaldes</span>
+                    </a>
+
+
+                </li>
+
+
+
+            </ul>
+        </div>
+
+        <form  accept-charset="UTF-8" id="searchFromMenu" action="/en/zeeland/search" method="post">
+
+
+            <div class="nav_right">
+                <div class="search_box">
+                    <input type="text" size="15" name="fulltextsearch" id="fulltextsearch" class="search_text">
+                </div>
+                <div class="image"><a onclick="$('#searchFromMenu').submit()"><span>Search</span></a></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+    $.ajaxSetup( { type: "post" } );
+
+
+
+
+    $("#fulltextsearch").autocomplete("/en/zeeland/autocomplete" ,
+
+    {
+
+    width:350,
+    scrollHeight: 420,
+    selectFirst: false,
+    matchCase: true,
+    delay: 400,
+    minChars: 2,
+    cacheLength: 1,
+    max: 40,
+    disabled: true,
+    formatItem: function(data, i, n, value) {
+    var items = value.split("##");
+    return "<img id='autoCompleteLogo' src='"+items[0]+"' />" +
+    "<span  id='autoCompleteRestName'>" + items[1] + 
+		                "</span><br><span id='autoCompleteAddress'>" + items[2]+", "+ items[3]+ "</span>";
+    }
+    ,
+    formatResult: function(data, value) {
+    var arr = value.split("##");
+    return arr[1]+", "+arr[2];
+    }
+    })
+    .result(function(event, item) {
+    var myString = new String(item);
+    var items = myString.split("##");
+    window.location.href  = items[4];
+    });
+    });
+</script>
+<!-- menu end here -->
+
+
+
+
+
+
+
+
+<style type="text/css">
+    #sendContact label.error {
+        margin-top: -52px;
+        color: red;
+        width: auto;
+        float: right;
+    }
+</style>
+
+<div id="body_container" class="png">
+
+<input type="text" name="event_id" id="event_id" value="0" style="display: none;"/>
+<input type="text" name="event_edate" id="event_edate" value="0" style="display: none;"/>
+<input type="text" name="event_sdate" id="event_sdate" value="0" style="display: none;"/>
+
+<div id="restaurant">
+
+<div class="bread_crumbs">
+    <div class="left_nav">
+        <ul class="left">
+
+
+
+
+            <li><a href="/en/zeeland/restaurant_ilgallodifirenze">Previous restaurant</a></li>
+
+
+        </ul>
+    </div>
+    <div class="right_nav">
+        <ul>
+
+
+
+
+            <li><a href="/en/zeeland/restaurant_katseveer" class="arrow_right">Next restaurant</a></li>
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="content_section">
+<div class="left_secton">
+    <ul>
+        <li><a id="menu1" href="/en/zeeland/restaurant_interscaldes">Overview</a></li>
+        <li><a id="menu2" href="/en/zeeland/restaurant_interscaldes/menu">Menu</a></li>
+
+        <li><a id="menu3" href="/en/zeeland/restaurant_interscaldes/reviews">Reviews (80)</a></li>
+
+
+        <li><a id="menu5" href="/en/zeeland/restaurant_interscaldes/map">Map &amp; route</a></li>
+
+        <li><a id="menu7" href="/en/zeeland/restaurant_interscaldes/contacting">Contact</a></li>
+
+
+
+
+        <li><a id="menu9" href="/en/zeeland/eventscalendar" id="calendar"><div class="calendar_pic"></div>
+            <!-- <img src="http://c754417.r17.cf2.rackcdn.com/common/images/calander_icon.gif" alt="" />-->Calendar
+        </a></li>
+
+        <li></li>
+    </ul>
+</div>
+
+
+
+
+
+<div class=right_panel_review>
+<div id="reviews" class="review">
+<div class="visitor_review">
+    <div class="col_left">
+        <h1 style="color: #B43126;">Inter Scaldes</h1>
+        <h2 style="color: #B43126;">80 Reviews</h2>
+    </div>
+    <div class="col_right">
+        <div class="place_review">
+            <a id="review_opener" href="/en/zeeland/restaurant_interscaldes/createreview">Post your review</a>
+        </div>
+
+    </div>
+</div>
+<div class="visitor_review">
+    <div class="review_mid">
+        <div class="review_top">
+            <div class="review_bottom">
+                <div class="col_left">
+                    <ul>
+
+                        <li><em>Cuisine</em><span>
+										9.2
+									</span></li>
+
+                        <li><em>Service</em><span>
+										9.0
+									</span></li>
+
+                        <li><em>Atmosphere</em><span>
+										8.8
+									</span></li>
+
+                    </ul>
+                </div>
+                <div class="col_right"><strong class="avg">9.0</strong>
+                    <em>Average rating</em>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Wij hebben daadwerkelijk een fantastische middag gehad bij restaurant Inter Scaldes.
+                        Het eten en de service waren zeer zeer goed.
+                        Echt een belevenis!</p>
+
+                    <p><em>13 Jul 2013, 12:05</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>uitstekend gegeten in een gastvrij en sfeervol restaurant</p>
+
+                    <p><em>12 Jul 2013, 14:31</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Hartelijke ontvangst. Prachtige en heerlijke gerechten. Mooi opgebouwd menu. Ontspannen sfeer alsof het gewoon is! Keuken, service en sfeer was ongewoon goed, perfect. Wij zullen het diner bij Inter Scaldes niet vergeten.</p>
+
+
+                    <p><em>Annemarie de Kroo, 18 Jun 2013, 23:11</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>We (mijn boer, schoonzus en ikzelf) hebben genoten!
+                        De ontvangst was hartelijk, mevrouw en haar équipe heel attent gedurende de ganse avond.
+                        We hebben genoten van de exquise gerechten, schitterend gepresenteerd en ZO PUUR.
+                        Een minpuntje vonden mijn broer en schoonzus de wijnkaart, prijs/kwaliteit niet ok.
+                        Wij hebben dan het wijnarrangement genomen, niet direct onze keuze maar zeer harmonieus met de gerechten.
+                        Bij de kaas werd ons na enig aandringen een lekkere Italiaanse wijn geschonken (per glas).
+                        Ik geniet nog na, mijn broer en schoonzus waren ook uiterst tevreden (wij zijn bourgondisch aangelegd zoals veel Vlamingen).
+                        De rekening viel ontzettend mee, dank aan jullie team, het is voor herhaling vatbaar!!!</p>
+
+
+                    <p><em>Carine Van Hoecke, 16 Jun 2013, 22:07</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Zeer gezellige ambiance , uitstekende ontvangst , alles werd gedaan om het ons volldeig naar de zin te maken.
+                        Echt een avond uit!</p>
+
+                    <p><em>16 Jun 2013, 18:30</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>De menu (+ 1 toevoeging) was overheerlijk. Gefeliciteerd. De wijnen pasten uitstekend bij de gerechten en de prijs was correct. Het onthaal, de bediening en het afscheid waren zeer professioneel en toch hartelijk. Voor ons een ontdekking niet ver van België.</p>
+
+                    <p><em>15 Jun 2013, 23:04</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="num">8.0</div>
+                    </div>
+                    <p>Waar koken tot kunst wordt verheven en waar ALLE zintuigen worden aangesproken. Gerechten als schilderijen .... pointillisme ...... de vergelijking hoefde geen nadere toelichting. Meer dan uitstekende wijnen en een enthousiaste sommelier. Serviesgoed : ter ondersteuning van de gerechten, maar wel de finishing touch. Zo nu en dan had een iets meer uitgesproken smaak gemogen, maar de naam zegt het al .... dat is een kwestie van smaak. </p>
+
+
+                    <p><em>Ineke de Blaaij, 14 Jun 2013, 16:29</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Het was geweldig! 5 gangen menu we hebben ook 2 toevoegingen gedaan wat ook wederom geweldig was. De smaken hadden iets meer explosie moeten hebben, maar alles was goed, klopte met de wijnen. Wat een luxe heeft dit restaurant, bediening zeer beleefd en netjes. Helemaal niks op aan te merken eigenlijk.</p>
+
+                    <p><em>14 Jun 2013, 07:38</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>We hebben heerlijk genoten, het 5 gangen menu paste perfect op elkaar aan. We hebben dan ook geen gebruik gemaakt van de toevoegingen het was gewoon top
+                    </p>
+
+                    <p><em>13 Jun 2013, 14:16</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Wederom beter dan de hoge verwachting.
+                    </p>
+
+                    <p><em>12 Jun 2013, 12:52</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>We werden allerhartelijkst ontvangen door het personeel. Keurig begeleid naar de entree, waar de gastheer en gastdame ons verwelkomden. We hadden een sfeervolle tafel in een soort serre met uitzicht op de tuin. Na het voorgerecht hebben we heerlijk geflaneerd in de tuin. Vervolgens hebben we ons laten verrassen door allerlei culinaire hoogstandjes. De tijd vloog voorbij. De gastvrouw kwam aan het einde van de avond even aan onze tafel vragen naar onze ervaringen. Kortom: een fantastische avond!</p>
+
+
+                    <p><em>Wilco Neeskens, 10 Jun 2013, 22:54</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Uitermate prettige, deskundige en toegewijde bediening, jong en enthousiast. Hun samenspel is mooi om te zien. Eerst en vooral heerlijke gerechten, met veel lokale accenten, waarin de bijzondere smaken en combinaties goed tot uiting komen! De witvis mag wat minder overschaduwd door andere smaken.  De ruimte is gemoedelijk, wat oubollig en sfeervol voorzien van kust. </p>
+
+                    <p><em>10 Jun 2013, 22:06</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="num">8.0</div>
+                    </div>
+                    <p>Mooie gerechten & wijnen, vriendelijk personeel en alles in een goede ambiance. Wij komen zeker terug!</p>
+
+                    <p><em>10 Jun 2013, 21:42</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Voor het eerst van mijn leven in een 2-sterren restaurant gegeten; het was in alle opzichten bijzonder. Bijzondere gerechten, bijzondere wijnen, bijzondere ambiance en bijzonder gastvrij. Het 'Dinner with the stars' menu werd voorafgegaan door een lekker hapje en amuse, het vijfgangendiner (langoustines, asperges, neustong, lamsfilet en aardbei) hebben we aangevuld met de specialiteit vh huis; de Jakobsmossel in de schelp. Kaas & port en koffie toe. En dit alles prachtig gekookt & opgemaakt & vergezeld van een prima opgebouwd & vakkundig toegelicht wijnarrangement.
+                        Absolute top!</p>
+
+                    <p><em>10 Jun 2013, 10:18</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Het eten was heerlijk en de samenkomst van de vele verschillende smaken waren dusdanig op elkaar afgestemd dat het een super sensationele mondvulling gaf(zeer verrassend ook); daarbij,naar mijn mening en die van mijn tafelgenoten, een uitstekende wijnkeuze bij iedere menu gang die het geheel tot een ware climax bracht.
+                        en om mijn uitleg kracht bij te zetten; ik geniet er nog steeds van.
+
+                        De service is van gelijk niveau en is medebepalend voor de sfeer die we uiteindelijk zelf moeten voltooien, maar alle voorwaarden die het restaurant hiertoe kan aanreiken waren dan ook aanwezig. Een geweldig team.
+
+                        Het was wederom fantastisch.   </p>
+
+
+                    <p><em>Rob  Duitemeijer, 10 Jun 2013, 08:36</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>We hebben fantastisch gegeten in een mooie ambiance en met uitstekende bediening. Het menu was zeer evenwichtig: alles even goed. Het wijnarrangement was ook voortreffelijk. We komen terug ook al is het niet om de hoek.</p>
+
+                    <p><em>10 Jun 2013, 08:01</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Echt fantastisch op alle fronten!!</p>
+
+
+                    <p><em>Martine Slothouwer, 10 Jun 2013, 07:39</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 5.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">8.0</div>
+                    </div>
+                    <p>Interscaldis, echt heerlijk gegeten. Elke gang weer een kunstwerk op zich. Bediening perfect.
+                        Wel een punt van kritiek: noem een volgende keer de prijzen van je aperitief en je wijnarrangement(en). Naar ons idee wordt er middels de dranken die niet op de menukaart staan de gemiste omzet voor deze actie via dining with the starts ruim terug verdiend. Niet slim van ze, want zo haal je geen nieuwe klanten over om in de toekomst nog eens terug te komen. Het wordt écht veel te duur voor ons, want het voorstel is EUR75pp, maar daar komt nog meer dan EUR75pp bij aan drank. Hier kies je voor, maar netjes zou zijn als de prijzen of getoond worden of genoemd worden. Duidelijk een verbeterpunt voor ze. </p>
+
+                    <p><em>09 Jun 2013, 11:54</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>De 3-gangen lunch was werkelijk fantastisch We vonden het vooral heel bijzonder diverse exclusieve groenten van Zeeland voorgeschoteld te krijgen. De reis van in totaal 4 uur heen en terug was zeker de moeite waard.</p>
+
+
+                    <p><em>Swan Go, 08 Jun 2013, 18:03</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Goeden dag ,
+
+                        We hebben gisteren ons tegoed gedaan , aan een uitstekend gangen menu ! Ik zal dan ook iedereen aan raden om daar bij Inter Scaldis te gaan eten .het was voor ons de eerste keer , dat we in een sterren restaurant hebben gegeten . Alle lof voor de bediening , en de goede service . Het eten was verrukkelijk , en de uitleg en kennis van zaken van het personeel , was uit stekend !We hopen als het mee zit weer een keer te komen eten .</p>
+
+
+                    <p><em>jack Ouden van den , 07 Jun 2013, 15:19</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Heerlijke avond gehad. Van ontvangst op de parkeerplaats tot afscheid. Heerlijk gevarieerd menu met mooi wijn arrangement erbij. Eventueel nog veel mogelijkheden om uit te breiden. Wat wij dan ook hadden gedaan met de wel bekende coquille. Elk gerecht geserveerd op zeer mooi en origineel service. Zeker een aanrader en met dining with the stars ook nog een goed te betalen;). </p>
+
+                    <p><em>06 Jun 2013, 14:58</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>In alle opzichten perfect. Wat zou Inter Scaldes nog meer/beter moeten doen voor een derde ster?</p>
+
+
+                    <p><em>M. van Leeuwen-de Boer, 06 Jun 2013, 10:46</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Heerlijk gegeten in een ontspannend sfeer. Zeer afwisselende gerechten, allemaal even smakelijk. Chapeau!</p>
+
+                    <p><em>06 Jun 2013, 10:32</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.3</div>
+                    </div>
+                    <p>Het eten was van het begin tot het eind top, met een uistekend bijpassend wijnarrangement. Tempo tussen de gangen was perfect, als Zeeuw ben ik trots op dit Zeeuwse topreataurant dat zo zoetjesaan maar eens die 3e ster moet krijgen. Dezelfde avond ontving ik nog het menu en de gegevens van de gedronken wijnen per mail, dus ook de service achteraf was perfect.</p>
+
+
+                    <p><em>Henk Slabbekoorn, 03 Jun 2013, 14:35</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Vriendelijk, perfecte keuken en prettige kamers!</p>
+
+                    <p><em>03 Jun 2013, 13:35</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Geweldig gegeten. Heel leuk gedaan met het afgesproken menu en daarnaast
+                        een keuzemogelijkheid om de specialiteiten van de keuken te kunnen proeven.
+                        Zeer sterke aanrader!</p>
+
+
+                    <p><em>Mirjam Vreezen, 03 Jun 2013, 12:21</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Het eten is verrukkelijk en prachtig opgediend. Het wijnarrangement biedt verassende, zeer passende wijnen en goede prijs-kwaliteit. Prima dat men als aperitief ons liet kennis maken met de bubbels van de Kleine Schorre en niet aankwamen met Moet & Chandon. Wel jammer dat standaard bij de kazen rode port wordt geadviseerd, getuigt niet van creativiteit en past bij een aantal kazen echt niet! Ratafia de Champagne daarentegen is wel orgineel en paste heerlijk bij de kazen.
+                        De bediening is correct en het serveren van de tafel verliep soepel, maar straalt al jaren nog altijd enige arrogantie uit. Dat is mijn voornaamste minpunt. Sommige gasten zullen het "vorstelijk onthaal" noemen, ik persoonlijk vind het nog steeds stijf/formeel. En van enkele sterren restaurants, weet ik dat dit ook echt anders kan.</p>
+
+                    <p><em>03 Jun 2013, 08:52</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Wij hebben genoten van al het lekkers en al het moois dat ons werd voorgeschoteld. Werkelijk alles is hier van een zeer hoog niveau.
+                        Aansluitend hebben we overnacht in één van de prima gastenkamers behorend bij het restaurant, inclusief een perfect ontbijt.</p>
+
+
+                    <p><em>Erik Van den Bergh, 30 Apr 2013, 11:02</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Wij hebben een fantastische avond gehad.
+                        Verukkelijk gegeten met prachtige bijpassende wijnen.
+                        Wij komen graag een keer terug</p>
+
+
+                    <p><em>GJ van Breugel, 29 Apr 2013, 20:34</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>wij hebben echt heerlijk gegeten bij inter-scaldes werden door meneer en mevrouw zelf; allerhartelijkst begroet en het eten was van het begin tot het eind superheerlijk; er werd je gewoon telkens een kunststukje voorgezet met zulke heerlijke smaken dat je bijna de neiging krijgt om je bord leeg te likken! Ook zo'n mooi porceleinen servies telkens een ander-soortig bord/kommetje prachtig: oog voor detail!  OOk de wijnen waren uit de kunst en werden door de sommelier (koen; mag mi wel vernoemd worden) enthousiast van herkomst en alle achtergrondverhalen eromheen ingeschonken; met een komische noot en erg goed zoals hij dit bracht; wij genoten ervan e, maar echt ook VAN ALLES Hebben ons top verwend gevoeld en willen zeker nog een keer terug!    </p>
+
+                    <p><em>29 Apr 2013, 16:05</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Hier klopt alles tot in perfectie! De ontvangst buiten aan de deur; de schitternde locatie en tuin; de hartelijke begroeting door mevr Brevet; de vlotte en perfecte bediening met een zeer terzake kundige sommellier; de sfeervolle ambiance; het prachtige servies goed en glaswerk en natuurlijk last but not least de meer dan uitstekende keuken van Janis Brevet met mooie en smaakvolle creaties. Ook is  het afscheid altijd allerhartelijkst. Het ia echt een feest om hier te mogen eten. Top, Top, Top. Sinds lang 3 sterren niveau!</p>
+
+
+                    <p><em>Kees van 't Land, 29 Apr 2013, 14:23</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Na dit kunnen we nergens anders meer heen want het , is voor wat het eten betreft , nog moeilijk te overtreffen ! In één woord : verrukkelijk !</p>
+
+
+                    <p><em>Jan Huylenbroeck, 29 Apr 2013, 14:08</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Prachtig gelegen en een vorstelijk onthaal.
+                        Heerlijk aan tafel gezeten, een smaakbeleving en de wijnen complimenteren de fantastische gerechten.
+                        Een topavond gehad!
+                    </p>
+
+
+                    <p><em>A  aan de Wiel, 29 Apr 2013, 11:37</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.3</div>
+                    </div>
+                    <p>Nice dinner against a very good price. We will come back to this beautiful restaurant.</p>
+
+                    <p><em>28 Apr 2013, 19:52</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>het was in 1 woord geweldig, van het begin tot het eind fantastisch.
+                        Vriendelijk welkom geheten bij de auto, en naar binnen begeleid, hier hartelijk ontvangen,en de vriendelijke service is de gehele avond gebleven, heerlijke amuses en een fantastisch 5 gangenmenu,met heerlijke wijnen, die met veel passie aan tafel werden uitgelegd.
+                        De espresso was heerlijk, maar de cappuccino viel wat tegen.
+                        Kortom zeker voor herhaling vatbaar</p>
+
+                    <p><em>28 Apr 2013, 19:44</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 6.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                        </div>
+
+                        <div class="num">6.7</div>
+                    </div>
+                    <p>Echt super gegeten! Vooral de smaak beleving was perfect. Ook de wijnen di erbij geserveerd werden klopten met de gerechten. Kortom; wij hebben een er mooie avond gehad.</p>
+
+                    <p><em>28 Apr 2013, 11:57</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Fantastich gegeten. Zeer smakelijke gerechtjes begeleid door uitstekende wijnen. Personeel zeer dekundig en met name de gerant had bij elke wijn een mooi verhaal. Als puntje op de i was ook het servies zeer bijzonder.</p>
+
+                    <p><em>27 Apr 2013, 20:36</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Het was een avond super vriendelijke mensen en geweldig eten.
+                        De chef en zijn collega's hebben er een feestje voor ons van gemaakt.
+                        De sommelier was ook geweldig wat een passie en enthousiasme.
+                        Wij gaan zeker weer een keer.  </p>
+
+
+                    <p><em>Edward Snijders, 27 Apr 2013, 16:31</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 6.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">7.3</div>
+                    </div>
+                    <p>We hebben heerlijk gegeten (broodjes waren wel heel erg hard). De bediening was wat onzeker en maakte daardoor wat foutjes. Op onze linnen servetten zaten diverse slijtage gaatjes, en bij de koffie kregen we helemaal niets van zoetigheid geserveerd. Er werd aangegeven dat het apart bijbesteld kon worden. Men heeft er voor gekozen het geen onderdeel te laten zijn in het arrangement. Ons inziens een gemiste kans om een goede indruk te maken op nieuwe gasten. Wij eten met regelmaat bij 1 of 2 sterren restaurants maar dit hebben wij nog niet eerder meegemaakt. Jammer wij gaan zeker niet meer terug.</p>
+
+
+                    <p><em>Wil Elderkamp, 27 Apr 2013, 11:15</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Heerlijk gegeten, voortreffelijke bediening (soms iets stijfjes) en een bijzonder sympathieke gastvrouw met oprechte interesse.
+                        Een keur van bijzondere gerechten gepresenteerd op prachtig servies.
+                        We hebben genoten!!!</p>
+
+                    <p><em>26 Apr 2013, 12:33</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Altijd al nieuwsgierig geweest naar Inter Scaldes en stiekem gedacht dat de reputatie waarschijnlijk (weer) beter was dan het restaurant zelf. De toon werd al gezet toen we kwamen aanrijden en een parkeerplaats toegewezen kregen van een van de medewerkers die direct vroeg of de reis goed was verlopen. De deuren werden heel galant opengehouden en we werden naar binnen begeleid.
+                        Diezelfde aandacht en overduidellijke betrokkenheid met de gasten hebben wij de hele avond gevoeld zonder dat het hinderlijk was.
+                        Het eten, tja, alleen superlatieven zijn hier op hun plaats. De wijze van serveren (plaatjes van servies!), de smaken, alles getuigt van een  enorme passie om alle zintuigen te prikkelen en te strelen. Spelen met smaken en het uiterlijk van het eten, geweldige combinaties.
+                        Onze favoriet was de lauwwarme foie gras... to die for!
+
+                        De eerste kennismaking is fantastisch gebleken,dus we komen zeker terug!</p>
+
+
+                    <p><em>Usha  Doekhie, 26 Apr 2013, 12:10</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Wat hebben we hier fantastisch gegeten! Van begin tot het einde geweldige smaakexplosies, die zowel afzonderlijk als gezamelijk helemaal tot hun recht kwamen. Als absoluut hoogtepunt de salade caprese anno 2013! Gecombineerd met mooie/heerlijke wijnen en iedere keer weer verrast met prachtig/creatief servies. Nog nooit eerder kippevel gekregen van eten, maar dat is ze bij Inter Scaldes gelukt! Wij hebben een heerlijke avond gehad en komen graag nog eens terug!</p>
+
+
+                    <p><em>Danielle  Hogeland, 26 Apr 2013, 10:59</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.3</div>
+                    </div>
+                    <p>Zeer vriendelijk ontvangen, met de juiste nabijheid en de juiste afstand. Sublieme service. Top hotel, top restaurant. Persoonlijke aandacht en culinair genieten in een sfeervolle omgeving. Grote klasse!</p>
+
+                    <p><em>25 Apr 2013, 20:54</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.3</div>
+                    </div>
+                    <p>Wij hadden het genoegen te dineren bij Inter Scaldes. De avond was in één woord uitmuntend. Bij ontvangst werden wij netjes begeleid en kregen wij een prima tafel in het lichte en ruime restaurant. Het menu was uitstekend samengesteld en steeds een bijzondere en passende wijn. Met name de amuse die was gebaseerd op de salade caprese is mij goed bevallen.
+                        De service was fantastisch, mijn complimenten voor de vriendelijkheid, het enthousiasme en de kunde van de brigade!
+                        Een ritje naar Kruiningen is dit fantastische restaurant Inter Scaldes zeker waard.</p>
+
+
+                    <p><em>Peggy Scheepens, 23 Apr 2013, 21:37</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>We waren aan komen wandelen en dat ontlokte de chef kok de vraag of we lokals waren. Nee, we waren met onze camper en die hadden we een eindje verderop geparkeerd. Spontaan reageerde hij dat deze ook wel bij hem op het parkeerterrein mocht staan, ook voor de nacht. Dus hebben we de camper verzet en hebben er overnacht. Wat niet verkeerd was met al die wijn! Dus de start was zeer gastvrij.
+                        De combinatie van de gerechten met de bijpassende wijnen was heerlijk.
+                        Het eten werd opgediend op zeer mooi servies waar over nagedacht was, het eten kwam daardoor nog mooier tot zijn recht. En wat een smaaksensaties.
+                        De bediening was correct en vertelden met kennis over het eten, evenals de sommelier. De gastvrouw kwam gezellig een praatje maken. </p>
+
+
+                    <p><em>M. Jansen, 22 Apr 2013, 10:29</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 7.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 6.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="num">7.0</div>
+                    </div>
+                    <p>Inrichting (atmosphere) veel wit, erg clean.</p>
+
+
+                    <p><em>Muijs Mildred, 22 Apr 2013, 09:00</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>HEERLIJK gegeten. Bijzondere avond en er ook heerlijk geslapen.</p>
+
+
+                    <p><em>L.  Ernes, 21 Apr 2013, 14:12</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>We hebben heerlijk gegeten en genoten bij Interscaldes! Verrassende en verrukkelijke smaken, als kunstwerken gepresenteerd op prachtig servies. Je wordt op je wenken bediend, sterker nog eer je kunt wenken want het personeel is zeer alert en attent. Er heerst een prettige sfeer en je voelt je welkom, mede door de vriendelijke benadering van personeel en gastvrouw. Ik zou niet weten wat er hier nog beter kan, vandaar 3x een 10! We komen graag weer terug!</p>
+
+
+                    <p><em>Hilde Aarts, 20 Apr 2013, 20:58</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>19 april bij inter scaldes gegeten en geslapen .... en wat een super beleving was dat zeg ...!!! in een hele mooie omgeving fantastisch gegeten ... de coquilles van de chef waren sublime... de bediening was echt tof en de gastvrouw gaf ons echt een warm gevoel ... ik had ook een overnachting als verrassing geboekt en dit was tot in de puntjes geregeld en tot het laatst geheim gebleven voor me vriendin .... al met al in 1 woord geweldig ... !!
+
+                        hartelijk bedankt inter scaldes  </p>
+
+
+                    <p><em>michel van hulst, 20 Apr 2013, 12:33</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>
+
+                        We willen dit jaar enkele restaurants uit de top van Nederland bezoeken en Inter Scaldes was de eerste. De volgens Lekker, nummer twee van Nederland, een beetje spannend vond ik het wel.
+                        Helaas was het niet het beste weer om met de auto te gaan, code oranje werd afgegeven en het was dan ook op sommige plaatsen verraderlijk glad. Maar op de snelweg viel het mee. We waren ruim op tijd vertrokken en kwamen mooi op tijd aan bij het landgoed dat net buiten het Kruiningen ligt. Het ijzelde en Arnold Zwartkruis de sommelier kwam ons met paraplu bij de auto ophalen, wat attent.
+                        We kregen een mooie plek in de grote serre met uitzicht over het gehele restaurant. De tafels zijn keurig gedekt met fijn linnen, moderne zilverkleurige vaasjes met bloemen, zilveren couverts, water “glazen” die aan de binnenzijde geheel verguld zijn en indrukwekkend servies van Piet Stockmans. Dit servies is speciaal voor Inter Scaldes op kleur aangepast zodat dit beter in het interieur past.. We waren al meteen onder de indruk.
+
+                        We bestelden een witte wijn als aperitief. Gepresenteerd werd een witte Macon Vergisson “La Roche” 2011 van Sylvie en Gilles Guerrin met een complex maar ingetogen aroma en relatief hoge zuurgraad in de mond. Hier werden drie hapjes uitgeserveerd, op een groot wit bord met op de rand de initialen van de chef. In een vierkant schaaltje een rillette van zalm tussen twee kerriekrokantjes met ernaast enkele blokjes Tosazu gelei.
+                        In een rond schaaltje bakje mousse van tomaat met hierop fijn maanzaad en krokant rolletje van thee. En op een porseleinen lepel een cilindertje paté eendenlever met blauwe kaas en erom een dun laagje bietengelei, ernaast nog een toefje chutney met een krokantje erin. Stuk voor stuk delicate hapjes die prima bevielen.
+
+                        De eerste amuse is een Caprese 2013 - Pointillisme! Een mooie presentatie in een porseleinen beker. Deze is gevuld met een lichte gel waarop druppels zijn aangebracht met de smaken tomaat, basilicum en mozzarella (de kleuren van de Italiaanse vlag) wat resulteerde in een frisse mediterrane smaakbeleving.
+
+                        De menukaart werd uitgereikt door Claudia Brevet de maître en hierbij een stukje persoonlijke aandacht, erg leuk. Er zijn volop uitbreidingsmogelijkheden en we besluiten een extra gang te nemen.
+
+                        De tweede amuse komt in een speciale eierdop, die op een schuin sokkeltje staat. In de eierschaal een op lage temperatuur gegaard roerei met Oosterschelde paling, bloemkoolroosjes en gekruid met basilicum. Hierbij nog een warme krakeling van bladerdeeg met specerijen. Heerlijke volle smaken van paling en ei die in de wijn mooie smaken naar voren brachten.
+
+                        De eerste begeleider wordt deskundig ingeleid en deze komt uit de Alsace. Een Silvaner 2011 van oude stokken van het huis Martin Schaetzel met mooi bloemig aroma en een elegante afdronk. Uit de keuken een mooie presentatie in twee delen. Op het bord dunne schijfjes gemarineerde sint jacobsmosselen op een mousseline van knolselderij en afgewerkt met oester cress, eromheen toefjes hangop met krokantje erin. In een kopje een brandade van zeetong met hierop een dun laagje truffelgelei en puntjes van tomaat en basilicum. Delicate smaakjes weer. In de marinade was kerrie te proeven, de cressjes gaven mooie accenten. De wijn was een goede begeleider.
+
+                        De tweede begeleider was een Spaanse met moeilijk uit te spreken namen. Txomin Etxaniz, Txakoli 2011 gemaakt van de inheemse druif hondarrabi zuri. Mooie bloemige tonen in de neus en een lichte afdronk met subtiel prikje op de tong. Uit de keuken weer een indrukwekkend stuk porselein, een groot hoogglanzend donker bord dat naar het centrum naar wit overging, met hierop een afgedekt schaaltje. Waarin een mooie presentatie met op de bodem een laagje venkelcrème met rondom puntjes van zee algen, centraal een bolletje van noordzeekrab met hierop enkele stukjes zoetzure koolrabi. Genieten weer van deze delicate smaakjes, de wijn vulde het gerecht met zijn mooie aroma uitstekend aan.
+
+                        We vervolgden met “Schaal – Schelp” waarbij een Franse witte uit de Minervois geschonken werd. Le Moulin des Nonnes "cuvée Ines” van Château La Rèze Gravade. Rijk aroma met mooie vanille toets en in de afdronk een subtiel bittertje. Op het bord geplette Langoustines met kaviaar van olijfolie en erom een bereiding met komkommer en geleitoefjes met basilicum.
+                        In een kopje ernaast een warm langoustinesoepje met hierin, stukjes scheermes, gemoute gerst, eikels, chicorei en vijg. We begonnen met het soepje dat vol van smaak was, een heerlijke langoustine smaak en de scheermes erin was uitstekend van cuisson. We hebben hem nog nooit zo mals en sappig gegeten. De wijn was hierbij een uitstekende begeleider met zijn mooie aroma en rijke smaak.
+                        Hierna genieten van de delicate smaken van de geplette langoustine met het frisse van de komkommer, heerlijk. De wijn was door het bittertje in de afdronk hierbij net iets te krachtig maar het aroma was een uitstekende aanvulling van het gerecht.
+
+                        De begeleider van het hoofdgerecht komt uit de Languedoc, De Chansac gemaakt van hout gerijpte chardonnay, een mooie rijke wijn, heerlijk. Uit de keuken een mooi stuk gegaarde rogvleugel gekruid met een mengsel van twaalf verschillende specerijen. Ernaast een aardappelmousseline, een quenelle crème van wortel met sinaasappel en een cannelloni van spitskool. Het geheel wordt aan tafel afgewerkt met een heerlijke vleesjus, het kannetje wordt helemaal leeg geschonken. De rogvleugel was mooi van cuisson de lamellen zaten los aan elkaar, de specerijen waren subtiel. De vleesjus gaf een fijne ondersteuning en deze was mild van smaak. De wijn was een prima ondersteuner van het gerecht.
+
+                        De kaaswagen werd nog voorgereden om ons nog even te verleiden, maar dit aanbod sloegen we af.
+
+                        De sommelier kiest graag wijnen uit Europa maar de dessertwijn komt uit Chili. Laat geoogste en deels zon gedroogde moscatel 2011 uit de Limari vallei van het huis Vistamar, mooie amber kleur met in de neus tonen van rijp fruit in de mond een prima zoet zuur balans die doet denken aan een Duitse Beerenauslese. Het dessert bestaat uit drie delen, een balk heerlijke chocolade mousse op een krokant koekje, ernaast blokjes gemarineerde ananas en blokjes marshmallow van champagne (heel apart en lekker!). In een cocktailgas ernaast, sorbetijs van kerrie en erop een gezouten koekje, een aparte maar mooie smaakbeleving. De wijn was een prima begeleider, de topper in wijn spijs van deze middag.
+
+                        Als afsluiter nog een heerlijke espresso in schitterend porselein met prima friandises. Fijn dat er ook nog de mogelijkheid was om de friandises niet te nemen. We kwamen bij binnenkomst verschillende tafels tegen met digestieven en de tafel met armagnac viel op. Veel verschillende jaartallen en de kleur van die uit 1962 was echt al donker bruin.
+
+                        Bediening was grote klasse, de zwarte brigade bestond deze middag uit een zestal personen, dat is voor acht tafels royaal. Aan onze tafel verschenen deze middag twee vriendelijke jonge dames en Arnold Zwartkruis de sommelier die de wijnen deskundig op een vriendelijke wijze presenteerde. Claudia Brevet maakte enkele keren een rondje langs de tafels om redelijk uitgebreid te informeren naar de gang van zaken, erg leuk.
+
+                        Prijs kwaliteit is zeer goed, het kost natuurlijk wel wat meer als anders. Maar het is dan ook een twee sterren restaurant waar je een totaalbeleving krijgt, van het afhalen bij de auto tot de handdruk bij het afscheid. De chef heeft een eigen signatuur van mooi verzorgde delicate gerechten. De ambiance is chique en alles is tip top verzorgd.
+                    </p>
+
+
+                    <p><em>Ad Wijgerde, 22 Feb 2013, 16:40</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Het was fantastisch</p>
+
+                    <p><em>10 Dec 2012, 15:58</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Wat een geweldige ervaring was het dineren bij Inter Scaldes. Het begint al wanneer je de oprit op komt rijden, vriendelijk personeel dat je verwelkomt en aanwijst waar te parkeren. Bij binnenkomst krijg je echt het huiskamer gevoel en Claudia en haar team laten je echt thuis voelen. Het eten was top, mooie amuses, de eigentijdse salade carprese een verrassing en de kreeft subliem. De vervolg gerechten en het dessert even mooi net zoals de wijnen en de bijbehorende verhalen van de sommelier. Echt genoten van de mooie avond.
+
+                        Bedankt!</p>
+
+
+                    <p><em>Edward & Lena Lemmens, 06 Dec 2012, 10:48</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>We vonden de ontvangst, sfeer en keuken uitstekend. We hebben er erg van genoten. Een minpuntje vonden wij, dat er geen gelegenheid binnen voor rokers is. </p>
+
+
+                    <p><em>Lilian Hoppenbrouwers, 05 Dec 2012, 20:27</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="num">8.3</div>
+                    </div>
+                    <p>De service was zeer goed met een goede timing</p>
+
+
+                    <p><em>Chris Geldof, 04 Dec 2012, 09:48</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Heel veel smaak in bijzondere vorm en combinaties.
+                        Uniek manieren van bereiding en presentatie. Prima wijnarrangement maakte het compleet. Lof voor een prima ervaring. En ook dit weer in Zeeland!</p>
+
+                    <p><em>03 Dec 2012, 22:03</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Grote klasse</p>
+
+                    <p><em>03 Dec 2012, 19:22</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Amuse heerlijk( eendenlever in zoetig rolletje, rilette van witvis met knapperige kerriekoekjes, schuimpje van tomaat), 2e amuse lekker (caprese anno 2012) maar ben nou eenmaal geen caprese fan, voorgerecht was superlekker (crème van pekingeend met schuim van popcorn en iets met truffel, ook in een cremevorm), Tussengerecht heerlijk (tongschaar met gerookte botersaus, vinaigrette van vlierbloesem knolselderij crème en algen/zeewier). Hoofdgerecht, lekker maar niet bijzonder qua smaak en dit terwijl er naar het verhaal heel veel mee gedaan was (boerderijkip gemarineerd in zuivel (de wei meen ik), met daarbij een saus van zuivel met dragon, daarnaast een glas met een crème van spinazie met een gepocheerd ei, aardappelmousseline (denk ik) en schuim van melk), nagerecht lekker (chocolade mokka creme op een krokant biscuit, meen gebakken stukjes ananas, ile-flontand anno 2012 en kerrie/champagne ijs). Minpunten: had van tevoren aangegeven dat ik niet tegen suiker kan, hier was absoluut geen rekening mee gehouden. Dit was trouwens ook nog een keer telefonisch doorgegeven. Heb er tijdens het eten niets meer van gezegd maar slordig vind ik het wel.</p>
+
+
+                    <p><em>Mirjam  Klerk, de, 03 Dec 2012, 15:20</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Een zeer ontspannen avond mede door de prima gastvrouwen/mannen en een vijf gangen diner met bijpassende wijnen om je vingers bij af te likken.Absoluut voor herhaling vatbaar. </p>
+
+                    <p><em>03 Dec 2012, 12:38</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Vriendelijk onthaal, aangename bediening en het allerbelangrijkste : lekkere gerechten.  Absoluut een toprestaurant op alle gebied !</p>
+
+
+                    <p><em>Rikkert Van Doorn, 03 Dec 2012, 10:03</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Een geweldige ervaring. Fantastische smaken, goede wijnen en perfecte bediening. </p>
+
+                    <p><em>03 Dec 2012, 09:11</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Heerlijk geluncht op zondagmiddag 2 december. Zoals altijd fantastische gerechten, een zeer prettige bediening en een fijne sfeer. Echt een toprestaurant. Om heel vaak te bezoeken!</p>
+
+
+                    <p><em>C vanS, 03 Dec 2012, 08:20</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Zoals altijd perfect en super klantvriendelijk o.a. met speciale wensen zelfs in deze drukke dinnerweek. Geef de moed niet op. Hier hoort een 3e ster te vallen!!</p>
+
+                    <p><em>03 Dec 2012, 01:20</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Zeer gastvrij onthaald en fantastisch gegeten!</p>
+
+                    <p><em>02 Dec 2012, 12:32</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Gewoon PERFECT. Eten krijgt in Inter Scaldes een nieuwe betekenis, vernieuwend
+                        verrassend, betoverend.
+                        Wanneer worden de inspecteurs van Michelin eens wakker en geven dit restaurant
+                        een derde ster?
+                        Collier, België
+
+
+                    </p>
+
+
+                    <p><em>Constantinus Collier , 01 Dec 2012, 18:33</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Perfecte ontvangst. Zeer creatieve gerechten en vriendelijke bediening (die een heel klein foutje maakte maar dat snel en beleefd herstelde). Uitmundende smaken worden hier op de borden getoverd. Geen enkele kritiek? De rogvleugel was prachtig gekruid en iets aan de zoute kant. Mag van ons iets minder. Overigens was de vis supervers en de een houdt wat meer van zout dan de ander. Dessert met een onovertroffen chocolade als hoofdingredient: daar zou je alleen al voor alngs gaan! Goede wijnkeuze voor een redelijke prijs op tafel gebracht, zeker gezien het niveau van deze prachtzaak.</p>
+
+                    <p><em>01 Dec 2012, 11:29</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.3</div>
+                    </div>
+                    <p>supplement aangepaste wijnen was zeer correct</p>
+
+                    <p><em>01 Dec 2012, 10:12</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Absolute topklasse,
+                        Uitstekende bediening.</p>
+
+                    <p><em>01 Dec 2012, 09:35</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Mooie omgeving, prettig interieur, zeer voorkomende ontvangst en attente bediening ondanks de te begrijpen drukte ten gevolge van deze actie.
+                        We hebben erg genoten, ondanks de griepnaweeen !
+                        Een mooie ervaring waarbij de gastvrouw zelf een extra bijdrage leverde met haar attente vriendelijkheid.</p>
+
+
+                    <p><em>Marijke Feijtel, 01 Dec 2012, 08:32</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.0</div>
+                    </div>
+                    <p>Prettige bediening, mocht wel ietsje minder formeel (iets ontspannender).
+                        Top gastvrouw!
+                        Erg lekkker gegeten</p>
+
+
+                    <p><em>Ingeborg Bouwman, 30 Nov 2012, 20:10</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Wat een gastvrij en warm onthaal kregen we. Uitstekende servie en bediening.We hebben heerlijk gegeten, verrassende cominaties met uitstekende wijn gedronken. Een restaurant dat zijn sterren zeker waard is.Een pluim erbij van ons.Ans uit Arnhem</p>
+
+                    <p><em>30 Nov 2012, 19:23</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>Alles was perfekt</p>
+
+
+                    <p><em>wollaert tony, 30 Nov 2012, 17:00</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Uitstekend en foutloos gegeten met uitzonderlijk goede wijnspijs combinaties. Zeer prettige, gastvrije en professionele bediening.</p>
+
+
+                    <p><em>Remon Baak, 30 Nov 2012, 15:20</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>We hebben een heerlijke luch gehad in een ontspannen sfeer.
+                        De sommelier weet precies welke wijnen hij voor je mag uitzoeken, perfect afgestemd bij de prachtig mooi opgemaakte gerechten.
+                        Een fantastiche middag in een fantastich restaurant!
+                        Alle lof! wij komen hier zeker terug! </p>
+
+                    <p><em>30 Nov 2012, 09:33</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">10.0</div>
+                    </div>
+                    <p>In een schitterende omgeving,al voor de deur warm ontvangen worden. Binnen bedient worden door attente en fijne mensen. Elk bord,schoteltje of bakje een lust voor het oog. Het eten en drinken een genot voor onze smaakpapillen. Een totaalervaring waar we met volle teugen van genoten hebben. En ook dmv onze foto's nog lang van na zullen genieten. Bedankt team Inter Scaldes!   </p>
+
+
+                    <p><em>Claire Zeijger, 29 Nov 2012, 19:19</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Geweldig gegeten en verwend door het personeel en de gastvrouw.
+                        Prijs van het wijnarrangement  was, gezien de verrassende wijnen, zeer aangenaam.
+                        Prijs van de champagne per glas daarentegen vonden wij wat hoog: 15 euro/glas
+                        Al met al een goede prijs/kwaliteitvdrhouding en we komen hier zeker terug.</p>
+
+                    <p><em>29 Nov 2012, 18:05</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.7</div>
+                    </div>
+                    <p>Prima ontvangst en bediening - hoffelijk, aardig en attent, ontspannen en niet stijf. Zeer kundige en betrokken sommelier met veel aandacht en tijd voor  uitleg  en het vinden van een passende keuze.
+                        En het eten - elke gang weer een sensatie van nieuwe , subtiele smaken met verassende keuze van Zeeuwse en uitheemse producten - buitengewoon lekker en knap
+                        Wat een talent is  het hier aan het werk!!
+                    </p>
+
+                    <p><em>29 Nov 2012, 12:20</em></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 10.0</em>
+                        </div>
+
+                        <div class="num">9.3</div>
+                    </div>
+                    <p>Alles is al gezegd over de fantastische smaken die uit de keuken kwamen. Een locatie die de moeite waard is, maar wellicht toe aan een update. Hoewel..de wonderen gebeuren op je bord. En wij geloven in wonderen. </p>
+
+
+                    <p><em>Walter Heijman, 29 Nov 2012, 11:09</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Wat een voorrecht om in zo'n omgeving te kunnen eten. Het laat zien dat de sterren toch nog iets betekenen. Alle lof aan de chef  en zijn brigade. Het eten was voortreffelijk, uitgebalanceerd, innovatief en humoristisch. De salade met tomaat en mozarella gaat op Facebook!
+
+                        Vanaf het begin tot het einde hebben de medewerkers ons het gevoel gegeven dat wij de enige gasten waren. Van het moment van ontvangst op de parkeergarage t/m het vertrek. De bediening aan de tafels was beleefd en behulpzaam maar niet te stijf. Er konden ook grappen gemaakt worden. De sommelier heeft nog iets speciaals voor ons 'uit de kast' gehaald, waarvoor dank. Leuk om iemand met zoveel liefde over zijn vak te horen praten.
+                        Alles bij elkaar een heerlijke ervaring.
+                    </p>
+
+
+                    <p><em>marianne ketting, 29 Nov 2012, 11:08</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>uitstekende lunch die de verwachtingen overtrof!</p>
+
+
+                    <p><em>Max Jongsma, 29 Nov 2012, 10:36</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="review_content">
+    <div class="mid_half">
+        <div class="top_half">
+            <div class="botom_half">
+                <div class="common">
+                    <div class="heading">
+
+                        <div class="service">Service
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="service">Atmosphere
+                            <em style="font-weight: bold; font-style: normal;"> 8.0</em>
+                        </div>
+
+                        <div class="service">Cuisine
+                            <em style="font-weight: bold; font-style: normal;"> 9.0</em>
+                        </div>
+
+                        <div class="num">8.7</div>
+                    </div>
+                    <p>Voortreffelijke keuken met prima bediening.
+                        Eten is perfect op smaak en temperatuur. Werkelijk niks op aan te merken.
+                        Vele verassende combinaties zoals je mag verwachten van een restaurant op dit niveau.
+
+                        Restaurant is erg mooi gelegen en toch zeer eenvoudig bereikbaar door gunstige ligging tov de A58. De tafels in de aanbouw achter met zicht op de tuin hebben onze voorkeur. Wij komen zeker terug in de zomer om ook eens op het terras te dineren.
+                    </p>
+
+
+                    <p><em>Maarten Touw, 29 Nov 2012, 09:25</em></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- Footer start here -->
+
+
+
+
+
+<div id="footer" class="png">
+<div class="footer_top">
+    <div class="col1">
+        <h5>Add a restaurant</h5>
+        <p>Add your restaurant to diningcity.com</p>
+
+
+        <a href="/en/zeeland/pages/restaurantadd" class="anchor">Add a restaurant <div class="link_arrow"></div></a> </div>
+
+    <div class="col2">
+        <h5>DiningCity newsletter</h5>
+        <p>Receive the hottest restaurant news from DiningCity.com</p>
+        <p class="email">Email address</p>
+        <div class="email_box">
+            <form id="footer_nl" onsubmit="return false;"  action="" method="post">
+                <div class="input_email">
+                    <input type="text" id="newsletter_email" name="newsletter_email" value=""/>
+                </div>
+                <div class="button02">
+                    <input type="image" src="http://c754417.r17.cf2.rackcdn.com/common/images/button02_empty.png" class="png" onclick="saveSubscription();"/>
+                    <span id="news_button" style="color: white; position: relative; left: 10px; top: -21px; cursor: pointer;" onclick="saveSubscription();">Subscribe</span>
+                </div>
+
+
+                <a style="color:#FFCC99;text-decoration:none;" href="/en/zeeland/pages//unsubscribe">Unsubscribe newsletter <div class="link_arrow"></div></a>
+
+            </form>
+        </div>
+    </div>
+    <div class="col3">
+        <h5>Add a restaurant</h5>
+        <p>Add your restaurant to diningcity.com</p>
+
+
+        <a href="/en/zeeland/pages/restaurantadd" class="anchor">Add a restaurant <div class="link_arrow"></div></a>
+
+
+        <div class="zoek_box">
+
+        </div>
+    </div>
+</div>
+<!-- Footer top here -->
+<!-- Footer middle start here -->
+<div class="footer_mid">
+<div class="static-footer">
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3>DiningCity local</h3>
+            <a href="/nl/amsterdam/" title="Restaurants in Amsterdam" lang="nl">Restaurants in Amsterdam</a>
+            <a href="/nl/rotterdam+en+zuid-holland+zuid/" title="Restaurants in Rotterdam" lang="nl">Restaurants in Rotterdam</a>
+            <a href="/nl/utrecht+en+het+gooi/" title="Restaurants in Utrecht" lang="nl">Restaurants in Utrecht</a>
+            <a href="/nl/den+haag+en+zuid-holland+noord/" title="Restaurants in Den Haag" lang="nl">Restaurants in Den Haag</a>
+            <a href="/nl/antwerpen/" title="Restaurants in Antwerpen" lang="nl">Restaurants in Antwerpen</a>
+            <a href="/nl/brussel/" title="Restaurants in Brussel" lang="nl">Restaurants in Brussel</a>
+            <a href="/de/berlin/" title="Restaurants in Berlin" lang="de">Restaurants in Berlin</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/de/wien/" title="Restaurants in Wien" lang="de">Restaurants in Wien</a>
+            <a href="/de/salzburg/" title="Restaurants in Salzburg" lang="de">Restaurants in Salzburg</a>
+            <a href="/hu/budapest/" title="&Eacute;ttermek - Budapest" lang="hu">&Eacute;ttermek - Budapest</a>
+            <a title="Restaurace v Praze" lang="cz">Restaurace v Praze (2012.)</a>
+            <a title="Restaurante din Bucuresti" lang="en">Restaurante din Bucuresti (2012)</a>
+            <a title="Restauranter i K&oslash;benhavn" lang="da">Restauranter i K&oslash;benhavn (2012)</a>
+            <a href="/fr/france/" title="Restaurants en Paris" lang="fr">Restaurants en Paris</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/it/roma+e+lazio/" title="Ristoranti a Roma" lang="it">Ristoranti a Roma</a>
+            <a href="/it/milano+e+lombardia/" title="Ristoranti a Milano" lang="it">Ristoranti a Milano</a>
+            <a href="/it/firenze+e+toscana/" title="Ristoranti a Firenze" lang="it">Ristoranti a Firenze</a>
+            <a href="/es/madrid/" title="Restaurantes en Madrid" lang="es">Restaurantes en Madrid</a>
+            <a href="/es/barcelona/" title="Restaurantes en Barcelona" lang="es">Restaurantes en Barcelona</a>
+            <a href="/en/dubai/" title="Restaurants in Dubai" lang="en">Restaurants in Dubai</a>
+            <a href="/en/new+york/" title="Restaurants in New York" lang="en">Restaurants in New York</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/cape+town/" title="Restaurants in Cape Town" lang="en">Restaurants in Cape Town</a>
+            <a href="/en/gardenroute/" title="Restaurants in Garden Route SA" lang="en">Restaurants in Garden Route SA</a>
+            <a href="/en/winelands/" title="Restaurants in Winelands SA" lang="en">Restaurants in Winelands SA</a>
+            <a href="/en/singapore+city/" title="Restaurants in Singapore" lang="en">Restaurants in Singapore</a>
+            <a href="/zh/shanghai/" title="&#39184;&#39302; &#19978;&#28023;" lang="zh">&#39184;&#39302; &#19978;&#28023;</a>
+            <a href="/zh/hong+kong+city/" title="&#39184;&#24307; &#39321;&#28207;" lang="zh">&#39184;&#24307; &#39321;&#28207;</a>
+            <a href="/zh/beijing/" title="&#39184;&#39302; &#21271;&#20140;" lang="zh">&#39184;&#39302; &#21271;&#20140;</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3>DiningCity international</h3>
+            <a href="/en/amsterdam/" title="Restaurants in Amsterdam" lang="en">Restaurants in Amsterdam</a>
+            <a href="/en/rotterdam/" title="Restaurants in Rotterdam" lang="en">Restaurants in Rotterdam</a>
+            <a href="/en/utrecht/" title="Restaurants in Utrecht" lang="en">Restaurants in Utrecht</a>
+            <a href="/en/the+hague+and+south-holland/" title="Restaurants in The Hague" lang="en">Restaurants in The Hague</a>
+            <a href="/en/antwerp/" title="Restaurants in Antwerp" lang="en">Restaurants in Antwerp</a>
+            <a href="/en/brussels/" title="Restaurants in Brussels" lang="en">Restaurants in Brussels</a>
+            <a href="/en/berlin/" title="Restaurants in Berlin" lang="en">Restaurants in Berlin</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/vienna/" title="Restaurants in Vienna" lang="en">Restaurants in Vienna</a>
+            <a href="/en/salzburg/" title="Restaurants in Salzburg" lang="en">Restaurants in Salzburg</a>
+            <a href="/en/budapest/" title="Restaurants in Budapest" lang="en">Restaurants in Budapest</a>
+            <a title="Restaurants in Prague" lang="en">Restaurants in Prague (2012)</a>
+            <a title="Restaurants in Bucharest" lang="en">Restaurants in Bucharest (2012)</a>
+            <a title="Restaurants in Copenhagen" lang="en">Restaurants in Copenhagen (2012)</a>
+            <a href="/en/paris/" title="Restaurants in Paris" lang="en">Restaurants in Paris</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/rome+and+latium/" title="Restaurants in Rome" lang="en">Restaurants in Rome</a>
+            <a href="/en/milan+and+lombardy/" title="Restaurants in Milan" lang="en">Restaurants in Milan</a>
+            <a href="/en/florence+and+tuscany/" title="Restaurants in Florence" lang="en">Restaurants in Florence</a>
+            <a href="/en/madrid/" title="Restaurants in Madrid" lang="en">Restaurants in Madrid</a>
+            <a href="/en/barcelona/" title="Restaurants in Barcelona" lang="en">Restaurants in Barcelona</a>
+            <a href="/en/dubai/" title="Restaurants in Dubai" lang="en">Restaurants in Dubai</a>
+            <a href="/en/new+york/" title="Restaurants in New York" lang="en">Restaurants in New York</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/cape+town/" title="Restaurants in Cape Town" lang="en">Restaurants in Cape Town</a>
+            <a href="/en/gardenroute/" title="Restaurants in Garden Route SA" lang="en">Restaurants in Garden Route SA</a>
+            <a href="/en/winelands/" title="Restaurants in Winelands SA" lang="en">Restaurants in Winelands SA</a>
+            <a href="/en/singapore+city/" title="Restaurants in Singapore" lang="en">Restaurants in Singapore</a>
+            <a href="/en/shanghai/" title="Restaurants in Shanghai" lang="en">Restaurants in Shanghai</a>
+            <a href="/en/hong+kong+city/" title="Restaurants in Hong Kong" lang="en">Restaurants in Hong Kong</a>
+            <a href="/en/beijing/" title="Restaurants in Beijing" lang="en">Restaurants in Beijing</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3><span style="text-transform: capitalize">all countries</span></h3>
+            <a href="http://www.diningcity.nl/" title="Restaurants in Nederland" lang="nl">DiningCity.nl</a>
+            <a href="http://www.diningcity.be/" title="Restaurants in Belgi&euml;" lang="nl">DiningCity.be</a>
+            <a href="http://www.diningcity.de/" title="Restaurants in Deutschland" lang="de">DiningCity.de</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.it/" title="Restauranti a Italia" lang="it">DiningCity.it</a>
+            <a href="http://www.diningcity.es/" title="Restaurantes en Espa&ntilde;a" lang="es">DiningCity.es</a>
+            <a title="Restauranter i Danmark" lang="da">DiningCity.dk</a>
+            <a href="http://www.diningcity.co.za/" title="Restaurants in South Africa" land="en">DiningCity.co.za</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.hu/" title="Ã&Eacute;ttermek - Magyarorsz&aacute;g" lang="hu">DiningCity.hu</a>
+            <a href="http://www.diningcity.at/" title="Restaurants in &Ouml;sterreich" lang="de">DiningCity.at</a>
+            <a href="http://www.diningcity.ae/" title="Restaurants in United Arab Emirates" lang="en">DiningCity.ae</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.cn/" title="Restaurants in China" lang="zh">DiningCity.cn</a>
+            <a href="http://www.diningcity.hk/" title="Restaurants in Hong Kong" lang="en">DiningCity.hk</a>
+            <a href="http://www.diningcity.sg/" title="Restaurants in Singapore" lang="en">DiningCity.sg</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3><span style="text-transform: capitalize">restaurant weeks</span></h3>
+            <a href="http://www.restaurantweek.nl/" title="Restaurantweek in Nederland" lang="nl">Restaurantweek.nl</a>
+            <a href="http://www.restaurantweek.be/" title="Restaurantweek in Belgi&euml;" lang="nl">Restaurantweek.be</a>
+            <a href="http://www.restaurantweek.de/" title="Restaurantweek in Deutschland" lang="de">Restaurantweek.de</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.it/" title="Restaurantweek a Italia" lang="it">Restaurantweek.it</a>
+            <a href="http://www.restaurantweek.hu/" title="Restaurantweek - Magyarorsz&aacute;g" lang="hu">Restaurantweek.hu</a>
+            <a href="http://www.restaurantweek.dk/" title="Restaurantweek i Danmark" lang="da">Restaurantweek.dk</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.sg/" title="Restaurantweek in Singapore" lang="en">Restaurantweek.sg</a>
+            <a href="http://www.restaurantwoche.at/" title="Restaurantwoche in &Ouml;sterreich" lang="de">Restaurantwoche.at</a>
+            <a href="http://www.restaurantweek.cn/" title="Restaurantweek Shanghai" lang="zh">Restaurantweek.cn</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.hk/" title="Restaurantweek Hongkong" lang="en">Restaurantweek.hk</a>
+            <a href="http://www.restaurantweek.co.za/" title="Restaurantweek in South Africa" lang="en">Restaurantweek.co.za</a>
+        </div>
+    </div>
+</div>
+
+<div class="footer_bottom">
+    <div class="col01">&copy; 2011 DiningCity.com</div>
+    <div class="col02" style="text-align:center;"></div>
+    <div class="col03"><a href="/sitemap">Sitemap</a>&nbsp;&nbsp;&nbsp;
+
+
+        <a href="/en/zeeland/pages/aboutus" title="About us" lang="en">About us</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="/en/zeeland/pages/contact" title="DiningCity Contact" lang="en">Contact</a>
+
+
+    </div>
+</div>
+
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#async=1"></script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18214395-1']);
+    _gaq.push(['_setDomainName', 'none']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    if ( $.browser.msie ) {
+    if($.browser.version == 7.0) {
+    $('#news_button').css('top', '-25px');
+    $('#search_button_footer').css('top', '-25px');
+    $('#flags_margin').css('margin-top', '18px');
+    $('.col01 ul li').css('padding-top', '10px');
+    $('.col01 ul li.first').css('margin-top', '-10px');
+    }
+    }
+
+    function pxLen(text){
+    $("#ruler").html(text);
+    return $("#ruler").width();
+    }
+
+    $("#footer").ready(function() {
+    $("#footer_nl").validate({
+    });
+    });
+
+    function saveSubscription() {
+    $('#newsletter_email').rules("add", {
+    required: true,
+    email: true,
+    messages: {
+    required: "",
+    email: ""
+    }
+    });
+
+    var ok = $("#footer_nl").validate().element("#newsletter_email");
+
+    if(ok) {
+
+
+    var url = "/en/the+netherlands/savesubscription";
+
+
+    var data = $.ajax({
+    type : "POST",
+    url : url,
+    data : 'newsletter_email=' + $('input[name="newsletter_email"]').val(),
+    success: function (html) {
+    alert("You have been subscribed.");
+    $('input[name="newsletter_email"]').val('');
+    }
+    });
+    } else {
+    alert("Invalid e-mail address. You have not been subscribed.");
+    }
+    }
+
+
+    function saveSubscriptionRegion() {
+    $('#newsletter_email_region').rules("add", {
+    required: true,
+    email: true,
+    messages: {
+    required: "",
+    email: ""
+    }
+    });
+    var ok = $("#newsletter_email_region_form").validate().element("#newsletter_email_region");
+
+    if(ok) {
+
+
+    var url = "/en/the+netherlands/savesubscription";
+
+
+    var data = $.ajax({
+    type : "POST",
+    url : url,
+    data : 'newsletter_email=' + $('input[name="newsletter_email_region"]').val(),
+    success: function (html) {
+    alert("You have been subscribed.");
+    $('input[name="newsletter_email_region"]').val('');
+    }
+    });
+    } else {
+    alert("Invalid e-mail address. You have not been subscribed.");
+    }
+    return false;
+    }
+    function saveSubscriptionCountry() {
+    $('#newsletter_email_country').rules("add", {
+    required: true,
+    email: true,
+    messages: {
+    required: "",
+    email: ""
+    }
+    });
+    var ok = $("#newsletter_email_country_form").validate().element("#newsletter_email_country");
+
+    if(ok) {
+
+
+    var url = "/en/the+netherlands/savesubscription";
+
+
+    var data = $.ajax({
+    type : "POST",
+    url : url,
+    data : 'newsletter_email=' + $('input[name="newsletter_email_country"]').val(),
+    success: function (html) {
+    alert("You have been subscribed.");
+    $('input[name="newsletter_email_country"]').val('');
+    }
+    });
+    } else {
+    alert("Invalid e-mail address. You have not been subscribed.");
+    }
+    return false;
+    }
+</script>
+
+<!-- Footer end here -->
+</div>
+</div>
+<span id="ruler" style="display: none; white-space: nowrap;"></span>
+</body>
+
+</html>
