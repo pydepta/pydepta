@@ -3,6 +3,9 @@
 pydepta is a Python implementation of Yanhong Zhai and Bing Liu's work on Web Data Extraction Based on Partial Tree Alignment. [1]
 The basic idea is to extract the data region with tree match algorithm (see Bing Lius' previous work on MDR [3]) and then build a seed tree on top of records to extract the data fields.
 
+### Deployment
+- see <http://pydepta-heroku.herokuapp.com/>
+
 ### Usage
 
 - extract from html page
