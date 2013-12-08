@@ -42,7 +42,7 @@ class Depta(object):
 
         return regions
 
-    def infer(self, seed_region, html='', **kwargs):
+    def infer(self, seed, html='', **kwargs):
         """
         extract the page has single record interested from with given region.
         """
@@ -56,7 +56,7 @@ class Depta(object):
         builder = DomTreeBuilder(html)
         document = builder.build()
 
-        xpath = self._get_anchor_xpath(seed_region)
+        xpath = self._get_anchor_xpath(seed)
         elements = document.xpath(xpath)
         regions = []
 

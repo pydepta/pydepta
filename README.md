@@ -23,7 +23,10 @@ The basic idea is to extract the data region with tree match algorithm (see Bing
 ```python
 >>> from pydepta import Depta
 >>> d = Depta()
->>> regions = d.extract(url='http://www.iens.nl/restaurant/10545/enschede-rhodos')
+>>> # seed region index set to 8, but it might change if the page change,
+>>> go http://pydepta-heroku.herokuapp.com/ to find out seed region index
+>>> region = d.extract(url='http://www.iens.nl/restaurant/10545/enschede-rhodos')[8]
+>>> region.as_plain_texts()
 ```
 
 - infer with seed
@@ -31,8 +34,11 @@ The basic idea is to extract the data region with tree match algorithm (see Bing
 ```python
 >>> from pydepta import Depta
 >>> d = Depta()
->>> seed = d.extract(url='http://www.iens.nl/restaurant/10545/enschede-rhodos')[5]
->>> d.infer(seed=seed, url='http://www.iens.nl/restaurant/34397/apeldoorn-de-boschvijver')
+>>> # seed region index set to 8, but it might change if the page change,
+>>> go http://pydepta-heroku.herokuapp.com/ to find out seed region index
+>>> seed = d.extract(url='http://www.iens.nl/restaurant/10545/enschede-rhodos')[8]
+>>> region = d.infer(seed=seed, url='http://www.iens.nl/restaurant/34397/apeldoorn-de-boschvijver')[0]
+>>> print region.as_plain_texts()
 >>>
 ```
 
