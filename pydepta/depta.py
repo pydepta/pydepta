@@ -64,20 +64,20 @@ class Depta(object):
             items = []
             parent = elements[0].getparent()
             start = parent.index(elements[0])
-            l1 = [seed_region.parent[seed_region.start+i] for i in range(seed_region.k)]
-            seed = Record(*l1)
-            region = copy(seed_region)
+            l1 = [seed.parent[seed.start+i] for i in range(seed.k)]
+            seed_record = Record(*l1)
+            region = copy(seed)
             region.parent = parent
             region.start = start
 
             while start < len(parent):
-                l2 = self._populate_siblings(parent[start], seed_region.k)
+                l2 = self._populate_siblings(parent[start], seed.k)
                 sim = stm.normalized_match_score(l1, l2)
                 if sim > self.threshold:
                     record = Record(*l2)
-                    aligned_item = field_finder.align_record(seed, record)
+                    aligned_item = field_finder.align_record(seed_record, record)
                     items.append(aligned_item)
-                start += seed_region.k
+                start += seed.k
             if items:
                 region.items = items
                 region.covered = len(items) * region.k
