@@ -1,15 +1,14 @@
-from copy import copy
 from urllib import urlopen
+from scrapely import HtmlPage, Scraper
+from lxml.html import tostring
 
 from w3lib.encoding import html_to_unicode
 
 from .htmls import DomTreeBuilder
-from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField, Record
-from .trees import SimpleTreeMatch
+from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField
 
 
 class Depta(object):
-
     def __init__(self, threshold=0.75, k=5):
         self.threshold = threshold
         self.k = k
@@ -42,58 +41,22 @@ class Depta(object):
 
         return regions
 
-    def infer(self, seed, html='', **kwargs):
+    def infer(self, seed, data, html='', **kwargs):
         """
-        extract the page has single record interested from with given region.
+        extract data with seed region and the data you expect to scrape from there.
         """
         if 'url' in kwargs:
             info = urlopen(kwargs.pop('url'))
             _, html = html_to_unicode(info.headers.get('content_type'), info.read())
 
-        stm = SimpleTreeMatch()
-        field_finder = MiningDataField()
-
         builder = DomTreeBuilder(html)
-        document = builder.build()
+        doc = builder.build()
+        page = HtmlPage(body=tostring(doc, encoding=unicode, method='html'))
 
-        xpath = self._get_anchor_xpath(seed)
-        elements = document.xpath(xpath)
-        regions = []
+        scraper = Scraper()
+        scraper.train_from_htmlpage(self._region_to_htmlpage(seed), data)
+        return scraper.scrape_page(page)
 
-        if len(elements):
-            items = []
-            parent = elements[0].getparent()
-            start = parent.index(elements[0])
-            l1 = [seed.parent[seed.start+i] for i in range(seed.k)]
-            seed_record = Record(*l1)
-            region = copy(seed)
-            region.parent = parent
-            region.start = start
-
-            while start < len(parent):
-                l2 = self._populate_siblings(parent[start], seed.k)
-                sim = stm.normalized_match_score(l1, l2)
-                if sim > self.threshold:
-                    record = Record(*l2)
-                    aligned_item = field_finder.align_record(seed_record, record)
-                    items.append(aligned_item)
-                start += seed.k
-            if items:
-                region.items = items
-                region.covered = len(items) * region.k
-                regions.append(region)
-
-        return regions
-
-    def _get_anchor_xpath(self, region):
-        start = region.start
-        anchor = region.parent[start]
-        if anchor.get('class', ''):
-            return '//{}[@class="{}"]'.format(anchor.tag, anchor.get('class', ''))
-        else:
-            return '//{}[{}]'.format(anchor.getparent().tag, start)
-
-    def _populate_siblings(self, anchor, size):
-        r = [anchor]
-        r.extend(list(anchor.itersiblings())[:size-1])
-        return r
+    def _region_to_htmlpage(self, region):
+        seed_body = tostring(region.parent[region.start], encoding=unicode, method='html')
+        return HtmlPage(body=seed_body)

@@ -3,6 +3,7 @@ from collections import namedtuple, defaultdict, Counter
 import copy
 from cStringIO import StringIO
 import itertools
+from lxml import etree
 from lxml.html import tostring, fragment_fromstring
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 
@@ -10,6 +11,19 @@ GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 
 def element_repr(e):
     return '<%s #%s .%s>' %(e.tag, e.get('class', ''), e.get('id', ''))
+
+def region_to_dict(region):
+    return {
+        'parent': tostring(region.parent, encoding=unicode, method='html'),
+        'start': region.start,
+        'k': region.k,
+        'covered': region.covered
+    }
+
+def dict_to_region(json_region):
+    parser = etree.HTMLParser(encoding='unicode')
+    parent = fragment_fromstring(json_region['parent'], parser=parser)
+    return Region(parent=parent, start=json_region['start'], k=json_region['k'], covered=json_region['covered'])
 
 class Region(object):
     def __init__(self, **dict):
@@ -25,11 +39,18 @@ class Region(object):
 
     def __getstate__(self):
         odict = self.__dict__.copy()
-        odict['parent'] = tostring(odict['parent'])
+        odict['parent'] = tostring(odict['parent'], encoding=unicode, method='html')
+        odict['start'] = odict['start']
+        odict['k'] = odict['k']
+        odict['covered'] = odict['covered']
         return odict
 
     def __setstate__(self, dict):
-        dict['parent'] = fragment_fromstring(dict['parent'])
+        parser = etree.HTMLParser(encoding='unicode')
+        dict['parent'] = fragment_fromstring(dict['parent'], parser=parser)
+        dict['start'] = dict['start']
+        dict['k'] = dict['k']
+        dict['covered'] = dict['covered']
         self.__dict__.update(dict)
 
     def iter(self, k):

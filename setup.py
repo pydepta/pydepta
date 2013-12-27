@@ -17,12 +17,12 @@ else:
     ext_modules.append(Extension("pydepta.trees_cython", ['pydepta/trees_cython.c']))
 
 setup(name='pydepta',
-      version='0.1',
+      version='0.2',
       description="A Python implementation of DEPTA",
-      long_description="A Python implementation of DEPTA (Data Extraction with Partial Tree Alignment",
+      long_description="A Python implementation of DEPTA (Data Extraction with Partial Tree Alignment)",
       author="Terry Peng",
       author_email="pengtaoo@gmail.com",
-      install_requires=['w3lib'],
+      install_requires=['w3lib', 'scrapely'],
       packages=find_packages(),
       cmdclass=cmdclass,
       ext_modules=ext_modules
