@@ -2,12 +2,12 @@
 PyDepta
 ========
 
-PyDepta is a library to extract structured data from HTML page. It can works in both supervised and unsupervised model.
+PyDepta is a library to extract structured data from HTML page. It can works in both supervised and unsupervised mode.
 
 Under the hold, PyDepta implemented Yanhong Zhai and Bing Liu's work on `Web Data Extraction Based on Partial Tree Alignment`_
 to extract data without example data (so called unsupervised learning).
-The basic idea is of this algorith is to extract the data region with tree match algorithm (see Bing Lius' previous work on MDR_)
-and then build a seed tree on top of records to extract the data fields.
+The basic idea is of this algorithm is to extract the data region with tree match algorithm (see Bing Lius' previous work on MDR_)
+and then build a seed tree on top of records to extract aligned data fields.
 
 PyDepta can also extract data with example data (so called supervised learning).
 It relies on Scrapely_ to extract the structured data after you tell it the data you'd to extract.
@@ -18,7 +18,7 @@ Usage
 1. (Unsupervised) Extract from url
 ==================================
 
-In this model PyDepta extract the data blindly base on the similarity of subtrees.::
+In this mode PyDepta extract the data blindly base on the similarity of subtrees.::
 
     >>> from pydepta import Depta
     >>> d = Depta()
@@ -34,17 +34,21 @@ or a python dict with (``region_to_dict``)
 2. (Supervised) Extract with seed region and data
 =================================================
 
-In this model you tell PyDepta the data you expect to scrape from seed region. e.g.
+In this mode you tell PyDepta the data you expect to scrape from seed region. e.g.
 let's say on the seed region you'd like to scrape ``MartenHH`` as name, ``Afgelopen zaterdag avond hebben we...`` as text::
 
 
     >>> data = {'name': 'MartenHH', 'text': 'Afgelopen zaterdag avond hebben we'}
 
-then just tell the PyDepta to scrape other similar pages on that site and it will return the results.::
+Then train the PyDepta by adding the seed region and the data.::
+
+    >>> d.train(seed, data)
+
+Finally just tell the PyDepta to scrape other similar pages on that site and it will return the results.::
 
 
     >>> url2 = 'http://www.iens.nl/restaurant/22513/zwolle-hotel-fidder'
-    >>> for item in d.infer(seed, data, url=url2):
+    >>> for item in d.infer(url=url2):
     ...     print item
     ...
     {u'text': [u'Heerlijke ontvangst van gastvrije en persoonlijke bediening. Eten is prima. Dit weekend gekozen voor gastronomisch arrangement en is echt goed. Goede keuzes met bijpassende wijnen. Lekker op loopafstand van Zwolle centrum.  Kortom een echte aanrader voor mensen die gastvrijheid en goed eten waarderen! En heb je kritiek of vragen: meldt het gewoon want hier wordt goed op ingespeeld.'], u'name': [u'CamielIens']}

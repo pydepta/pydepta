@@ -2,12 +2,12 @@ from __future__ import division
 from collections import namedtuple, defaultdict, Counter
 import copy
 from cStringIO import StringIO
-import itertools
 from lxml import etree
 from lxml.html import tostring, fragment_fromstring
 from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
+Field = namedtuple('Field', ['text', 'html'])
 
 def element_repr(e):
     return '<%s #%s .%s>' %(e.tag, e.get('class', ''), e.get('id', ''))
@@ -17,13 +17,16 @@ def region_to_dict(region):
         'parent': tostring(region.parent, encoding=unicode, method='html'),
         'start': region.start,
         'k': region.k,
-        'covered': region.covered
+        'covered': region.covered,
+        'items': region.items
     }
 
 def dict_to_region(json_region):
     parser = etree.HTMLParser(encoding='unicode')
     parent = fragment_fromstring(json_region['parent'], parser=parser)
-    return Region(parent=parent, start=json_region['start'], k=json_region['k'], covered=json_region['covered'])
+    return Region(parent=parent, start=json_region['start'], k=json_region['k'],
+                  covered=json_region['covered'],
+                  items=json_region['items'])
 
 class Region(object):
     def __init__(self, **dict):
@@ -43,6 +46,7 @@ class Region(object):
         odict['start'] = odict['start']
         odict['k'] = odict['k']
         odict['covered'] = odict['covered']
+        odict['items'] = odict['items']
         return odict
 
     def __setstate__(self, dict):
@@ -51,6 +55,7 @@ class Region(object):
         dict['start'] = dict['start']
         dict['k'] = dict['k']
         dict['covered'] = dict['covered']
+        dict['items'] = dict['items']
         self.__dict__.update(dict)
 
     def iter(self, k):
@@ -72,24 +77,6 @@ class Region(object):
         for i in xrange(self.start, self.start + self.covered, k):
             yield self.parent[i:i + k]
 
-    def get_elements_after_generalized_node(self, tag="*"):
-        """
-        Gets the elements inside the current region.
-        """
-        if (self.start + self.covered) < len(self.parent):
-            start = self.parent[self.start + self.covered]
-            region_elements = set(e for e in self.parent.iter(tag))
-            elements = []
-            # no following-or-self::?
-            for e in itertools.chain(start.iter(tag), start.xpath('following::%s' %tag)):
-                if e in region_elements:
-                    elements.append(e)
-                else:
-                    # end of the region
-                    break
-            return elements
-        return []
-
     def as_html_table(self, headers=None, show_id=False):
         """
         convert the region to a HTML table
@@ -103,7 +90,7 @@ class Region(object):
             if isinstance(headers, dict):
                 if show_id:
                     print >> f, '<th></th>'
-                for i in range(len(self.items[0].fields)):
+                for i in range(len(self.items[0])):
                     print >> f, '<th>%s</th>' %headers.get(i, '')
             elif isinstance(headers, list):
                 if show_id:
@@ -117,7 +104,7 @@ class Region(object):
             print >> f, '<tr>'
             if show_id:
                 print >> f, '<td>%s</td>' %(i+1)
-            for field in item.fields:
+            for field in item:
                 print >> f, '<td>%s</td>' %field.text
             print >> f, '</tr>'
         print >> f, '</table>'
@@ -126,9 +113,9 @@ class Region(object):
 
     def as_plain_texts(self):
         """
-        convert the region to a 2d plain text
+        convert the region to a two dim plain texts.
         """
-        return [[field.text for field in item.fields] for item in self.items]
+        return [[field[0] for field in item] for item in self.items]
 
 class Record(object):
     def __init__(self, *elements):
@@ -152,24 +139,6 @@ class Record(object):
         for element in record.elements:
             s += tree_size(element)
         return s
-
-class Item(object):
-    def __init__(self, fields):
-        self.fields = fields
-
-    def __len__(self):
-        return len(self.fields)
-
-    def __getitem__(self, item):
-        return self.fields[item]
-
-    def __iter__(self):
-        return iter(self.fields)
-
-class Field(object):
-    def __init__(self, text, html):
-        self.text = text
-        self.html = html
 
 def pairwise(a, K, start=0):
     """
@@ -420,11 +389,11 @@ class MiningDataField(object):
     def _extract_item(self, seed, d):
         """
         extract data item from the tree.
-        `seed`: the seed tree
-        `d`: a seed element -> original element dictionary
+
+        param:seed: the seed tree
+        param:d: a seed element -> original element dictionary
         """
-        fields = self._extract_field(seed, d)
-        return Item(fields)
+        return self._extract_field(seed, d)
 
     def _extract_field(self, seed, record):
         r = []
@@ -462,5 +431,5 @@ class MiningDataField(object):
         if text != None:
             if isinstance(text, unicode):
                 return text.encode('utf8')
-            return text
+            return text.strip()
         return ''

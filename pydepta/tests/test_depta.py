@@ -3,30 +3,25 @@ from __future__ import absolute_import
 import unittest
 import os
 import re
-import cPickle as pickle
-from cStringIO import StringIO
+import json
 from ..depta import Depta
-from ..mdr import element_repr
+from ..mdr import element_repr, dict_to_region
 
 CASES = [
     ('1', 'http://www.iens.nl/restaurant/10545/enschede-rhodos', {
-        #'anchor_after_gn': ['/restaurant/10545/enschede-rhodos/recensie#6']
         'region-index': 5
         }),
 
     ('2', 'http://www.diningcity.com/en/zeeland/restaurant_oesterbeurs', {
         'regions': [('<div #review_content .>', 3, 1, 4)],
-        'anchor_after_gn': ['/en/zeeland/restaurant_oesterbeurs/createreview',
-                            '/en/zeeland/restaurant_oesterbeurs/reviews'],
         'region-index': 9
         }),
 
     ('3', 'http://www.iens.nl/restaurant/12229/nijmegen-pasta-e-fagioli', {
         'regions': [('<hr #greyBreak .>', 8, 4, 20)],
         'region-index': 5,
-        'anchor_after_gn': ['/restaurant/12229/nijmegen-pasta-e-fagioli/recensie#6']
         }),
-    #
+
     ('4', 'http://www.yp.com.hk/Dining-Entertainment-Shopping-Travel-b/Entertainment-Production-Services/CD-VCD-DVD-Manufacturers/p1/en/', {
         'regions': [('<div #listing_div .>', 0, 1, 13)],
         }),
@@ -37,33 +32,36 @@ CASES = [
     ]
 
 INFER_CASES = [
-    ('1_infer', 'http://www.diningcity.com/en/zeeland/restaurant_nelsons', {
-        'seed': '2',
-        'seed-index': 9,
+    ('6', 'http://www.diningcity.com/en/zeeland/restaurant_nelsons', {
+        'seed': r'{"start": 3, "k": 1, "items": [[["Service", ""], ["9.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["8.0", ""], ["8.3", ""], ["Mooi menu voor restaurantweek!", ""], ["07 Oct 2013, 21:34", ""]], [["Service", ""], ["8.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["9.0", ""], ["8.3", ""], ["Alles bij elkaar een geweldige avond gehad, zeker voor herhaling vatbaar.", ""], ["01 Oct 2013, 08:36", ""]], [["Service", ""], ["7.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["10.0", ""], ["8.3", ""], ["goed restaurant. goede bediening leuke sfeer super keuken", ""], ["30 Sep 2013, 17:26", ""]], [["Service", ""], ["9.0", ""], ["Atmosphere", ""], ["9.0", ""], ["Cuisine", ""], ["10.0", ""], ["9.3", ""], ["We hebben weer geweldig genoten. Het was een echte smaaksensatie en een lust voor het oog. Complimenten voor de chef.", ""], ["adrienne hoekman, 30 Sep 2013, 10:57", ""]]], "parent": "<div id=\"reviews\" class=\"review\">\n\t                            <h4 id=\"reviewnumber\">55 Reviews</h4>\n\t                            <p class=\"black_txt\"></p>\n\t                            <div class=\"visitor_review\">\n\t                                <div class=\"review_mid\">\n\t                                    <div class=\"review_top\">\n\t                                        <div class=\"review_bottom\">\n\t                                            <div class=\"col_left\">\n\t                                                <ul><li><em>Cuisine</em><span>\n\t                                                        \t8.7\n\t                                                        </span></li>\n\t                                                    \n\t                                                        <li><em>Service</em><span>\n\t                                                        \t8.3\n\t                                                        </span></li>\n\t                                                    \n\t                                                        <li><em>Atmosphere</em><span>\n\t                                                        \t8.1\n\t                                                        </span></li>\n\t                                                    \n\t                                                </ul></div>\n\t                                            <div class=\"col_right\"> <strong class=\"avg\">8.4</strong> \n\t                                            \t<em>Average rating</em>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>Mooi menu voor restaurantweek!</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>07 Oct 2013, 21:34</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>Alles bij elkaar een geweldige avond gehad, zeker voor herhaling vatbaar.</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>01 Oct 2013, 08:36</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 7.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 10.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>goed restaurant. goede bediening leuke sfeer super keuken </p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>30 Sep 2013, 17:26</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 10.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">9.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>We hebben weer geweldig genoten. Het was een echte smaaksensatie en een lust voor het oog. Complimenten voor de chef.</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>adrienne hoekman, 30 Sep 2013, 10:57</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div class=\"plaats_review\"> \n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<a id=\"review_opener\" href=\"/en/zeeland/restaurant_oesterbeurs/createreview\">Post your review</a>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_more\"> \n\t\t\t\t\t\t\t\t\t\t<a id=\"review_opener\" href=\"/en/zeeland/restaurant_oesterbeurs/reviews\">\u00a0\u00a0\u00a0\u00a0Show all reviews</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t", "covered": 4}',
+        'data': {'service': '9.0', 'Atmosphere': '8.0', 'Cuisine': '8.0', 'General': '8.3', 'text': 'Mooi menu voor restaurantweek!', 'date': '07 Oct 2013, 21:34'},
+        'expected': {}
         }),
 
-    ('2_infer', 'http://www.diningcity.com/en/zeeland/restaurant_hetbadpaviljoen', {
-        'seed': '2',
-        'seed-index': 9,
-        'regions': [('<div #review_content .>', 3, 1, 4)],
+    ('7', 'http://www.diningcity.com/en/zeeland/restaurant_hetbadpaviljoen', {
+        'seed': r'{"start": 3, "k": 1, "items": [[["Service", ""], ["9.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["8.0", ""], ["8.3", ""], ["Mooi menu voor restaurantweek!", ""], ["07 Oct 2013, 21:34", ""]], [["Service", ""], ["8.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["9.0", ""], ["8.3", ""], ["Alles bij elkaar een geweldige avond gehad, zeker voor herhaling vatbaar.", ""], ["01 Oct 2013, 08:36", ""]], [["Service", ""], ["7.0", ""], ["Atmosphere", ""], ["8.0", ""], ["Cuisine", ""], ["10.0", ""], ["8.3", ""], ["goed restaurant. goede bediening leuke sfeer super keuken", ""], ["30 Sep 2013, 17:26", ""]], [["Service", ""], ["9.0", ""], ["Atmosphere", ""], ["9.0", ""], ["Cuisine", ""], ["10.0", ""], ["9.3", ""], ["We hebben weer geweldig genoten. Het was een echte smaaksensatie en een lust voor het oog. Complimenten voor de chef.", ""], ["adrienne hoekman, 30 Sep 2013, 10:57", ""]]], "parent": "<div id=\"reviews\" class=\"review\">\n\t                            <h4 id=\"reviewnumber\">55 Reviews</h4>\n\t                            <p class=\"black_txt\"></p>\n\t                            <div class=\"visitor_review\">\n\t                                <div class=\"review_mid\">\n\t                                    <div class=\"review_top\">\n\t                                        <div class=\"review_bottom\">\n\t                                            <div class=\"col_left\">\n\t                                                <ul><li><em>Cuisine</em><span>\n\t                                                        \t8.7\n\t                                                        </span></li>\n\t                                                    \n\t                                                        <li><em>Service</em><span>\n\t                                                        \t8.3\n\t                                                        </span></li>\n\t                                                    \n\t                                                        <li><em>Atmosphere</em><span>\n\t                                                        \t8.1\n\t                                                        </span></li>\n\t                                                    \n\t                                                </ul></div>\n\t                                            <div class=\"col_right\"> <strong class=\"avg\">8.4</strong> \n\t                                            \t<em>Average rating</em>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>Mooi menu voor restaurantweek!</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>07 Oct 2013, 21:34</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>Alles bij elkaar een geweldige avond gehad, zeker voor herhaling vatbaar.</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>01 Oct 2013, 08:36</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 7.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 8.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 10.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">8.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>goed restaurant. goede bediening leuke sfeer super keuken </p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>30 Sep 2013, 17:26</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_content\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"mid_half\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"top_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"botom_half\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"common\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"heading\">\n\t\t                                                    \n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Service\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Atmosphere\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 9.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"service\">Cuisine\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<em> 10.0</em>\n\t\t  \t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"num\">9.3</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p>We hebben weer geweldig genoten. Het was een echte smaaksensatie en een lust voor het oog. Complimenten voor de chef.</p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<p><em>adrienne hoekman, 30 Sep 2013, 10:57</em></p>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div class=\"plaats_review\"> \n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<a id=\"review_opener\" href=\"/en/zeeland/restaurant_oesterbeurs/createreview\">Post your review</a>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"review_more\"> \n\t\t\t\t\t\t\t\t\t\t<a id=\"review_opener\" href=\"/en/zeeland/restaurant_oesterbeurs/reviews\">\u00a0\u00a0\u00a0\u00a0Show all reviews</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t", "covered": 4}',
+        'data': {'service': '9.0', 'Atmosphere': '8.0', 'Cuisine': '8.0', 'General': '8.3', 'text': 'Mooi menu voor restaurantweek!', 'date': '07 Oct 2013, 21:34'},
+        'expected': {u'Cuisine': [u'10.0', u'7.0', u'3.0', u'9.0'],
+                     u'Atmosphere': [u'10.0', u'8.0', u'3.0', u'9.0'],
+                     u'service': [u'10.0', u'8.0', u'3.0', u'9.0'],
+                     u'text': [u'gewoon geweldig, prachtig uitzicht en zeer vriendelijk personeel. eten was heerlijk. We hebben een leuke dag gehad',
+                               u'Wij waren door fileleed wat later als aangegeven, maar de bediening ving dit heel professioneel op. Gezien de temperatuur was het diner binnen,maar dat gaf geen domper op de sfeer. Het eten was soms een herkenning maar ook wel een gokje, maar de bediening gaf uitleg wat er op het bord lag, zodat alles nog goed tot zijn recht kwam. Eten en wijn combinatie was goed in evenwicht, maar ikzelf had graag de spaanse rode wijn ingeruild voor een andere. Al met al een fijne avond.',
+                               u'ondanks een zeer duidelijke melding in de reservering : mijn vrouw loopt met een rollator en we nemen zonder tegenbericht 2 Jack Russells mee - werd ons de toegang geweigerd. ja, het was wel bekend, maar ze hadden "vergeten" ons te melden dat honden niet welkom zijn. of we die dan maar ergens anders konden onderbrengen. geen excuus mogelijk, we konden ophoepelen. en dat moet een top zaak voorstellen? ronduit waardeloos en belachelijk. daar rijdt je dan een heel eind voor en verheug je je op. slechte bedrijfsleiding ? dat lijkt er toch wel erg op.',
+                               u'Vootreffelijk 5 gangen menu met goede bijpassende wijnen. Lichte keuken en alles heerlijk op smaak. Goede ontvangst en virendelijke attente bediening en sympathieke sfeer met een prachtig uitzicht.'], u'General': [u'10.0', u'7.7', u'3.0', u'9.0'],
+                     u'date': [u'ad van de louw, 22 Apr 2013, 12:59', u'Bob de Jong, 27 Apr 2013, 19:00', u'Jan Hollestelle, 29 Apr 2013, 07:35', u'P. van den Booren, 01 May 2013, 10:10']}
     }),
 
-    ('4_infer', 'http://www.diningcity.com/en/zeeland/restaurant_interscaldes/reviews', {
-        'seed': '2',
-        'seed-index': 9,
-        'regions': [('<div #review_content .>', 2, 1, 80)],
-        }),
+]
 
-    ('3_infer', 'http://www.iens.nl/restaurant/31144/leiden-olive-land', {
-        'seed': '3',
-        'seed-index': 5,
-        'regions': [('<hr #greyBreak .>', 3, 4, 20)],
-        'sep': '|'
-        }),
-    ]
+def _normalize_text(text):
+    return re.sub(r'\s+', ' ', text).replace(u'\u00a0', ' ').strip()
 
-def normalize_text(text):
-    return re.sub(r'\s+', ' ', text.decode('utf8' ,'ignore').replace(u'\u00a0', ' ')).strip()
+def _merge_list_of_dict(items):
+    d = {}
+    for item in items:
+        for k, v in item.iteritems():
+            d.setdefault(k, []).append(_normalize_text(v[0].text_content))
+    return d
 
 class DeptaTest(unittest.TestCase):
 
@@ -76,22 +74,22 @@ class DeptaTest(unittest.TestCase):
         lines = open(path, 'r').readlines()
         texts = []
         for line in lines:
-            rows = [normalize_text(text) for text in line.split(sep)]
+            rows = [_normalize_text(text) for text in line.split(sep)]
             texts.append(rows)
         return texts
 
     def _normalize_region_text(self, region):
         texts = []
         for row in region.as_plain_texts():
-            texts.append([normalize_text(text) for text in row])
+            texts.append([_normalize_text(text) for text in row])
         return texts
 
-    def test_depta(self):
-        depta = Depta()
+    def test_extract(self):
+        d = Depta()
         for fn, url, case in CASES:
             body = self._get_html(fn)
             texts = self._get_texts(fn)
-            regions = depta.extract(body)
+            regions = d.extract(body)
 
             for k, vs in case.iteritems():
                 if 'region-index' in case:
@@ -101,58 +99,12 @@ class DeptaTest(unittest.TestCase):
                     start_elements = [(element_repr(region.parent[region.start]), region.start, region.k, region.covered) for region in regions]
                     for v in vs:
                         self.assertTrue(v in start_elements, '%s region failed' %fn)
-                if k == 'anchor_after_gn':
-                    anchors = []
-                    for region in regions:
-                        anchors.extend(anchor.get('href') for anchor in region.get_elements_after_generalized_node('a'))
-                    for v in vs:
-                        self.assertTrue(v in anchors, '%s not sees in %s.' %(v, fn))
 
-    def test_depta_infer(self):
+    def test_infer(self):
         for fn, url, case in INFER_CASES:
-            depta = Depta()
+            d = Depta()
             body = self._get_html(fn)
-            texts = self._get_texts(fn, case.get('sep', '\t'))
-            seed = self._get_html(case['seed'])
-
-            for k, vs in case.iteritems():
-                region = depta.extract(seed)[case['seed-index']]
-                inferred_regions = depta.infer(region, body)
-                if 'regions' in case:
-                    self.assertEqual(1, len(inferred_regions), msg='A region should be inferred from %s' %fn)
-                    inferred_region = inferred_regions[0]
-                    self.assertEquals(self._normalize_region_text(inferred_region), texts)
-                    if k == 'regions':
-                        start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
-                                           inferred_region.start, inferred_region.k, inferred_region.covered)]
-                        for v in vs:
-                            self.assertTrue(v in start_elements, '%s region failed' %fn)
-                else:
-                    self.assertEqual([], inferred_regions, msg='no region inferred from %s' %fn)
-
-    def test_depta_infer_from_pickle(self):
-        for fn, url, case in INFER_CASES:
-            depta = Depta()
-            body = self._get_html(fn)
-            texts = self._get_texts(fn, case.get('sep', '\t'))
-            seed = self._get_html(case['seed'])
-
-            for k, vs in case.iteritems():
-                region = depta.extract(seed)[case['seed-index']]
-                buffer = StringIO()
-                pickle.dump(region, buffer)
-
-                buffer.seek(0)
-                pickled_region = pickle.load(buffer)
-                inferred_regions = depta.infer(pickled_region, body)
-
-                if 'regions' in case:
-                    inferred_region = inferred_regions[0]
-                    self.assertEquals(self._normalize_region_text(inferred_region), texts)
-                    if k == 'regions':
-                        start_elements = [(element_repr(inferred_region.parent[inferred_region.start]),
-                                           inferred_region.start, inferred_region.k, inferred_region.covered)]
-                        for v in vs:
-                            self.assertTrue(v in start_elements, '%s region failed' %fn)
-                else:
-                    self.assertEqual([], inferred_regions)
+            seed = dict_to_region(json.loads(case['seed']))
+            d.train(seed, case['data'])
+            r = _merge_list_of_dict(d.infer(html=body))
+            self.assertDictEqual(case['expected'], r)

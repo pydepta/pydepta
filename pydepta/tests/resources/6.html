@@ -58,388 +58,388 @@ var localeLng = 'en';
 
 
 $(document).ready(function () {
-// after reload of page, ensure the correct menu is active.
-setMenuActive('menu1');
+    // after reload of page, ensure the correct menu is active.
+    setMenuActive('menu1');
 
-if (('menu1' == 'menu3') || ('menu1' == 'menu5')) {
-showMediaTab('t1');
-}
+    if (('menu1' == 'menu3') || ('menu1' == 'menu5')) {
+        showMediaTab('t1');
+    }
 
-$('.ad-gallery').adGallery({
-thumb_opacity: 0.4,
-effect: 'fade',
-slideshow: {
-start_label: '',
-stop_label: '',
-stop_on_scroll: true, // Should the slideshow stop if the user scrolls the thumb list?
-countdown_prefix: '', // Wrap around the countdown
-countdown_sufix: ''
-}
-});
+    $('.ad-gallery').adGallery({
+        thumb_opacity: 0.4,
+        effect: 'fade',
+        slideshow: {
+            start_label: '',
+            stop_label: '',
+            stop_on_scroll: true, // Should the slideshow stop if the user scrolls the thumb list?
+            countdown_prefix: '', // Wrap around the countdown
+            countdown_sufix: ''
+        }
+    });
 
-if ( $.browser.msie ) {
-if($.browser.version == 7.0) {
-$('.ad-nav').css('margin-top', '17px');
-$('input#lunch').css('margin-bottom', '0px');
-$('#error_nl').css('margin-top', '-22px');
-}
-}
+    if ( $.browser.msie ) {
+        if($.browser.version == 7.0) {
+            $('.ad-nav').css('margin-top', '17px');
+            $('input#lunch').css('margin-bottom', '0px');
+            $('#error_nl').css('margin-top', '-22px');
+        }
+    }
 
-var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-if(is_chrome)  $('#error_nl2').css('margin-top','-20px');
+    var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+    if(is_chrome)  $('#error_nl2').css('margin-top','-20px');
 
-$('#description_opener').click(function() {
+    $('#description_opener').click(function() {
 
-showTab1();
-$('#description_dialog').dialog('open');
-$(".ui-dialog-titlebar").hide();
-return false;
-});
+        showTab1();
+        $('#description_dialog').dialog('open');
+        $(".ui-dialog-titlebar").hide();
+        return false;
+    });
 
-$("div.textmore").hide();
-
-
-var no = 0;
-for(i = 1; i < 20; i++) {
-if($('#inf_' + i).length) { // exist
-if(no == 0) {
-no = i;
-}
-}
-}
-
-j = 1;
-for(i = no; i < 20; i++) {
-
-if($('#inf_' + i).length) { // exist
-
-if(j%2==1)
-{
-$('#inf_' + i).addClass('light_blue');
-
-}
-j++;
-}
-}
+    $("div.textmore").hide();
 
 
-// media box tab click handler
-$('.tabbing ul:first li a').click(function() {
-$('.tabbing ul li a').removeClass('select');
-$(this).addClass('select');
-$(this).parent().parent().parent().children('div').hide();
-$('#conten'+$(this).attr('rel')).show();
-});
+    var no = 0;
+    for(i = 1; i < 20; i++) {
+        if($('#inf_' + i).length) { // exist
+            if(no == 0) {
+                no = i;
+            }
+        }
+    }
+
+    j = 1;
+    for(i = no; i < 20; i++) {
+
+        if($('#inf_' + i).length) { // exist
+
+            if(j%2==1)
+            {
+                $('#inf_' + i).addClass('light_blue');
+
+            }
+            j++;
+        }
+    }
+
+
+    // media box tab click handler
+    $('.tabbing ul:first li a').click(function() {
+        $('.tabbing ul li a').removeClass('select');
+        $(this).addClass('select');
+        $(this).parent().parent().parent().children('div').hide();
+        $('#conten'+$(this).attr('rel')).show();
+    });
 
 // lunch dinner tab click handler; shows the openings times for dinner and lunch
-$('.tabbing_below ul li a').click(function() {
-$('.tabbing_below ul li a').removeClass('active');
-$(this).addClass('active');
-$(this).parent().parent().parent().parent().children('div').hide();
-$(this).parent().parent().parent().parent().find('.tabbing_below').show();
-//$(this).parent().parent().parent().children('div').show();
-$('#conten'+$(this).attr('rel')).show();
-});
+    $('.tabbing_below ul li a').click(function() {
+        $('.tabbing_below ul li a').removeClass('active');
+        $(this).addClass('active');
+        $(this).parent().parent().parent().parent().children('div').hide();
+        $(this).parent().parent().parent().parent().find('.tabbing_below').show();
+        //$(this).parent().parent().parent().children('div').show();
+        $('#conten'+$(this).attr('rel')).show();
+    });
 
 
-/* tab width in % */
-mvt = 0;
-movie = 'false';
-vt = 'false';
-ismovie = true;
-isvt = true;
+    /* tab width in % */
+    mvt = 0;
+    movie = 'false';
+    vt = 'false';
+    ismovie = true;
+    isvt = true;
 
-if(movie != 'true') {
-mvt++;
-ismovie = false;
-}
+    if(movie != 'true') {
+        mvt++;
+        ismovie = false;
+    }
 
-if(vt != 'true') {
-mvt++;
-isvt = false;
-}
+    if(vt != 'true') {
+        mvt++;
+        isvt = false;
+    }
 
-if(mvt != 0) {
-if(mvt == 1) {
-width = 33; // %
-for(i = 1; i <= 4; i++) {
+    if(mvt != 0) {
+        if(mvt == 1) {
+            width = 33; // %
+            for(i = 1; i <= 4; i++) {
 
-$('#lt' + i ).css('width', width + '%');
-$('#at' + i ).css('width', '100%');
-$('#st' + i ).css('width', '71%');
-$('#st' + i ).css('text-align', 'center');
-if(i == 1) {
-$('#st' + i ).css('width', '94px');
-}
-if(i == 4) {
-$('#st' + i ).css('width', '99px');
-$('#st' + i ).css('white-space', 'nowrap');
-$('#st' + i ).removeClass('last_span');
-$('#st' + i ).addClass('last_span33');
+                $('#lt' + i ).css('width', width + '%');
+                $('#at' + i ).css('width', '100%');
+                $('#st' + i ).css('width', '71%');
+                $('#st' + i ).css('text-align', 'center');
+                if(i == 1) {
+                    $('#st' + i ).css('width', '94px');
+                }
+                if(i == 4) {
+                    $('#st' + i ).css('width', '99px');
+                    $('#st' + i ).css('white-space', 'nowrap');
+                    $('#st' + i ).removeClass('last_span');
+                    $('#st' + i ).addClass('last_span33');
 
-}
-}
-}
+                }
+            }
+        }
 
-if(mvt == 2) {
-width = 50; // %
+        if(mvt == 2) {
+            width = 50; // %
 
-for(i = 1; i <= 4; i++) {
+            for(i = 1; i <= 4; i++) {
 
-$('#lt' + i ).css('width', width + '%');
-$('#at' + i ).css('width', '100%');
-$('#st' + i ).css('width', '162px');
-$('#st' + i ).css('text-align', 'center');
-if(i == 4) {
-$('#st' + i ).css('width', '162px');
-$('#st' + i ).css('white-space', 'nowrap');
+                $('#lt' + i ).css('width', width + '%');
+                $('#at' + i ).css('width', '100%');
+                $('#st' + i ).css('width', '162px');
+                $('#st' + i ).css('text-align', 'center');
+                if(i == 4) {
+                    $('#st' + i ).css('width', '162px');
+                    $('#st' + i ).css('white-space', 'nowrap');
 
-}
-}
-}
-}
+                }
+            }
+        }
+    }
 
-// calendar reservation
-$(function() {
-if ($("#datepicker").length > 0)
-$("#datepicker").datepicker({
-minDate: 0,
-showOn: 'button',
-buttonImage: 'common/images/calendar.gif',
-buttonImageOnly: true,
-showOtherMonths: true,
-selectOtherMonths: false,
-constrainInput: true,
-beforeShowDay: noWeekends,
-buttonText: 'Select date',
-onSelect: function(dateText, inst) {
-setDatepickerDate(dateText);
-}
-});
+    // calendar reservation
+    $(function() {
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker({
+                minDate: 0,
+                showOn: 'button',
+                buttonImage: 'common/images/calendar.gif',
+                buttonImageOnly: true,
+                showOtherMonths: true,
+                selectOtherMonths: false,
+                constrainInput: true,
+                beforeShowDay: noWeekends,
+                buttonText: 'Select date',
+                onSelect: function(dateText, inst) {
+                    setDatepickerDate(dateText);
+                }
+            });
 
-var date = new Date();
-date.setTime('1378781482117');
-if ($("#datepicker").length > 0)
-$("#datepicker").datepicker( "setDate" , date );
+        var date = new Date();
+        date.setTime('1388372520972');
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker( "setDate" , date );
 
-setDatepickerDate();
+        setDatepickerDate();
 
-$('#dinner').css('color', 'white');
-$('#event_dinner').css('color', 'white');
+        $('#dinner').css('color', 'white');
+        $('#event_dinner').css('color', 'white');
 
-if ($("#datepicker").length > 0) {
-$.datepicker.setDefaults($.datepicker.regional[localeLng]);
-}
+        if ($("#datepicker").length > 0) {
+            $.datepicker.setDefaults($.datepicker.regional[localeLng]);
+        }
 
-if ($("#datepicker").length > 0)
-$("#datepicker").datepicker( "setDate" , date );
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker( "setDate" , date );
 
-fdate = "";
-if ($("#datepicker").length > 0)
-fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+        fdate = "";
+        if ($("#datepicker").length > 0)
+            fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
 
-$('#pickdate').html(fdate);
-if ($("#datepicker").length > 0)
-fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+        $('#pickdate').html(fdate);
+        if ($("#datepicker").length > 0)
+            fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
 
-$('#reservdate').val(fdate);
-$('#error_rd').hide();
+        $('#reservdate').val(fdate);
+        $('#error_rd').hide();
 
-var day;
-if ($("#datepicker").length > 0)
-day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+        var day;
+        if ($("#datepicker").length > 0)
+            day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
 
-$.cookie('selectedDay', day, {path: '/', expires: 1});
-if($('#lunch').hasClass('right_button_down'))
-addDayLunch(day);
-else
-addDayDinner(day);
-});
+        $.cookie('selectedDay', day, {path: '/', expires: 1});
+        if($('#lunch').hasClass('right_button_down'))
+            addDayLunch(day);
+        else
+            addDayDinner(day);
+    });
 
-// event date picker
+    // event date picker
 
-$("#event_datepicker").datepicker({
-minDate: 0,
-showOtherMonths: true,
-selectOtherMonths: false,
-constrainInput: true,
-beforeShowDay: checkTimeblockDate,
-buttonText: 'Select date',
-onSelect: updateEventDate
-});
-if ($("#event_datepicker").length > 0) {
-$.datepicker.setDefaults($.datepicker.regional[localeLng]);
-}
+    $("#event_datepicker").datepicker({
+        minDate: 0,
+        showOtherMonths: true,
+        selectOtherMonths: false,
+        constrainInput: true,
+        beforeShowDay: checkTimeblockDate,
+        buttonText: 'Select date',
+        onSelect: updateEventDate
+    });
+    if ($("#event_datepicker").length > 0) {
+        $.datepicker.setDefaults($.datepicker.regional[localeLng]);
+    }
 
-// set aal setting for the event.
-showEvent();
+    // set aal setting for the event.
+    showEvent();
 
-// validation rules...
-$("#saveReview").validate({
-rules: {
-review_firstname: {
-required: true
-},
-review_lastname: {
-required: true
-},
-review_email: {// compound rule
-required: true,
-email: true
-},
-review_text: {
-required: true,
-minlength: 10
-},
-j_captcha_response: {
-required: true
-}
-},
-messages: {
-// TODO: from bundles
-review_firstname: 'required',
-review_lastname: 'required',
-review_text: {
-required: 'required',
-minlength: 'Review is too short'
-},
-review_email: {
-required: 'required',
-email: 'emailformat'
-},
-j_captcha_response: 'required'
-}
-});
-
-
-$("#saveReservation").validate({
-rules: {
-//  reservdate: "required",// simple rule, converted to {required:true}
-email: {// compound rule
-required: true,
-email: true
-},
-firstname: {
-required: true
-},
-lastname: {
-required: true
-},
-numberofpeople: {
-required: true,
-min: 1,
-digits: true
-},
-mobilenumber: {
-required: true
-}
-},
-messages: {
-//   reservdate: error.date.required,
-firstname: 'required',
-lastname: 'required',
-mobilenumber: 'required',
-email: 'required',
-numberofpeople: 'required'
-}
-});
+    // validation rules...
+    $("#saveReview").validate({
+        rules: {
+            review_firstname: {
+                required: true
+            },
+            review_lastname: {
+                required: true
+            },
+            review_email: {// compound rule
+                required: true,
+                email: true
+            },
+            review_text: {
+                required: true,
+                minlength: 10
+            },
+            j_captcha_response: {
+                required: true
+            }
+        },
+        messages: {
+            // TODO: from bundles
+            review_firstname: 'required',
+            review_lastname: 'required',
+            review_text: {
+                required: 'required',
+                minlength: 'Review is too short'
+            },
+            review_email: {
+                required: 'required',
+                email: 'emailformat'
+            },
+            j_captcha_response: 'required'
+        }
+    });
 
 
-$("#event_saveReservation").validate({
-rules: {
-//  reservdate: "required",// simple rule, converted to {required:true}
-event_email: {// compound rule
-required: true,
-email: true
-},
-event_hour: {
-required: true
-},
-event_firstname: {
-required: true
-},
-event_lastname: {
-required: true
-},
-event_numberofpeople: {
-required: true,
-min: 1,
-max:8,
-digits: true
-},
-event_mobilenumber: {
-required: true
-//   digits: true
-}
-},
-messages: {
-//   reservdate: error.date.required,
-event_firstname: 'required',
-event_mobilenumber: 'required',
-event_numberofpeople: '',
-event_email: 'required'
-}
-});
+    $("#saveReservation").validate({
+        rules: {
+            //  reservdate: "required",// simple rule, converted to {required:true}
+            email: {// compound rule
+                required: true,
+                email: true
+            },
+            firstname: {
+                required: true
+            },
+            lastname: {
+                required: true
+            },
+            numberofpeople: {
+                required: true,
+                min: 1,
+                digits: true
+            },
+            mobilenumber: {
+                required: true
+            }
+        },
+        messages: {
+            //   reservdate: error.date.required,
+            firstname: 'required',
+            lastname: 'required',
+            mobilenumber: 'required',
+            email: 'required',
+            numberofpeople: 'required'
+        }
+    });
 
 
-// hide title bar..
-$(".ui-dialog-titlebar").hide();
+    $("#event_saveReservation").validate({
+        rules: {
+            //  reservdate: "required",// simple rule, converted to {required:true}
+            event_email: {// compound rule
+                required: true,
+                email: true
+            },
+            event_hour: {
+                required: true
+            },
+            event_firstname: {
+                required: true
+            },
+            event_lastname: {
+                required: true
+            },
+            event_numberofpeople: {
+                required: true,
+                min: 1,
+                max:8,
+                digits: true
+            },
+            event_mobilenumber: {
+                required: true
+                //   digits: true
+            }
+        },
+        messages: {
+            //   reservdate: error.date.required,
+            event_firstname: 'required',
+            event_mobilenumber: 'required',
+            event_numberofpeople: '',
+            event_email: 'required'
+        }
+    });
 
-var placereservation = location.getQueryString("placereservation");
-if (placereservation == "yes") {
-$('img[name="captcha"]').attr('src', '/captcha/jcaptcha.jpg?i=' + (Math.floor(Math.random()*1000000)+1));
-$('.tour').hide();
-$('#reservation_dialog').dialog('open');
-}
-updateCalendar();
+
+    // hide title bar..
+    $(".ui-dialog-titlebar").hide();
+
+    var placereservation = location.getQueryString("placereservation");
+    if (placereservation == "yes") {
+        $('img[name="captcha"]').attr('src', '/captcha/jcaptcha.jpg?i=' + (Math.floor(Math.random()*1000000)+1));
+        $('.tour').hide();
+        $('#reservation_dialog').dialog('open');
+    }
+    updateCalendar();
 });
 
 // set menu highlight
 function setMenuActive(a) {
-if (a != null) {
-$('#menu1').removeClass('active');
-$('#menu2').removeClass('active');
-$('#menu3').removeClass('active');
-$('#menu4').removeClass('active');
-$('#menu5').removeClass('active');
-$('#menu7').removeClass('active');
-$('#reservation_opener5').removeClass('active');
+    if (a != null) {
+        $('#menu1').removeClass('active');
+        $('#menu2').removeClass('active');
+        $('#menu3').removeClass('active');
+        $('#menu4').removeClass('active');
+        $('#menu5').removeClass('active');
+        $('#menu7').removeClass('active');
+        $('#reservation_opener5').removeClass('active');
 
-$('#calendar').removeClass('active');
-$('#event_').removeClass('active');
-$('#' + a).addClass('active');
-}
+        $('#calendar').removeClass('active');
+        $('#event_').removeClass('active');
+        $('#' + a).addClass('active');
+    }
 }
 
 
 
 function getMediaContent(restId, content) {
-var loader =  "<img  style=\"position: relative; left: 170px; top: 150px;\" src=\"/common/images/review-loader.gif\" alt=\"\" />";
+    var loader =  "<img  style=\"position: relative; left: 170px; top: 150px;\" src=\"/common/images/review-loader.gif\" alt=\"\" />";
 
-if(content == 'ipix') {
-$('#ipixHtml').html(loader);
-}
+    if(content == 'ipix') {
+        $('#ipixHtml').html(loader);
+    }
 
-if(content == 'movie') {
-$('#movieHtml').html(loader);
-}
+    if(content == 'movie') {
+        $('#movieHtml').html(loader);
+    }
 
-$.ajax({
-type : "GET",
-url : "/en/zeeland/restaurant_nelsons/getmediacontent?restId=" + restId + '&content=' + content,
+    $.ajax({
+                type : "GET",
+                url : "/en/zeeland/restaurant_nelsons/getmediacontent?restId=" + restId + '&content=' + content,
 
-success: function (text) {
+                success: function (text) {
 
-if(content == 'ipix') {
-$('#ipixHtml').html(text.toString());
-}
+                    if(content == 'ipix') {
+                        $('#ipixHtml').html(text.toString());
+                    }
 
-if(content == 'movie') {
-$('#movieHtml').html(text.toString());
-}
-}
-}
-);
+                    if(content == 'movie') {
+                        $('#movieHtml').html(text.toString());
+                    }
+                }
+            }
+    );
 }
 
 
@@ -452,15 +452,15 @@ var city = 'amsterdam';
 
 var streetview = null;
 function load() {
-position = new google.maps.LatLng(51.7318937, 3.772779);
-myPOV = {pitch:-20};
-svOpts = {latlng:position, pov:myPOV};
-loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.772779);
+    position = new google.maps.LatLng(51.7318937, 3.77277900000001);
+    myPOV = {pitch:-20};
+    svOpts = {latlng:position, pov:myPOV};
+    loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.77277900000001);
 }
 
 function resize() {
-//console.log("resize");
-loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.772779);
+    //console.log("resize");
+    loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.77277900000001);
 }
 
 // slider for reviews
@@ -468,575 +468,575 @@ loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.772779);
 
 
 function validateReviewForm() {
-$("input[name='review_newsletter']").rules("add", {
-required: true,
-messages: {
-required: ''
-}
-});
+    $("input[name='review_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ''
+        }
+    });
 
-$("textarea[name='review_text']").rules("add", {
-required: true,
-minlength: 10,
-messages: {
-required: 'required',
-minlength: 'Review is too short'
-}
-});
+    $("textarea[name='review_text']").rules("add", {
+        required: true,
+        minlength: 10,
+        messages: {
+            required: 'required',
+            minlength: 'Review is too short'
+        }
+    });
 
-var validate = $("#saveReview").valid();
-if(validate) {
-return true;
-} else { return false; }
+    var validate = $("#saveReview").valid();
+    if(validate) {
+        return true;
+    } else { return false; }
 }
 
 var disabledDays = [""];
 
 function updateCalendar() {
 
-var closedDinner = [""
+    var closedDinner = [""
 
-];
-var closedLunch = [""
+    ];
+    var closedLunch = [""
 
-];
+    ];
 
-if($('#dinner').hasClass('left_button_down')) {
-disabledDays = closedDinner;
-if ($("#datepicker").length > 0)
-$('#datepicker').datepicker('refresh');
+    if($('#dinner').hasClass('left_button_down')) {
+        disabledDays = closedDinner;
+        if ($("#datepicker").length > 0)
+            $('#datepicker').datepicker('refresh');
 
-} else {
-disabledDays = closedLunch;
-if ($("#datepicker").length > 0)
-$('#datepicker').datepicker('refresh');
-}
+    } else {
+        disabledDays = closedLunch;
+        if ($("#datepicker").length > 0)
+            $('#datepicker').datepicker('refresh');
+    }
 }
 
 function event_updateCalendar() {
-$('#event_datepicker').datepicker('refresh');
-updateEventDate();
+    $('#event_datepicker').datepicker('refresh');
+    updateEventDate();
 }
 
 
 /* utility functions */
 function checkTimeblockDate( date ) {
-var number_of_people =  $('#event_amount').val();
+    var number_of_people =  $('#event_amount').val();
 
-for (var i = 0 ; i < timeblocks.length ; i++ ) {
-var from = new Date(timeblocks[i].from_date);
+    for (var i = 0 ; i < timeblocks.length ; i++ ) {
+        var from = new Date(timeblocks[i].from_date);
 
-if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people) {
+        if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people) {
 
-if($('#event_dinner').hasClass('left_button_down')) {
+            if($('#event_dinner').hasClass('left_button_down')) {
 
-if (timeblocks[i].type == 3 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
-return [true];
-} else {
-if (timeblocks[i].type == 2 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
-return [true];
-}
-}
-}
-return [false,'ui-datepicker-closed'];
+                if (timeblocks[i].type == 3 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+                    return [true];
+            } else {
+                if (timeblocks[i].type == 2 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+                    return [true];
+            }
+        }
+    }
+    return [false,'ui-datepicker-closed'];
 }
 
 function nationalDays(date) {
-var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-for (i = 0; i < disabledDays.length; i++) {
-if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 ) {
-return [false,'ui-datepicker-closed'];
-}
-}
-return [true];
+    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+    for (i = 0; i < disabledDays.length; i++) {
+        if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 ) {
+            return [false,'ui-datepicker-closed'];
+        }
+    }
+    return [true];
 }
 
 function noWeekends(date) {
-return  nationalDays(date);
+    return  nationalDays(date);
 }
 
 function setDatepickerDate(dateText) {
-if ($("#datepicker").length <= 0)
-return;
-fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
-$('#pickdate').html(fdate);
-fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
-$('#reservdate').val(fdate);
-$('#error_rd').hide();
+    if ($("#datepicker").length <= 0)
+        return;
+    fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+    $('#pickdate').html(fdate);
+    fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+    $('#reservdate').val(fdate);
+    $('#error_rd').hide();
 
-var day;
-day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
-$.cookie('selectedDay', day, {path: '/', expires: 1});
+    var day;
+    day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+    $.cookie('selectedDay', day, {path: '/', expires: 1});
 
-if($('#lunch').hasClass('right_button_down')) {
-addDayLunch(day);
-} else {
-addDayDinner(day);
-}
+    if($('#lunch').hasClass('right_button_down')) {
+        addDayLunch(day);
+    } else {
+        addDayDinner(day);
+    }
 }
 
 function updateEventDate() {
-fdate = $.datepicker.formatDate('DD, d MM, yy', $("#event_datepicker").datepicker('getDate'));
-$('#event_pickdate').html(fdate);
-fdate = $.datepicker.formatDate('dd/mm/yy', $("#event_datepicker").datepicker('getDate'));
-$('#event_reservdate').val(fdate);
-$('#event_error_rd').hide();
+    fdate = $.datepicker.formatDate('DD, d MM, yy', $("#event_datepicker").datepicker('getDate'));
+    $('#event_pickdate').html(fdate);
+    fdate = $.datepicker.formatDate('dd/mm/yy', $("#event_datepicker").datepicker('getDate'));
+    $('#event_reservdate').val(fdate);
+    $('#event_error_rd').hide();
 
-if($('#event_lunch').hasClass('right_button_down')) {
-setEventTimes($("#event_datepicker").datepicker('getDate'),2); // lunch type
-} else {
-setEventTimes($("#event_datepicker").datepicker('getDate'),3); // dinner type
-}
+    if($('#event_lunch').hasClass('right_button_down')) {
+        setEventTimes($("#event_datepicker").datepicker('getDate'),2); // lunch type
+    } else {
+        setEventTimes($("#event_datepicker").datepicker('getDate'),3); // dinner type
+    }
 }
 
 function addDayLunch(day) {
-if(day == 'Mon') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Tue') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Wed') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Thu') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Fri') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Sat') {
-addToSelect('12:00 - 17:00');
-}
-if(day == 'Sun') {
-addToSelect('12:00 - 17:00');
-}
+    if(day == 'Mon') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Tue') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Wed') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Thu') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Fri') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Sat') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Sun') {
+        addToSelect('12:00 - 17:00');
+    }
 }
 
 function addDayDinner(day) {
-if(day == 'Mon') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Tue') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Wed') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Thu') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Fri') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Sat') {
-addToSelect('17:00 - 21:00');
-}
-if(day == 'Sun') {
-addToSelect('17:00 - 21:00');
-}
+    if(day == 'Mon') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Tue') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Wed') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Thu') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Fri') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Sat') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Sun') {
+        addToSelect('17:00 - 21:00');
+    }
 }
 
 function addToSelect(inHours) {
 
-if(inHours.toString().indexOf("-") < 0) {
-if ($("#datepicker").length > 0)
-$("#datepicker").datepicker();
-$('#hour').children().remove();
-return;
-}
-var hours, begin, end, bh, eh, bm, em;
-hours = inHours.toString();
-begin = hours.split('-')[0].toString();
-end = hours.split('-')[1].toString();
-bh = begin.split(':')[0].toString();
-eh = end.split(':')[0].toString();
-bm = begin.split(':')[1].toString();
-em = end.split(':')[1].toString();
+    if(inHours.toString().indexOf("-") < 0) {
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker();
+        $('#hour').children().remove();
+        return;
+    }
+    var hours, begin, end, bh, eh, bm, em;
+    hours = inHours.toString();
+    begin = hours.split('-')[0].toString();
+    end = hours.split('-')[1].toString();
+    bh = begin.split(':')[0].toString();
+    eh = end.split(':')[0].toString();
+    bm = begin.split(':')[1].toString();
+    em = end.split(':')[1].toString();
 
-$('#hour').children().remove();
-startHour = parseInt(bh);
-endHour =  parseInt(eh);
+    $('#hour').children().remove();
+    startHour = parseInt(bh);
+    endHour =  parseInt(eh);
 
-if (startHour > endHour)
-endHour = endHour + 24;
+    if (startHour > endHour)
+        endHour = endHour + 24;
 
-var startMinute = parseInt(bm);
-var endMinute =  parseInt(em);
+    var startMinute = parseInt(bm);
+    var endMinute =  parseInt(em);
 
-// put openinghours in selectbox
-for(var h = startHour; h <= endHour; h++)  {
-for(var m = (h == startHour ? (startMinute/30) : 0 ) ; m <= (h == endHour ? (endMinute/30) : 1) ; m++ ) {
-var timeStr = h%24+ ":" + (m*30 == 0 ? "00" : m*30) + " Hour";
-$('#hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
-}
-}
+    // put openinghours in selectbox
+    for(var h = startHour; h <= endHour; h++)  {
+        for(var m = (h == startHour ? (startMinute/30) : 0 ) ; m <= (h == endHour ? (endMinute/30) : 1) ; m++ ) {
+            var timeStr = h%24+ ":" + (m*30 == 0 ? "00" : m*30) + " Hour";
+            $('#hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+        }
+    }
 }
 
 
 function setEventTimes( date, type ) {
-$('#event_hour').children().remove();
-var number_of_people =  $('#event_amount').val();
+    $('#event_hour').children().remove();
+    var number_of_people =  $('#event_amount').val();
 
-for (var i = 0 ; i < timeblocks.length ; i++ ) {
+    for (var i = 0 ; i < timeblocks.length ; i++ ) {
 
-var fdatetime = timeblocks[i].from_dateformatted.split(" ");
-var fdate = fdatetime[0].split("-");
-var ftime = fdatetime[1].split(":");
+        var fdatetime = timeblocks[i].from_dateformatted.split(" ");
+        var fdate = fdatetime[0].split("-");
+        var ftime = fdatetime[1].split(":");
 
-if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people && timeblocks[i].type == type && date.getDate() == fdate[0] && (date.getMonth()+1) == fdate[1] && date.getFullYear() == fdate[2]) {
+        if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people && timeblocks[i].type == type && date.getDate() == fdate[0] && (date.getMonth()+1) == fdate[1] && date.getFullYear() == fdate[2]) {
 
-var tdatetime = timeblocks[i].to_dateformatted.split(" ");
-var ttime = tdatetime[1].split(":");
+            var tdatetime = timeblocks[i].to_dateformatted.split(" ");
+            var ttime = tdatetime[1].split(":");
 
-var startHour = ftime[0];
-var startMinute = ftime[1];
-var endHour = ttime[0];
-var endMinute = ttime[1];
+            var startHour = ftime[0];
+            var startMinute = ftime[1];
+            var endHour = ttime[0];
+            var endMinute = ttime[1];
 
-if (startHour > endHour)
-endHour = endHour + 24;
+            if (startHour > endHour)
+                endHour = endHour + 24;
 
-for(var h = startHour; h <= endHour; h++)  {
-for(var m = (h == startHour ? (startMinute/15) : 0 ) ; m <= (h == endHour ? (endMinute/15) : 3) ; m++ ) {
-var timeStr = h%24+ ":" + (m*15 == 0 ? "00" : m*15) + " Hour";
-$('#event_hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
-}
-}
+            for(var h = startHour; h <= endHour; h++)  {
+                for(var m = (h == startHour ? (startMinute/15) : 0 ) ; m <= (h == endHour ? (endMinute/15) : 3) ; m++ ) {
+                    var timeStr = h%24+ ":" + (m*15 == 0 ? "00" : m*15) + " Hour";
+                    $('#event_hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+                }
+            }
 
-}
-}
+        }
+    }
 }
 
 function displayRestaurantContent() {
-param = "";
-if(param == null || param == '' || isNaN(param)) {
-$('.middle_content').show();
-$('#image_section').show();
-$('.mid_secton').show();
-$('.right_secton').show();
-}
+    param = "";
+    if(param == null || param == '' || isNaN(param)) {
+        $('.middle_content').show();
+        $('#image_section').show();
+        $('.mid_secton').show();
+        $('.right_secton').show();
+    }
 }
 
 function validateReservationForm() {
-$("#amount").rules("add", {
-required: true,
-min: 1,
-digits: true,
-messages: {
-required: "",
-min: "",
-digits: ""
-}
-});
+    $("#amount").rules("add", {
+        required: true,
+        min: 1,
+        digits: true,
+        messages: {
+            required: "",
+            min: "",
+            digits: ""
+        }
+    });
 
-$("input[name='reservation_newsletter']").rules("add", {
-required: true,
-messages: {
-required: ""
-}
-});
+    $("input[name='reservation_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
 
-var ok_nop = $("#saveReservation").validate().element("#amount");
-if(!ok_nop) {
-$('#error_nop').show();
-} else {
-$('#error_nop').hide();
-}
+    var ok_nop = $("#saveReservation").validate().element("#amount");
+    if(!ok_nop) {
+        $('#error_nop').show();
+    } else {
+        $('#error_nop').hide();
+    }
 
-var ok_nl = $("#saveReservation").validate().element("input[name='reservation_newsletter']");
-if(!ok_nl) {
-$('#error_nl').show();
-} else {
-$('#error_nl').hide();
-}
+    var ok_nl = $("#saveReservation").validate().element("input[name='reservation_newsletter']");
+    if(!ok_nl) {
+        $('#error_nl').show();
+    } else {
+        $('#error_nl').hide();
+    }
 
-var other = $("#saveReservation").valid();
-var validate = ok_nop && other && ok_nl;
-return validate;
+    var other = $("#saveReservation").valid();
+    var validate = ok_nop && other && ok_nl;
+    return validate;
 }
 
 function saveNewReservation() {
-var validate = true;
-if(validate) {
-return true;
-}
+    var validate = true;
+    if(validate) {
+        return true;
+    }
 }
 
 
 function sendGuestsEmail() {
-var validate = true;
+    var validate = true;
 
-if(validate) {
-return true;
-}
+    if(validate) {
+        return true;
+    }
 }
 
 
 // event reservation form
 function event_validateReservationForm() {
 
-$("#event_amount").rules("add", {
-required: true,
-min: 1,
-digits: true,
-messages: {
-required: "",
-min: "",
-digits: ""
-}
-});
-$("input[name='event_reservation_newsletter']").rules("add", {
-required: true,
-messages: {
-required: ""
-}
-});
-$("select[name='event_hour']").rules("add", {
-required: true,
-messages: {
-required: "required"
-}
-});
-var ok_nop = $("#event_saveReservation").validate().element("#event_amount");
-// alert(ok);
+    $("#event_amount").rules("add", {
+        required: true,
+        min: 1,
+        digits: true,
+        messages: {
+            required: "",
+            min: "",
+            digits: ""
+        }
+    });
+    $("input[name='event_reservation_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
+    $("select[name='event_hour']").rules("add", {
+        required: true,
+        messages: {
+            required: "required"
+        }
+    });
+    var ok_nop = $("#event_saveReservation").validate().element("#event_amount");
+    // alert(ok);
 
-if(!ok_nop) {
-$('#event_error_nop').show();
-} else {
-$('#event_error_nop').hide();
-}
-var ok_nl = $("#event_saveReservation").validate().element("input[name='event_reservation_newsletter']");
+    if(!ok_nop) {
+        $('#event_error_nop').show();
+    } else {
+        $('#event_error_nop').hide();
+    }
+    var ok_nl = $("#event_saveReservation").validate().element("input[name='event_reservation_newsletter']");
 
-if(!ok_nl) {
-$('#event_error_nl').show();
-} else {
-$('#event_error_nl').hide();
-}
-var other = $("#event_saveReservation").valid();
-var validate = ok_nop && other && ok_nl;
-return validate;
+    if(!ok_nl) {
+        $('#event_error_nl').show();
+    } else {
+        $('#event_error_nl').hide();
+    }
+    var other = $("#event_saveReservation").valid();
+    var validate = ok_nop && other && ok_nl;
+    return validate;
 }
 
 
 function event_saveNewReservation() {
-var validate =  event_validateReservationForm();
-$("#event_reservation_dialog").parent().css('z-index', '1000');
-$('#event_srLoader').css('display', 'block');
+    var validate =  event_validateReservationForm();
+    $("#event_reservation_dialog").parent().css('z-index', '1000');
+    $('#event_srLoader').css('display', 'block');
 }
 
 
 function validateContactForm() {
-$("textarea[name='message']").keyup(function() {
-$('#sendContact').validate().element(this)==false ? $('#error_m').show() : $('#error_m').hide()
-});
-$("#sendContact").validate({
-rules: {
-name_surname: {
-required: true
-},
-email_address: {// compound rule
-required: true,
-email: true
-}
-},
-messages: {
-name_surname: 'required',
-email_address: 'required'
-}
-});
-var other =  $("#sendContact").valid();
-$("textarea[name='message']").rules("add", {
-required: true,
-messages: {
-required: ""
-}
-});
-var ok_m = $("#sendContact").validate().element("textarea[name='message']");
-if(!ok_m) {
-$('#error_m').show();
-} else {
-$('#error_m').hide();
-}
-var validate =  other && ok_m;
-if(validate) {
-$("#contact_dialog").parent().css('z-index', '1000');
-}
+    $("textarea[name='message']").keyup(function() {
+        $('#sendContact').validate().element(this)==false ? $('#error_m').show() : $('#error_m').hide()
+    });
+    $("#sendContact").validate({
+        rules: {
+            name_surname: {
+                required: true
+            },
+            email_address: {// compound rule
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            name_surname: 'required',
+            email_address: 'required'
+        }
+    });
+    var other =  $("#sendContact").valid();
+    $("textarea[name='message']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
+    var ok_m = $("#sendContact").validate().element("textarea[name='message']");
+    if(!ok_m) {
+        $('#error_m').show();
+    } else {
+        $('#error_m').hide();
+    }
+    var validate =  other && ok_m;
+    if(validate) {
+        $("#contact_dialog").parent().css('z-index', '1000');
+    }
 }
 
 String.prototype.startsWith = function(str){
-return (this.indexOf(str) == 0);
+    return (this.indexOf(str) == 0);
 }
 
 
 $("#tabs").tabs();
 $("a#readmore").click(function () {
-if($("a").hasClass("readmore")) {
-$("div.text").hide();
-$("div.textmore").show();
-$("a.readmore").text("read less");
-$("a.readmore").addClass("readless");
-$("a.readmore").removeClass("readmore");
-$('div.mid_secton').css('left', $('div.mid_secton').position().left);
-$('div.mid_secton').addClass('overlay');
-}
-else {
-$("div.textmore").hide();
-$("div.text").show();
-$("a.readless").text("Read more");
-$("a.readless").addClass("readmore");
-$("a.readless").removeClass("readless");
-$('div.mid_secton').removeClass('overlay');
-}
+    if($("a").hasClass("readmore")) {
+        $("div.text").hide();
+        $("div.textmore").show();
+        $("a.readmore").text("read less");
+        $("a.readmore").addClass("readless");
+        $("a.readmore").removeClass("readmore");
+        $('div.mid_secton').css('left', $('div.mid_secton').position().left);
+        $('div.mid_secton').addClass('overlay');
+    }
+    else {
+        $("div.textmore").hide();
+        $("div.text").show();
+        $("a.readless").text("Read more");
+        $("a.readless").addClass("readmore");
+        $("a.readless").removeClass("readless");
+        $('div.mid_secton').removeClass('overlay');
+    }
 });
 
 function showTab1() {
-$('#popup11').show();
-$('#popup22').hide();
-$('#p1tab2').removeClass('active');
-$('#p1tab1').addClass('active');
+    $('#popup11').show();
+    $('#popup22').hide();
+    $('#p1tab2').removeClass('active');
+    $('#p1tab1').addClass('active');
 
-$("#reservation_dialog").dialog("option", "height", 600);
+    $("#reservation_dialog").dialog("option", "height", 600);
 
-if($("#iframe").length > 0) {
-//$("#reservation_dialog").parent().css("height", "360px");
-$("#reservation_dialog").dialog("option", "width", 380);
-$("#reservation_dialog").dialog("option", "height", 500);
-//$("#reservation_dialog").css("height", 455);
+    if($("#iframe").length > 0) {
+        //$("#reservation_dialog").parent().css("height", "360px");
+        $("#reservation_dialog").dialog("option", "width", 380);
+        $("#reservation_dialog").dialog("option", "height", 500);
+        //$("#reservation_dialog").css("height", 455);
 
-}
+    }
 }
 
 function showTab2() {
 
-var validate = validateReservationForm();
+    var validate = validateReservationForm();
 
-if(validate) {
-updateTab2();
-$('#popup11').hide();
-$('#popup22').show();
-$('#p2tab1').removeClass('active');
-$('#p2tab2').addClass('active');
+    if(validate) {
+        updateTab2();
+        $('#popup11').hide();
+        $('#popup22').show();
+        $('#p2tab1').removeClass('active');
+        $('#p2tab2').addClass('active');
 
-$("#reservation_dialog").dialog("option", "height", 392);
-}
+        $("#reservation_dialog").dialog("option", "height", 392);
+    }
 }
 
 function updateTab2() {
-var hour = $('select#hour').val();
-//alert(hour);
-$('#tab2hour').html(hour);read
+    var hour = $('select#hour').val();
+    //alert(hour);
+    $('#tab2hour').html(hour);read
 
-var nop = $('#amount').val();
-$('#tab2person').html(nop + " ");
+    var nop = $('#amount').val();
+    $('#tab2person').html(nop + " ");
 
 
-if ($("#datepicker").length > 0)
-fdate = $.datepicker.formatDate('d M yy', $("#datepicker").datepicker('getDate'));
-//   $('#pickdate').html(fdate);
-//var date = $('#reservdate').val();
-$('#tab2date').html(fdate);
+    if ($("#datepicker").length > 0)
+        fdate = $.datepicker.formatDate('d M yy', $("#datepicker").datepicker('getDate'));
+    //   $('#pickdate').html(fdate);
+    //var date = $('#reservdate').val();
+    $('#tab2date').html(fdate);
 
-// update popup 3
-$('#popup3date').html(fdate);
-$('#popup3hour').html(hour);
-$('#popup3person').html(nop);
+    // update popup 3
+    $('#popup3date').html(fdate);
+    $('#popup3hour').html(hour);
+    $('#popup3person').html(nop);
 
-var name = $('input[name="firstname"]').val();
-$('#popup3name').html(name);
-var surname = $('input[name="lastname"]').val();
-$('#popup3surname').html(surname);
-var email = $('input[name="email"]').val();
-$('#popup3email').html(email);
-var mobile_number = $('input[name="mobilenumber"]').val();
-$('#popup3mnumber').html(mobile_number);
+    var name = $('input[name="firstname"]').val();
+    $('#popup3name').html(name);
+    var surname = $('input[name="lastname"]').val();
+    $('#popup3surname').html(surname);
+    var email = $('input[name="email"]').val();
+    $('#popup3email').html(email);
+    var mobile_number = $('input[name="mobilenumber"]').val();
+    $('#popup3mnumber').html(mobile_number);
 }
 
 // event fns
 function event_showTab1() {
-$('#event_popup11').show();
-$('#event_popup22').hide();
-$('#event_p1tab2').removeClass('active');
-$('#event_p1tab1').addClass('active');
+    $('#event_popup11').show();
+    $('#event_popup22').hide();
+    $('#event_p1tab2').removeClass('active');
+    $('#event_p1tab1').addClass('active');
 
-$("#event_reservation_dialog").dialog("option", "height", 600);
+    $("#event_reservation_dialog").dialog("option", "height", 600);
 }
 
 function event_showTab2() {
 
-var validate = event_validateReservationForm();
+    var validate = event_validateReservationForm();
 
-if(validate) {
-event_updateTab2();
-$('#event_popup11').hide();
-$('#event_popup22').show();
-$('#event_p2tab1').removeClass('active');
-$('#event_p2tab2').addClass('active');
+    if(validate) {
+        event_updateTab2();
+        $('#event_popup11').hide();
+        $('#event_popup22').show();
+        $('#event_p2tab1').removeClass('active');
+        $('#event_p2tab2').addClass('active');
 
-$("#event_reservation_dialog").dialog("option", "height", 392);
-}
+        $("#event_reservation_dialog").dialog("option", "height", 392);
+    }
 }
 
 function event_updateTab2() {
-var hour = $('select#event_hour').val();
-//alert(hour);
-$('#event_tab2hour').html(hour);
+    var hour = $('select#event_hour').val();
+    //alert(hour);
+    $('#event_tab2hour').html(hour);
 
-var nop = $('#event_amount').val();
-$('#event_tab2person').html(nop + " ");
+    var nop = $('#event_amount').val();
+    $('#event_tab2person').html(nop + " ");
 
 
-fdate = $.datepicker.formatDate('d M yy', $("#event_datepicker").datepicker('getDate'));
-//   $('#pickdate').html(fdate);
-//var date = $('#reservdate').val();
-$('#event_tab2date').html(fdate);
+    fdate = $.datepicker.formatDate('d M yy', $("#event_datepicker").datepicker('getDate'));
+    //   $('#pickdate').html(fdate);
+    //var date = $('#reservdate').val();
+    $('#event_tab2date').html(fdate);
 
-// update popup 3
-$('#popup3date').html(fdate);
-$('#popup3hour').html(hour);
-$('#popup3person').html(nop);
+    // update popup 3
+    $('#popup3date').html(fdate);
+    $('#popup3hour').html(hour);
+    $('#popup3person').html(nop);
 
-var name = $('input[name="event_firstname"]').val();
-$('#popup3name').html(name);
-var surname = $('input[name="event_lastname"]').val();
-$('#popup3surname').html(surname);
-var email = $('input[name="event_email"]').val();
-$('#popup3email').html(email);
-var mobile_number = $('input[name="event_mobilenumber"]').val();
-$('#popup3mnumber').html(mobile_number);
+    var name = $('input[name="event_firstname"]').val();
+    $('#popup3name').html(name);
+    var surname = $('input[name="event_lastname"]').val();
+    $('#popup3surname').html(surname);
+    var email = $('input[name="event_email"]').val();
+    $('#popup3email').html(email);
+    var mobile_number = $('input[name="event_mobilenumber"]').val();
+    $('#popup3mnumber').html(mobile_number);
 
 
 }
 
 function openMessage() {
 
-$('#send_message_dialog').dialog('open');
-$("#send_message_dialog").parent().css('height', '588px');
+    $('#send_message_dialog').dialog('open');
+    $("#send_message_dialog").parent().css('height', '588px');
 }
 
 function showDescription() {
 
-$('html,body').animate({scrollTop:$('html').offset().top}, 0,
+    $('html,body').animate({scrollTop:$('html').offset().top}, 0,
 
-function() {
-var y = $('.readmore').offset().top;
-var x = $('.readmore').offset().left;
-//alert(x)
-$('.tour').hide();
-$("#description_dialog").dialog("option", "position", [x - 13, y - 100]);
-$('#description_dialog').dialog('open');
-}
-);
+            function() {
+                var y = $('.readmore').offset().top;
+                var x = $('.readmore').offset().left;
+                //alert(x)
+                $('.tour').hide();
+                $("#description_dialog").dialog("option", "position", [x - 13, y - 100]);
+                $('#description_dialog').dialog('open');
+            }
+    );
 }
 
 
 function showEvent() {
-//alert(id);
-$('input[name="event_id"]').val();
-$('input[name="event_edate"]').val();
-$('input[name="event_sdate"]').val();
+    //alert(id);
+    $('input[name="event_id"]').val();
+    $('input[name="event_edate"]').val();
+    $('input[name="event_sdate"]').val();
 
-// set timeblocks
+    // set timeblocks
 
 }
 
@@ -1194,41 +1194,41 @@ $('input[name="event_sdate"]').val();
 
 <script>
     $(document).ready(function(){
-    $.ajaxSetup( { type: "post" } );
+        $.ajaxSetup( { type: "post" } );
 
 
 
 
-    $("#fulltextsearch").autocomplete("/en/zeeland/autocomplete" ,
+        $("#fulltextsearch").autocomplete("/en/zeeland/autocomplete" ,
 
-    {
+                {
 
-    width:350,
-    scrollHeight: 420,
-    selectFirst: false,
-    matchCase: true,
-    delay: 400,
-    minChars: 2,
-    cacheLength: 1,
-    max: 40,
-    disabled: true,
-    formatItem: function(data, i, n, value) {
-    var items = value.split("##");
-    return "<img id='autoCompleteLogo' src='"+items[0]+"' />" +
-    "<span  id='autoCompleteRestName'>" + items[1] +
-		                "</span><br><span id='autoCompleteAddress'>" + items[2]+", "+ items[3]+ "</span>";
-    }
-    ,
-    formatResult: function(data, value) {
-    var arr = value.split("##");
-    return arr[1]+", "+arr[2];
-    }
-    })
-    .result(function(event, item) {
-    var myString = new String(item);
-    var items = myString.split("##");
-    window.location.href  = items[4];
-    });
+                    width:350,
+                    scrollHeight: 420,
+                    selectFirst: false,
+                    matchCase: true,
+                    delay: 400,
+                    minChars: 2,
+                    cacheLength: 1,
+                    max: 40,
+                    disabled: true,
+                    formatItem: function(data, i, n, value) {
+                        var items = value.split("##");
+                        return "<img id='autoCompleteLogo' src='"+items[0]+"' />" +
+                                "<span  id='autoCompleteRestName'>" + items[1] +
+                                "</span><br><span id='autoCompleteAddress'>" + items[2]+", "+ items[3]+ "</span>";
+                    }
+                    ,
+                    formatResult: function(data, value) {
+                        var arr = value.split("##");
+                        return arr[1]+", "+arr[2];
+                    }
+                })
+                .result(function(event, item) {
+                    var myString = new String(item);
+                    var items = myString.split("##");
+                    window.location.href  = items[4];
+                });
     });
 </script>
 <!-- menu end here -->
@@ -1264,7 +1264,7 @@ $('input[name="event_sdate"]').val();
 
 
 
-            <li><a href="/en/zeeland/restaurant_lekkerlavie">Previous restaurant</a></li>
+            <li><a href="/en/zeeland/moio_beach">Previous restaurant</a></li>
 
 
         </ul>
@@ -1655,13 +1655,13 @@ $('input[name="event_sdate"]').val();
             <li id="inf_13" ><em>Payment</em>
                                             <span>
 
-                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/JCB4.jpg" alt="" /></a>
-
-                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Visa7.jpg" alt="" /></a>
-
                                                     <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/MasterCard6.jpg" alt="" /></a>
 
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/JCB4.jpg" alt="" /></a>
+
                                                     <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Pin11.gif" alt="Pin" /></a>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Visa7.jpg" alt="" /></a>
 
                                             </span>
             </li>
@@ -1818,28 +1818,28 @@ $('input[name="event_sdate"]').val();
     <ul>
 
         <li>
-            <p><a href="/en/zeeland/eeterij_ietsanders"><img src="http://media.diningcity.com/restaurantpictures/Restauranteeterijietsanderskortgenepic136370_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>Eeterij "Iets Anders"</span>
+            <p><a href="/en/zeeland/restaurant_bottles"><img src="http://media.diningcity.com/restaurantpictures/m_rest26274_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Restaurant Bottles</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_dekleinetorenvanbaarland"><img src="http://media.diningcity.com/restaurantpictures/m_rest26264_logo.bmp" alt="" width="150px" height="106px" /></a></p>
-            <span>De Kleine Toren van Baarland</span>
+            <p><a href="/en/zeeland/restaurant_interscaldes"><img src="http://media.diningcity.com/restaurantpictures/33778_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Inter Scaldes</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_degevangentoren"><img src="http://media.diningcity.com/restaurantpictures/27364_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>De Gevangentoren</span>
+            <p><a href="/en/zeeland/deeetkamermiddelburg"><img src="http://media.diningcity.com/restaurantpictures/m_rest7302_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>De Eetkamer</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_destadsschuur"><img src="http://media.diningcity.com/restaurantpictures/27551_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>De Stadsschuur</span>
+            <p><a href="/en/zeeland/restaurant_hetbadpaviljoen"><img src="http://media.diningcity.com/restaurantpictures/m_rest7199_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Het Badpaviljoen</span>
         </li>
 
         <li>
-            <p><a href="/en/zeeland/restaurant_deoudesluis"><img src="http://media.diningcity.com/restaurantpictures/32470_logo.jpg" alt="" width="150px" height="106px" /></a></p>
-            <span>De Oude Sluis</span>
+            <p><a href="/en/zeeland/restaurant_aubergedesmoules"><img src="http://media.diningcity.com/restaurantpictures/27548_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Auberge des Moules</span>
         </li>
 
     </ul>
@@ -2061,125 +2061,125 @@ $('input[name="event_sdate"]').val();
     _gaq.push(['_trackPageview']);
 
     (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 
     if ( $.browser.msie ) {
-    if($.browser.version == 7.0) {
-    $('#news_button').css('top', '-25px');
-    $('#search_button_footer').css('top', '-25px');
-    $('#flags_margin').css('margin-top', '18px');
-    $('.col01 ul li').css('padding-top', '10px');
-    $('.col01 ul li.first').css('margin-top', '-10px');
-    }
+        if($.browser.version == 7.0) {
+            $('#news_button').css('top', '-25px');
+            $('#search_button_footer').css('top', '-25px');
+            $('#flags_margin').css('margin-top', '18px');
+            $('.col01 ul li').css('padding-top', '10px');
+            $('.col01 ul li.first').css('margin-top', '-10px');
+        }
     }
 
     function pxLen(text){
-    $("#ruler").html(text);
-    return $("#ruler").width();
+        $("#ruler").html(text);
+        return $("#ruler").width();
     }
 
     $("#footer").ready(function() {
-    $("#footer_nl").validate({
-    });
+        $("#footer_nl").validate({
+        });
     });
 
     function saveSubscription() {
-    $('#newsletter_email').rules("add", {
-    required: true,
-    email: true,
-    messages: {
-    required: "",
-    email: ""
-    }
-    });
+        $('#newsletter_email').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
 
-    var ok = $("#footer_nl").validate().element("#newsletter_email");
+        var ok = $("#footer_nl").validate().element("#newsletter_email");
 
-    if(ok) {
-
-
-    var url = "/en/the+netherlands/savesubscription";
+        if(ok) {
 
 
-    var data = $.ajax({
-    type : "POST",
-    url : url,
-    data : 'newsletter_email=' + $('input[name="newsletter_email"]').val(),
-    success: function (html) {
-    alert("You have been subscribed.");
-    $('input[name="newsletter_email"]').val('');
-    }
-    });
-    } else {
-    alert("Invalid e-mail address. You have not been subscribed.");
-    }
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
     }
 
 
     function saveSubscriptionRegion() {
-    $('#newsletter_email_region').rules("add", {
-    required: true,
-    email: true,
-    messages: {
-    required: "",
-    email: ""
-    }
-    });
-    var ok = $("#newsletter_email_region_form").validate().element("#newsletter_email_region");
+        $('#newsletter_email_region').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
+        var ok = $("#newsletter_email_region_form").validate().element("#newsletter_email_region");
 
-    if(ok) {
-
-
-    var url = "/en/the+netherlands/savesubscription";
+        if(ok) {
 
 
-    var data = $.ajax({
-    type : "POST",
-    url : url,
-    data : 'newsletter_email=' + $('input[name="newsletter_email_region"]').val(),
-    success: function (html) {
-    alert("You have been subscribed.");
-    $('input[name="newsletter_email_region"]').val('');
-    }
-    });
-    } else {
-    alert("Invalid e-mail address. You have not been subscribed.");
-    }
-    return false;
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email_region"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email_region"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
+        return false;
     }
     function saveSubscriptionCountry() {
-    $('#newsletter_email_country').rules("add", {
-    required: true,
-    email: true,
-    messages: {
-    required: "",
-    email: ""
-    }
-    });
-    var ok = $("#newsletter_email_country_form").validate().element("#newsletter_email_country");
+        $('#newsletter_email_country').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
+        var ok = $("#newsletter_email_country_form").validate().element("#newsletter_email_country");
 
-    if(ok) {
-
-
-    var url = "/en/the+netherlands/savesubscription";
+        if(ok) {
 
 
-    var data = $.ajax({
-    type : "POST",
-    url : url,
-    data : 'newsletter_email=' + $('input[name="newsletter_email_country"]').val(),
-    success: function (html) {
-    alert("You have been subscribed.");
-    $('input[name="newsletter_email_country"]').val('');
-    }
-    });
-    } else {
-    alert("Invalid e-mail address. You have not been subscribed.");
-    }
-    return false;
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email_country"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email_country"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
+        return false;
     }
 </script>
 

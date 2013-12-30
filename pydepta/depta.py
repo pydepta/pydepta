@@ -1,5 +1,5 @@
 from urllib import urlopen
-from scrapely import HtmlPage, Scraper
+from scrapely import HtmlPage, Scraper, TemplateMaker, best_match
 from lxml.html import tostring
 
 from w3lib.encoding import html_to_unicode
@@ -12,6 +12,7 @@ class Depta(object):
     def __init__(self, threshold=0.75, k=5):
         self.threshold = threshold
         self.k = k
+        self.scraper = Scraper()
 
     def extract(self, html='', **kwargs):
         """
@@ -41,7 +42,27 @@ class Depta(object):
 
         return regions
 
-    def infer(self, seed, data, html='', **kwargs):
+    def train(self, seed, data):
+        """
+        train scrapely from give seed region and data.
+        """
+        assert data, "Cannot train with empty data"
+        htmlpage = self._region_to_htmlpage(seed)
+        tm = TemplateMaker(htmlpage)
+        if isinstance(data, dict):
+            data = data.items()
+
+        for field, values in data:
+            if not hasattr(values, '__iter__'):
+                values = [values]
+            for value in values:
+                if isinstance(value, str):
+                    value = value.decode(htmlpage.encoding or 'utf-8')
+                tm.annotate(field, best_match(value), best_match=False)
+        self.scraper.add_template(tm.get_template())
+
+
+    def infer(self, html='', **kwargs):
         """
         extract data with seed region and the data you expect to scrape from there.
         """
@@ -53,9 +74,7 @@ class Depta(object):
         doc = builder.build()
         page = HtmlPage(body=tostring(doc, encoding=unicode, method='html'))
 
-        scraper = Scraper()
-        scraper.train_from_htmlpage(self._region_to_htmlpage(seed), data)
-        return scraper.scrape_page(page)
+        return self.scraper.scrape_page(page)
 
     def _region_to_htmlpage(self, region):
         seed_body = tostring(region.parent[region.start], encoding=unicode, method='html')
