@@ -23,17 +23,20 @@ class DeptaExtractor(RecordExtractor):
         pindex, sindex, attributes = self._doextract(page, region_elements, start_index,
                                            end_index, **kwargs)
 
-        # collect variant data, maintaining the order of variants
-        items = [(k, v) for k, v in attributes]
-        r = [_attrs2dict(items)]
-
         if not end_index:
             end_index = len(page.page_tokens)
 
-        if len(items) > 0 and sindex and sindex < end_index:
-            # extract recursively backward
-            r.extend(self.extract(page, pindex - len(self.template_tokens), pindex, ignored_regions, **kwargs))
+        # collect variant data, maintaining the order of variants
+        r = []
+        items = [(k, v) for k, v in attributes]
 
+        # if the number of extracted data match
+        if len(items) == len(region_elements):
+            r.append(_attrs2dict(items))
+
+            # if there are remaining items, extract recursively backward
+            if sindex and sindex < end_index:
+                r.extend(self.extract(page, 0, pindex - 1, ignored_regions, **kwargs))
         return r
 
     def __repr__(self):

@@ -4,7 +4,7 @@ import copy
 from cStringIO import StringIO
 from lxml import etree
 from lxml.html import tostring, fragment_fromstring
-from pydepta.trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
+from .trees import SimpleTreeMatch, tree_depth, PartialTreeAligner, SimpleTreeAligner, tree_size
 
 GeneralizedNode = namedtuple('GeneralizedNode', ['element', 'length'])
 Field = namedtuple('Field', ['text', 'html'])
@@ -105,7 +105,7 @@ class Region(object):
             if show_id:
                 print >> f, '<td>%s</td>' %(i+1)
             for field in item:
-                print >> f, '<td>%s</td>' %field.text
+                print >> f, '<td>%s</td>' %field[0].encode('utf8', 'ignore')
             print >> f, '</tr>'
         print >> f, '</table>'
 
@@ -145,6 +145,8 @@ def pairwise(a, K, start=0):
     A generator to return the comparison pair.
 
     for example:
+    >>> list(pairwise([1, 2, 3, 4], 1))
+    [([1], [2]), ([2], [3]), ([3], [4])]
     >>> list(pairwise([1, 2, 3, 4], 2))
     [([1], [2]), ([2], [3]), ([3], [4]), ([2], [3]), ([3], [4]), ([1, 2], [3, 4])]
     >>> list(pairwise([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2))
@@ -185,8 +187,8 @@ class MiningDataRegion(object):
 
 
     def identify_regions(self, start, root, max_generalized_nodes, threshold, scores):
-        cur_region = Region(parent=root, start=0, k=0, covered=0)
-        max_region = Region(parent=root, start=0, k=0, covered=0)
+        cur_region = Region(parent=root, start=0, k=0, covered=0, score=0)
+        max_region = Region(parent=root, start=0, k=0, covered=0, score=0)
         data_regions = []
 
         for k in xrange(1, max_generalized_nodes + 1):
@@ -199,17 +201,20 @@ class MiningDataRegion(object):
                         if flag:
                             cur_region.k = k
                             cur_region.start = j
+                            cur_region.score = score
                             cur_region.covered = 2 * k
                             flag = False
                         else:
                             cur_region.covered += k
+                            cur_region.score += score
                     elif not flag:  # doesn't match but previous match
                         break
-                if cur_region.covered > max_region.covered and (
-                        max_region.start == 0 or cur_region.start <= max_region.start):
+
+                if self.calculate_score(cur_region) > self.calculate_score(max_region):
                     max_region.k = cur_region.k
                     max_region.start = cur_region.start
                     max_region.covered = cur_region.covered
+                    max_region.score = cur_region.score
 
         if max_region.covered:
             data_regions.append(max_region)
@@ -237,6 +242,11 @@ class MiningDataRegion(object):
                 scores.setdefault((gn1, gn2), score)
         return scores
 
+    def calculate_score(self, region):
+        if region.covered == 0:
+            return 0
+        count = region.covered / region.k
+        return region.score / count
 
 class MiningDataRecord(object):
     """
@@ -301,8 +311,7 @@ class MiningDataField(object):
         self.sta = SimpleTreeAligner()
 
     def align_records(self, records):
-        """
-        partial align multiple records.
+        """partial align multiple records.
 
         for example (from paper Web Data Extraction Based on Partial Tree Alignment):
         >>> from lxml.html import fragment_fromstring
@@ -351,8 +360,7 @@ class MiningDataField(object):
         return items, seed_copy
 
     def align_record(self, seed, record):
-        """
-        simple align the given record with given seed
+        """simple align the given record with given seed
         """
         alignment = self.sta.align(seed, record)
         aligned = dict({alignment.first: alignment.second})
@@ -361,8 +369,7 @@ class MiningDataField(object):
         return self._extract_item(seed, aligned)
 
     def _create_seed_mapping(self, seed, record):
-        """
-        create a mapping from seed record to data record.
+        """create a mapping from seed record to data record.
 
         for example:
         >>> from lxml.html import fragment_fromstring
@@ -386,24 +393,20 @@ class MiningDataField(object):
             d.update(self._create_seed_mapping(s, e))
         return d
 
-    def _extract_item(self, seed, d):
-        """
-        extract data item from the tree.
+    def _extract_item(self, seed, mapping):
+        """extract data item from the tree.
 
-        param:seed: the seed tree
-        param:d: a seed element -> original element dictionary
+        seed: the seed tree
+        mapping: a seed element to original element dict
         """
-        return self._extract_field(seed, d)
-
-    def _extract_field(self, seed, record):
         r = []
         for element in seed:
-            r.extend(self._extract_element(element, record))
+            r.extend(self._extract_element(element, mapping))
         return r
 
-    def _extract_element(self, seed, record):
+    def _extract_element(self, seed, mapping):
         r = []
-        e = record.get(seed, None)
+        e = mapping.get(seed, None)
 
         # handle text
         if e is not None:
@@ -411,25 +414,25 @@ class MiningDataField(object):
                 r.append(Field(self._get_text(e.text), ''))
         else:
             if seed.text and seed.text.strip():
-                r.append(Field('', ''))
+                r.append(Field(u'', ''))
 
         # handle children
         for child in seed:
-            r.extend(self._extract_element(child, record))
+            r.extend(self._extract_element(child, mapping))
 
         # handle tail
         if e is not None:
             if seed.tail and seed.tail.strip():
-                r.append(Field(self._get_text(e.tail) or '', ''))
+                r.append(Field(self._get_text(e.tail) or u'', ''))
         else:
             if seed.tail and seed.tail.strip():
-                r.append(Field('', ''))
+                r.append(Field(u'', ''))
 
         return r
 
     def _get_text(self, text):
         if text != None:
-            if isinstance(text, unicode):
-                return text.encode('utf8')
-            return text.strip()
-        return ''
+            if not isinstance(text, unicode):
+                return text.decode('utf8', 'ignore')
+            return text
+        return u''
