@@ -4,7 +4,8 @@ from lxml.html.clean import Cleaner
 
 class DomTreeBuilder(object):
     def __init__(self, html):
-        cleaner = Cleaner(style=True, page_structure=False, remove_tags=('br',), )
+        cleaner = Cleaner(style=True, page_structure=False, \
+                          remove_tags=('br',))
         self.html = cleaner.clean_html(html)
 
     def build(self):
