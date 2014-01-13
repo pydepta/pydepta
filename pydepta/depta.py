@@ -1,12 +1,32 @@
 from urllib import urlopen
 from scrapely import HtmlPage, Scraper, TemplateMaker, best_match, InstanceBasedLearningExtractor
 from lxml.html import tostring
-from scrapely.extraction.regionextract import *
+from scrapely.extraction.regionextract import (RecordExtractor, BasicTypeExtractor, TemplatePageExtractor, \
+                                               TraceExtractor, labelled_element, attrs2dict)
 from scrapely.extraction.similarity import first_longest_subsequence
+from scrapely.template import FragmentNotFound, FragmentAlreadyAnnotated
 from w3lib.encoding import html_to_unicode
 
 from .htmls import DomTreeBuilder
 from .mdr import MiningDataRegion, MiningDataRecord, MiningDataField
+
+class DeptaTemplateMaker(TemplateMaker):
+
+    def annotate(self, field, score_func, best_match=False):
+        """Annotate a field, but unlike TemplateMaker, it simply try next match field if need.
+        """
+        indexes = self.select(score_func)
+        if not indexes:
+            raise FragmentNotFound("Fragment not found annotating %r using: %s" %
+                                   (field, score_func))
+        if best_match:
+            del indexes[1:]
+        for i in indexes:
+            try:
+                if self.annotate_fragment(i, field):
+                    break
+            except FragmentAlreadyAnnotated:
+                pass
 
 class DeptaExtractor(RecordExtractor):
     """
@@ -19,7 +39,7 @@ class DeptaExtractor(RecordExtractor):
     def extract(self, page, start_index=0, end_index=None, ignored_regions=None, **kwargs):
         if ignored_regions is None:
             ignored_regions = []
-        region_elements = sorted(self.extractors + ignored_regions, key=lambda x: _labelled(x).start_index)
+        region_elements = sorted(self.extractors + ignored_regions, key=lambda x: labelled_element(x).start_index)
         pindex, sindex, attributes = self._doextract(page, region_elements, start_index,
                                            end_index, **kwargs)
 
@@ -32,7 +52,7 @@ class DeptaExtractor(RecordExtractor):
 
         # if the number of extracted data match
         if len(items) == len(region_elements):
-            r.append(_attrs2dict(items))
+            r.append(attrs2dict(items))
 
             # if there are remaining items, extract recursively backward
             if sindex and sindex < end_index:
@@ -105,7 +125,7 @@ class Depta(object):
         """
         assert data, "Cannot train with empty data"
         htmlpage = self._region_to_htmlpage(seed)
-        tm = TemplateMaker(htmlpage)
+        dtm = DeptaTemplateMaker(htmlpage)
         if isinstance(data, dict):
             data = data.items()
 
@@ -115,8 +135,8 @@ class Depta(object):
             for value in values:
                 if isinstance(value, str):
                     value = value.decode(htmlpage.encoding or 'utf-8')
-                tm.annotate(field, best_match(value), best_match=False)
-        self.scraper.add_template(tm.get_template())
+                dtm.annotate(field, best_match(value))
+        self.scraper.add_template(dtm.get_template())
 
 
     def infer(self, html='', **kwargs):
