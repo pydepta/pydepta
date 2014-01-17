@@ -1,0 +1,2192 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>Restaurant Nelsons Zeeland - Book your table online now - DiningCity</title>
+<meta name="geo.position" content="51.731894;3.772779"/>
+<meta name="description" content="" />
+<meta name="geo.region"  content="nl">
+<meta name="keywords" content="Restaurant Nelsons, Renesse, Zeeland, Restaurant Renesse DiningCity.com | DiningCity.com" />
+<meta http-equiv="Content-Language" content="en">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="SHORTCUT ICON" href="http://c754417.r17.cf2.rackcdn.com/images/favicon.ico">
+
+
+
+<link rel="stylesheet" type="text/css" href="http://c754417.r17.cf2.rackcdn.com/css/general.22f91a17f404174292214cdccfdffac069999c0e.min.css" />
+<link rel="stylesheet" type="text/css" href="http://c754417.r17.cf2.rackcdn.com/css/restaurant.22f91a17f404174292214cdccfdffac069999c0e.min.css" />
+
+
+
+
+
+
+
+
+
+
+<!-- ISOCODE "nl -->
+
+<script type="text/javascript"	src="https://apis.google.com/js/plusone.js"></script>
+
+<script type="text/javascript"	src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+
+
+<script type="text/javascript" src="http://c754417.r17.cf2.rackcdn.com/js/general.22f91a17f404174292214cdccfdffac069999c0e.min.js"></script>
+<script type="text/javascript" src="http://c754417.r17.cf2.rackcdn.com/js/restaurant.22f91a17f404174292214cdccfdffac069999c0e.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+var timeblocks = [];
+var restaurant_id = '9494';
+var restaurant_name = 'Nelsons';
+var locale = 'en_NL';
+var localeLng = 'en';
+
+
+$(document).ready(function () {
+    // after reload of page, ensure the correct menu is active.
+    setMenuActive('menu1');
+
+    if (('menu1' == 'menu3') || ('menu1' == 'menu5')) {
+        showMediaTab('t1');
+    }
+
+    $('.ad-gallery').adGallery({
+        thumb_opacity: 0.4,
+        effect: 'fade',
+        slideshow: {
+            start_label: '',
+            stop_label: '',
+            stop_on_scroll: true, // Should the slideshow stop if the user scrolls the thumb list?
+            countdown_prefix: '', // Wrap around the countdown
+            countdown_sufix: ''
+        }
+    });
+
+    if ( $.browser.msie ) {
+        if($.browser.version == 7.0) {
+            $('.ad-nav').css('margin-top', '17px');
+            $('input#lunch').css('margin-bottom', '0px');
+            $('#error_nl').css('margin-top', '-22px');
+        }
+    }
+
+    var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+    if(is_chrome)  $('#error_nl2').css('margin-top','-20px');
+
+    $('#description_opener').click(function() {
+
+        showTab1();
+        $('#description_dialog').dialog('open');
+        $(".ui-dialog-titlebar").hide();
+        return false;
+    });
+
+    $("div.textmore").hide();
+
+
+    var no = 0;
+    for(i = 1; i < 20; i++) {
+        if($('#inf_' + i).length) { // exist
+            if(no == 0) {
+                no = i;
+            }
+        }
+    }
+
+    j = 1;
+    for(i = no; i < 20; i++) {
+
+        if($('#inf_' + i).length) { // exist
+
+            if(j%2==1)
+            {
+                $('#inf_' + i).addClass('light_blue');
+
+            }
+            j++;
+        }
+    }
+
+
+    // media box tab click handler
+    $('.tabbing ul:first li a').click(function() {
+        $('.tabbing ul li a').removeClass('select');
+        $(this).addClass('select');
+        $(this).parent().parent().parent().children('div').hide();
+        $('#conten'+$(this).attr('rel')).show();
+    });
+
+// lunch dinner tab click handler; shows the openings times for dinner and lunch
+    $('.tabbing_below ul li a').click(function() {
+        $('.tabbing_below ul li a').removeClass('active');
+        $(this).addClass('active');
+        $(this).parent().parent().parent().parent().children('div').hide();
+        $(this).parent().parent().parent().parent().find('.tabbing_below').show();
+        //$(this).parent().parent().parent().children('div').show();
+        $('#conten'+$(this).attr('rel')).show();
+    });
+
+
+    /* tab width in % */
+    mvt = 0;
+    movie = 'false';
+    vt = 'false';
+    ismovie = true;
+    isvt = true;
+
+    if(movie != 'true') {
+        mvt++;
+        ismovie = false;
+    }
+
+    if(vt != 'true') {
+        mvt++;
+        isvt = false;
+    }
+
+    if(mvt != 0) {
+        if(mvt == 1) {
+            width = 33; // %
+            for(i = 1; i <= 4; i++) {
+
+                $('#lt' + i ).css('width', width + '%');
+                $('#at' + i ).css('width', '100%');
+                $('#st' + i ).css('width', '71%');
+                $('#st' + i ).css('text-align', 'center');
+                if(i == 1) {
+                    $('#st' + i ).css('width', '94px');
+                }
+                if(i == 4) {
+                    $('#st' + i ).css('width', '99px');
+                    $('#st' + i ).css('white-space', 'nowrap');
+                    $('#st' + i ).removeClass('last_span');
+                    $('#st' + i ).addClass('last_span33');
+
+                }
+            }
+        }
+
+        if(mvt == 2) {
+            width = 50; // %
+
+            for(i = 1; i <= 4; i++) {
+
+                $('#lt' + i ).css('width', width + '%');
+                $('#at' + i ).css('width', '100%');
+                $('#st' + i ).css('width', '162px');
+                $('#st' + i ).css('text-align', 'center');
+                if(i == 4) {
+                    $('#st' + i ).css('width', '162px');
+                    $('#st' + i ).css('white-space', 'nowrap');
+
+                }
+            }
+        }
+    }
+
+    // calendar reservation
+    $(function() {
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker({
+                minDate: 0,
+                showOn: 'button',
+                buttonImage: 'common/images/calendar.gif',
+                buttonImageOnly: true,
+                showOtherMonths: true,
+                selectOtherMonths: false,
+                constrainInput: true,
+                beforeShowDay: noWeekends,
+                buttonText: 'Select date',
+                onSelect: function(dateText, inst) {
+                    setDatepickerDate(dateText);
+                }
+            });
+
+        var date = new Date();
+        date.setTime('1388372520972');
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker( "setDate" , date );
+
+        setDatepickerDate();
+
+        $('#dinner').css('color', 'white');
+        $('#event_dinner').css('color', 'white');
+
+        if ($("#datepicker").length > 0) {
+            $.datepicker.setDefaults($.datepicker.regional[localeLng]);
+        }
+
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker( "setDate" , date );
+
+        fdate = "";
+        if ($("#datepicker").length > 0)
+            fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+
+        $('#pickdate').html(fdate);
+        if ($("#datepicker").length > 0)
+            fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+
+        $('#reservdate').val(fdate);
+        $('#error_rd').hide();
+
+        var day;
+        if ($("#datepicker").length > 0)
+            day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+
+        $.cookie('selectedDay', day, {path: '/', expires: 1});
+        if($('#lunch').hasClass('right_button_down'))
+            addDayLunch(day);
+        else
+            addDayDinner(day);
+    });
+
+    // event date picker
+
+    $("#event_datepicker").datepicker({
+        minDate: 0,
+        showOtherMonths: true,
+        selectOtherMonths: false,
+        constrainInput: true,
+        beforeShowDay: checkTimeblockDate,
+        buttonText: 'Select date',
+        onSelect: updateEventDate
+    });
+    if ($("#event_datepicker").length > 0) {
+        $.datepicker.setDefaults($.datepicker.regional[localeLng]);
+    }
+
+    // set aal setting for the event.
+    showEvent();
+
+    // validation rules...
+    $("#saveReview").validate({
+        rules: {
+            review_firstname: {
+                required: true
+            },
+            review_lastname: {
+                required: true
+            },
+            review_email: {// compound rule
+                required: true,
+                email: true
+            },
+            review_text: {
+                required: true,
+                minlength: 10
+            },
+            j_captcha_response: {
+                required: true
+            }
+        },
+        messages: {
+            // TODO: from bundles
+            review_firstname: 'required',
+            review_lastname: 'required',
+            review_text: {
+                required: 'required',
+                minlength: 'Review is too short'
+            },
+            review_email: {
+                required: 'required',
+                email: 'emailformat'
+            },
+            j_captcha_response: 'required'
+        }
+    });
+
+
+    $("#saveReservation").validate({
+        rules: {
+            //  reservdate: "required",// simple rule, converted to {required:true}
+            email: {// compound rule
+                required: true,
+                email: true
+            },
+            firstname: {
+                required: true
+            },
+            lastname: {
+                required: true
+            },
+            numberofpeople: {
+                required: true,
+                min: 1,
+                digits: true
+            },
+            mobilenumber: {
+                required: true
+            }
+        },
+        messages: {
+            //   reservdate: error.date.required,
+            firstname: 'required',
+            lastname: 'required',
+            mobilenumber: 'required',
+            email: 'required',
+            numberofpeople: 'required'
+        }
+    });
+
+
+    $("#event_saveReservation").validate({
+        rules: {
+            //  reservdate: "required",// simple rule, converted to {required:true}
+            event_email: {// compound rule
+                required: true,
+                email: true
+            },
+            event_hour: {
+                required: true
+            },
+            event_firstname: {
+                required: true
+            },
+            event_lastname: {
+                required: true
+            },
+            event_numberofpeople: {
+                required: true,
+                min: 1,
+                max:8,
+                digits: true
+            },
+            event_mobilenumber: {
+                required: true
+                //   digits: true
+            }
+        },
+        messages: {
+            //   reservdate: error.date.required,
+            event_firstname: 'required',
+            event_mobilenumber: 'required',
+            event_numberofpeople: '',
+            event_email: 'required'
+        }
+    });
+
+
+    // hide title bar..
+    $(".ui-dialog-titlebar").hide();
+
+    var placereservation = location.getQueryString("placereservation");
+    if (placereservation == "yes") {
+        $('img[name="captcha"]').attr('src', '/captcha/jcaptcha.jpg?i=' + (Math.floor(Math.random()*1000000)+1));
+        $('.tour').hide();
+        $('#reservation_dialog').dialog('open');
+    }
+    updateCalendar();
+});
+
+// set menu highlight
+function setMenuActive(a) {
+    if (a != null) {
+        $('#menu1').removeClass('active');
+        $('#menu2').removeClass('active');
+        $('#menu3').removeClass('active');
+        $('#menu4').removeClass('active');
+        $('#menu5').removeClass('active');
+        $('#menu7').removeClass('active');
+        $('#reservation_opener5').removeClass('active');
+
+        $('#calendar').removeClass('active');
+        $('#event_').removeClass('active');
+        $('#' + a).addClass('active');
+    }
+}
+
+
+
+function getMediaContent(restId, content) {
+    var loader =  "<img  style=\"position: relative; left: 170px; top: 150px;\" src=\"/common/images/review-loader.gif\" alt=\"\" />";
+
+    if(content == 'ipix') {
+        $('#ipixHtml').html(loader);
+    }
+
+    if(content == 'movie') {
+        $('#movieHtml').html(loader);
+    }
+
+    $.ajax({
+                type : "GET",
+                url : "/en/zeeland/restaurant_nelsons/getmediacontent?restId=" + restId + '&content=' + content,
+
+                success: function (text) {
+
+                    if(content == 'ipix') {
+                        $('#ipixHtml').html(text.toString());
+                    }
+
+                    if(content == 'movie') {
+                        $('#movieHtml').html(text.toString());
+                    }
+                }
+            }
+    );
+}
+
+
+
+
+/* MAPS */
+var mapbig;
+var mapitems = new Array();
+var city = 'amsterdam';
+
+var streetview = null;
+function load() {
+    position = new google.maps.LatLng(51.7318937, 3.77277900000001);
+    myPOV = {pitch:-20};
+    svOpts = {latlng:position, pov:myPOV};
+    loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.77277900000001);
+}
+
+function resize() {
+    //console.log("resize");
+    loadRestaurantMap('restaurant_nelsons', 51.7318937, 3.77277900000001);
+}
+
+// slider for reviews
+
+
+
+function validateReviewForm() {
+    $("input[name='review_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ''
+        }
+    });
+
+    $("textarea[name='review_text']").rules("add", {
+        required: true,
+        minlength: 10,
+        messages: {
+            required: 'required',
+            minlength: 'Review is too short'
+        }
+    });
+
+    var validate = $("#saveReview").valid();
+    if(validate) {
+        return true;
+    } else { return false; }
+}
+
+var disabledDays = [""];
+
+function updateCalendar() {
+
+    var closedDinner = [""
+
+    ];
+    var closedLunch = [""
+
+    ];
+
+    if($('#dinner').hasClass('left_button_down')) {
+        disabledDays = closedDinner;
+        if ($("#datepicker").length > 0)
+            $('#datepicker').datepicker('refresh');
+
+    } else {
+        disabledDays = closedLunch;
+        if ($("#datepicker").length > 0)
+            $('#datepicker').datepicker('refresh');
+    }
+}
+
+function event_updateCalendar() {
+    $('#event_datepicker').datepicker('refresh');
+    updateEventDate();
+}
+
+
+/* utility functions */
+function checkTimeblockDate( date ) {
+    var number_of_people =  $('#event_amount').val();
+
+    for (var i = 0 ; i < timeblocks.length ; i++ ) {
+        var from = new Date(timeblocks[i].from_date);
+
+        if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people) {
+
+            if($('#event_dinner').hasClass('left_button_down')) {
+
+                if (timeblocks[i].type == 3 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+                    return [true];
+            } else {
+                if (timeblocks[i].type == 2 && date.getDate() == from.getDate() && date.getMonth() == from.getMonth() && date.getFullYear() == from.getFullYear())
+                    return [true];
+            }
+        }
+    }
+    return [false,'ui-datepicker-closed'];
+}
+
+function nationalDays(date) {
+    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+    for (i = 0; i < disabledDays.length; i++) {
+        if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 ) {
+            return [false,'ui-datepicker-closed'];
+        }
+    }
+    return [true];
+}
+
+function noWeekends(date) {
+    return  nationalDays(date);
+}
+
+function setDatepickerDate(dateText) {
+    if ($("#datepicker").length <= 0)
+        return;
+    fdate = $.datepicker.formatDate('DD, d MM, yy', $("#datepicker").datepicker('getDate'));
+    $('#pickdate').html(fdate);
+    fdate = $.datepicker.formatDate('dd/mm/yy', $("#datepicker").datepicker('getDate'));
+    $('#reservdate').val(fdate);
+    $('#error_rd').hide();
+
+    var day;
+    day = $("#datepicker").datepicker('getDate').toString().split(' ')[0];
+    $.cookie('selectedDay', day, {path: '/', expires: 1});
+
+    if($('#lunch').hasClass('right_button_down')) {
+        addDayLunch(day);
+    } else {
+        addDayDinner(day);
+    }
+}
+
+function updateEventDate() {
+    fdate = $.datepicker.formatDate('DD, d MM, yy', $("#event_datepicker").datepicker('getDate'));
+    $('#event_pickdate').html(fdate);
+    fdate = $.datepicker.formatDate('dd/mm/yy', $("#event_datepicker").datepicker('getDate'));
+    $('#event_reservdate').val(fdate);
+    $('#event_error_rd').hide();
+
+    if($('#event_lunch').hasClass('right_button_down')) {
+        setEventTimes($("#event_datepicker").datepicker('getDate'),2); // lunch type
+    } else {
+        setEventTimes($("#event_datepicker").datepicker('getDate'),3); // dinner type
+    }
+}
+
+function addDayLunch(day) {
+    if(day == 'Mon') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Tue') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Wed') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Thu') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Fri') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Sat') {
+        addToSelect('12:00 - 17:00');
+    }
+    if(day == 'Sun') {
+        addToSelect('12:00 - 17:00');
+    }
+}
+
+function addDayDinner(day) {
+    if(day == 'Mon') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Tue') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Wed') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Thu') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Fri') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Sat') {
+        addToSelect('17:00 - 21:00');
+    }
+    if(day == 'Sun') {
+        addToSelect('17:00 - 21:00');
+    }
+}
+
+function addToSelect(inHours) {
+
+    if(inHours.toString().indexOf("-") < 0) {
+        if ($("#datepicker").length > 0)
+            $("#datepicker").datepicker();
+        $('#hour').children().remove();
+        return;
+    }
+    var hours, begin, end, bh, eh, bm, em;
+    hours = inHours.toString();
+    begin = hours.split('-')[0].toString();
+    end = hours.split('-')[1].toString();
+    bh = begin.split(':')[0].toString();
+    eh = end.split(':')[0].toString();
+    bm = begin.split(':')[1].toString();
+    em = end.split(':')[1].toString();
+
+    $('#hour').children().remove();
+    startHour = parseInt(bh);
+    endHour =  parseInt(eh);
+
+    if (startHour > endHour)
+        endHour = endHour + 24;
+
+    var startMinute = parseInt(bm);
+    var endMinute =  parseInt(em);
+
+    // put openinghours in selectbox
+    for(var h = startHour; h <= endHour; h++)  {
+        for(var m = (h == startHour ? (startMinute/30) : 0 ) ; m <= (h == endHour ? (endMinute/30) : 1) ; m++ ) {
+            var timeStr = h%24+ ":" + (m*30 == 0 ? "00" : m*30) + " Hour";
+            $('#hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+        }
+    }
+}
+
+
+function setEventTimes( date, type ) {
+    $('#event_hour').children().remove();
+    var number_of_people =  $('#event_amount').val();
+
+    for (var i = 0 ; i < timeblocks.length ; i++ ) {
+
+        var fdatetime = timeblocks[i].from_dateformatted.split(" ");
+        var fdate = fdatetime[0].split("-");
+        var ftime = fdatetime[1].split(":");
+
+        if ((timeblocks[i].capacity-timeblocks[i].booked) >= number_of_people && timeblocks[i].type == type && date.getDate() == fdate[0] && (date.getMonth()+1) == fdate[1] && date.getFullYear() == fdate[2]) {
+
+            var tdatetime = timeblocks[i].to_dateformatted.split(" ");
+            var ttime = tdatetime[1].split(":");
+
+            var startHour = ftime[0];
+            var startMinute = ftime[1];
+            var endHour = ttime[0];
+            var endMinute = ttime[1];
+
+            if (startHour > endHour)
+                endHour = endHour + 24;
+
+            for(var h = startHour; h <= endHour; h++)  {
+                for(var m = (h == startHour ? (startMinute/15) : 0 ) ; m <= (h == endHour ? (endMinute/15) : 3) ; m++ ) {
+                    var timeStr = h%24+ ":" + (m*15 == 0 ? "00" : m*15) + " Hour";
+                    $('#event_hour').append($('<option id="houroption"></option>').val(timeStr).html(timeStr));
+                }
+            }
+
+        }
+    }
+}
+
+function displayRestaurantContent() {
+    param = "";
+    if(param == null || param == '' || isNaN(param)) {
+        $('.middle_content').show();
+        $('#image_section').show();
+        $('.mid_secton').show();
+        $('.right_secton').show();
+    }
+}
+
+function validateReservationForm() {
+    $("#amount").rules("add", {
+        required: true,
+        min: 1,
+        digits: true,
+        messages: {
+            required: "",
+            min: "",
+            digits: ""
+        }
+    });
+
+    $("input[name='reservation_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
+
+    var ok_nop = $("#saveReservation").validate().element("#amount");
+    if(!ok_nop) {
+        $('#error_nop').show();
+    } else {
+        $('#error_nop').hide();
+    }
+
+    var ok_nl = $("#saveReservation").validate().element("input[name='reservation_newsletter']");
+    if(!ok_nl) {
+        $('#error_nl').show();
+    } else {
+        $('#error_nl').hide();
+    }
+
+    var other = $("#saveReservation").valid();
+    var validate = ok_nop && other && ok_nl;
+    return validate;
+}
+
+function saveNewReservation() {
+    var validate = true;
+    if(validate) {
+        return true;
+    }
+}
+
+
+function sendGuestsEmail() {
+    var validate = true;
+
+    if(validate) {
+        return true;
+    }
+}
+
+
+// event reservation form
+function event_validateReservationForm() {
+
+    $("#event_amount").rules("add", {
+        required: true,
+        min: 1,
+        digits: true,
+        messages: {
+            required: "",
+            min: "",
+            digits: ""
+        }
+    });
+    $("input[name='event_reservation_newsletter']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
+    $("select[name='event_hour']").rules("add", {
+        required: true,
+        messages: {
+            required: "required"
+        }
+    });
+    var ok_nop = $("#event_saveReservation").validate().element("#event_amount");
+    // alert(ok);
+
+    if(!ok_nop) {
+        $('#event_error_nop').show();
+    } else {
+        $('#event_error_nop').hide();
+    }
+    var ok_nl = $("#event_saveReservation").validate().element("input[name='event_reservation_newsletter']");
+
+    if(!ok_nl) {
+        $('#event_error_nl').show();
+    } else {
+        $('#event_error_nl').hide();
+    }
+    var other = $("#event_saveReservation").valid();
+    var validate = ok_nop && other && ok_nl;
+    return validate;
+}
+
+
+function event_saveNewReservation() {
+    var validate =  event_validateReservationForm();
+    $("#event_reservation_dialog").parent().css('z-index', '1000');
+    $('#event_srLoader').css('display', 'block');
+}
+
+
+function validateContactForm() {
+    $("textarea[name='message']").keyup(function() {
+        $('#sendContact').validate().element(this)==false ? $('#error_m').show() : $('#error_m').hide()
+    });
+    $("#sendContact").validate({
+        rules: {
+            name_surname: {
+                required: true
+            },
+            email_address: {// compound rule
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            name_surname: 'required',
+            email_address: 'required'
+        }
+    });
+    var other =  $("#sendContact").valid();
+    $("textarea[name='message']").rules("add", {
+        required: true,
+        messages: {
+            required: ""
+        }
+    });
+    var ok_m = $("#sendContact").validate().element("textarea[name='message']");
+    if(!ok_m) {
+        $('#error_m').show();
+    } else {
+        $('#error_m').hide();
+    }
+    var validate =  other && ok_m;
+    if(validate) {
+        $("#contact_dialog").parent().css('z-index', '1000');
+    }
+}
+
+String.prototype.startsWith = function(str){
+    return (this.indexOf(str) == 0);
+}
+
+
+$("#tabs").tabs();
+$("a#readmore").click(function () {
+    if($("a").hasClass("readmore")) {
+        $("div.text").hide();
+        $("div.textmore").show();
+        $("a.readmore").text("read less");
+        $("a.readmore").addClass("readless");
+        $("a.readmore").removeClass("readmore");
+        $('div.mid_secton').css('left', $('div.mid_secton').position().left);
+        $('div.mid_secton').addClass('overlay');
+    }
+    else {
+        $("div.textmore").hide();
+        $("div.text").show();
+        $("a.readless").text("Read more");
+        $("a.readless").addClass("readmore");
+        $("a.readless").removeClass("readless");
+        $('div.mid_secton').removeClass('overlay');
+    }
+});
+
+function showTab1() {
+    $('#popup11').show();
+    $('#popup22').hide();
+    $('#p1tab2').removeClass('active');
+    $('#p1tab1').addClass('active');
+
+    $("#reservation_dialog").dialog("option", "height", 600);
+
+    if($("#iframe").length > 0) {
+        //$("#reservation_dialog").parent().css("height", "360px");
+        $("#reservation_dialog").dialog("option", "width", 380);
+        $("#reservation_dialog").dialog("option", "height", 500);
+        //$("#reservation_dialog").css("height", 455);
+
+    }
+}
+
+function showTab2() {
+
+    var validate = validateReservationForm();
+
+    if(validate) {
+        updateTab2();
+        $('#popup11').hide();
+        $('#popup22').show();
+        $('#p2tab1').removeClass('active');
+        $('#p2tab2').addClass('active');
+
+        $("#reservation_dialog").dialog("option", "height", 392);
+    }
+}
+
+function updateTab2() {
+    var hour = $('select#hour').val();
+    //alert(hour);
+    $('#tab2hour').html(hour);read
+
+    var nop = $('#amount').val();
+    $('#tab2person').html(nop + " ");
+
+
+    if ($("#datepicker").length > 0)
+        fdate = $.datepicker.formatDate('d M yy', $("#datepicker").datepicker('getDate'));
+    //   $('#pickdate').html(fdate);
+    //var date = $('#reservdate').val();
+    $('#tab2date').html(fdate);
+
+    // update popup 3
+    $('#popup3date').html(fdate);
+    $('#popup3hour').html(hour);
+    $('#popup3person').html(nop);
+
+    var name = $('input[name="firstname"]').val();
+    $('#popup3name').html(name);
+    var surname = $('input[name="lastname"]').val();
+    $('#popup3surname').html(surname);
+    var email = $('input[name="email"]').val();
+    $('#popup3email').html(email);
+    var mobile_number = $('input[name="mobilenumber"]').val();
+    $('#popup3mnumber').html(mobile_number);
+}
+
+// event fns
+function event_showTab1() {
+    $('#event_popup11').show();
+    $('#event_popup22').hide();
+    $('#event_p1tab2').removeClass('active');
+    $('#event_p1tab1').addClass('active');
+
+    $("#event_reservation_dialog").dialog("option", "height", 600);
+}
+
+function event_showTab2() {
+
+    var validate = event_validateReservationForm();
+
+    if(validate) {
+        event_updateTab2();
+        $('#event_popup11').hide();
+        $('#event_popup22').show();
+        $('#event_p2tab1').removeClass('active');
+        $('#event_p2tab2').addClass('active');
+
+        $("#event_reservation_dialog").dialog("option", "height", 392);
+    }
+}
+
+function event_updateTab2() {
+    var hour = $('select#event_hour').val();
+    //alert(hour);
+    $('#event_tab2hour').html(hour);
+
+    var nop = $('#event_amount').val();
+    $('#event_tab2person').html(nop + " ");
+
+
+    fdate = $.datepicker.formatDate('d M yy', $("#event_datepicker").datepicker('getDate'));
+    //   $('#pickdate').html(fdate);
+    //var date = $('#reservdate').val();
+    $('#event_tab2date').html(fdate);
+
+    // update popup 3
+    $('#popup3date').html(fdate);
+    $('#popup3hour').html(hour);
+    $('#popup3person').html(nop);
+
+    var name = $('input[name="event_firstname"]').val();
+    $('#popup3name').html(name);
+    var surname = $('input[name="event_lastname"]').val();
+    $('#popup3surname').html(surname);
+    var email = $('input[name="event_email"]').val();
+    $('#popup3email').html(email);
+    var mobile_number = $('input[name="event_mobilenumber"]').val();
+    $('#popup3mnumber').html(mobile_number);
+
+
+}
+
+function openMessage() {
+
+    $('#send_message_dialog').dialog('open');
+    $("#send_message_dialog").parent().css('height', '588px');
+}
+
+function showDescription() {
+
+    $('html,body').animate({scrollTop:$('html').offset().top}, 0,
+
+            function() {
+                var y = $('.readmore').offset().top;
+                var x = $('.readmore').offset().left;
+                //alert(x)
+                $('.tour').hide();
+                $("#description_dialog").dialog("option", "position", [x - 13, y - 100]);
+                $('#description_dialog').dialog('open');
+            }
+    );
+}
+
+
+function showEvent() {
+    //alert(id);
+    $('input[name="event_id"]').val();
+    $('input[name="event_edate"]').val();
+    $('input[name="event_sdate"]').val();
+
+    // set timeblocks
+
+}
+
+</script>
+
+
+
+
+</head>
+<body>
+<div id="layout">
+<div class="layout_inner png">
+<!-- Header  start here -->
+
+
+
+
+<div id="header">
+    <span class="logo">
+
+
+
+
+
+		        <a href="/en/zeeland" >
+
+
+
+                    <img src="http://c754417.r17.cf2.rackcdn.com/common/images/logo.png" alt="logo" class="png" /></a>
+    </span>
+    <div>
+        <div>
+            <ul>
+
+                <li style="cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;" class="nl">
+
+
+                    <a class="menuflag" href="/nl/zeeland/restaurant_nelsons">&nbsp;&nbsp;&nbsp;</a>
+
+                </li>
+
+                <li style="cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;" class="en">
+
+
+                    <a class="menuflag" href="/en/zeeland/restaurant_nelsons">&nbsp;&nbsp;&nbsp;</a>
+
+                </li>
+
+                <li style="color: #FFFFFF;cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="color: #FFFFFF;cursor: pointer; display: inline; list-style-type: none; margin-right: 8px; float: right;">DiningCity has over 100.000 restaurant reviews!</li>
+            </ul>
+        </div>
+        <div class="country" style="clear:right">
+
+
+            Restaurants in Zeeland
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    a.menuflag:link {text-decoration: none}      /* unvisited link */
+    a.menuflag:visited {text-decoration: none}  /* visited link */
+    a.menuflag:hover {text-decoration: none}  /* mouse over link */
+    a.menuflag:active {text-decoration: none}  /* selected link */
+</style>
+<!-- Header  end here -->
+
+<!--menu start-->
+
+
+
+
+<div class="menu_shadow">
+
+    <div id="menu_box">
+        <div class="menu">
+            <ul>
+                <li><a href="/countries" class="png">
+                    <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                    <span style="float:left">DiningCity Home</span>
+                </a></li>
+                <li><a href="/en/the+netherlands">
+                    <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                    <span style="float:left">The Netherlands</span>
+                </a></li>
+
+
+
+
+
+                <li>
+
+
+
+
+                    <a href="/en/zeeland">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;" ></span>
+                        <span  style="float: left;">Zeeland</span>
+                    </a>
+
+
+                </li>
+
+
+
+
+                <li>
+
+
+
+                    <a href="/en/zeeland/search">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;"></span>
+                        <span  style="float: left;">Search results</span>
+                    </a>
+
+
+
+                </li>
+
+
+
+
+                <li>
+
+
+
+
+                    <a href="/en/zeeland/restaurant_nelsons">
+                        <span style="width: 3px !important; height: 11px; margin-top: 1px;" ></span>
+                        <span  style="float: left;">Nelsons</span>
+                    </a>
+
+
+                </li>
+
+
+
+            </ul>
+        </div>
+
+        <form  accept-charset="UTF-8" id="searchFromMenu" action="/en/zeeland/search" method="post">
+
+
+            <div class="nav_right">
+                <div class="search_box">
+                    <input type="text" size="15" name="fulltextsearch" id="fulltextsearch" class="search_text">
+                </div>
+                <div class="image"><a onclick="$('#searchFromMenu').submit()"><span>Search</span></a></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $.ajaxSetup( { type: "post" } );
+
+
+
+
+        $("#fulltextsearch").autocomplete("/en/zeeland/autocomplete" ,
+
+                {
+
+                    width:350,
+                    scrollHeight: 420,
+                    selectFirst: false,
+                    matchCase: true,
+                    delay: 400,
+                    minChars: 2,
+                    cacheLength: 1,
+                    max: 40,
+                    disabled: true,
+                    formatItem: function(data, i, n, value) {
+                        var items = value.split("##");
+                        return "<img id='autoCompleteLogo' src='"+items[0]+"' />" +
+                                "<span  id='autoCompleteRestName'>" + items[1] +
+                                "</span><br><span id='autoCompleteAddress'>" + items[2]+", "+ items[3]+ "</span>";
+                    }
+                    ,
+                    formatResult: function(data, value) {
+                        var arr = value.split("##");
+                        return arr[1]+", "+arr[2];
+                    }
+                })
+                .result(function(event, item) {
+                    var myString = new String(item);
+                    var items = myString.split("##");
+                    window.location.href  = items[4];
+                });
+    });
+</script>
+<!-- menu end here -->
+
+
+
+
+
+
+
+
+<style type="text/css">
+    #sendContact label.error {
+        margin-top: -52px;
+        color: red;
+        width: auto;
+        float: right;
+    }
+</style>
+
+<div id="body_container" class="png">
+
+<input type="text" name="event_id" id="event_id" value="0" style="display: none;"/>
+<input type="text" name="event_edate" id="event_edate" value="0" style="display: none;"/>
+<input type="text" name="event_sdate" id="event_sdate" value="0" style="display: none;"/>
+
+<div id="restaurant">
+
+<div class="bread_crumbs">
+    <div class="left_nav">
+        <ul class="left">
+
+
+
+
+            <li><a href="/en/zeeland/moio_beach">Previous restaurant</a></li>
+
+
+        </ul>
+    </div>
+    <div class="right_nav">
+        <ul>
+
+
+
+
+            <li><a href="/en/zeeland/restaurant_oesterbeurs" class="arrow_right">Next restaurant</a></li>
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="content_section">
+    <div class="left_secton">
+        <ul>
+            <li><a id="menu1" href="/en/zeeland/restaurant_nelsons">Overview</a></li>
+            <li><a id="menu2" href="/en/zeeland/restaurant_nelsons/menu">Menu</a></li>
+
+            <li><a id="menu3" href="/en/zeeland/restaurant_nelsons/reviews">Reviews (0)</a></li>
+
+
+            <li><a id="menu5" href="/en/zeeland/restaurant_nelsons/map">Map &amp; route</a></li>
+
+            <li><a id="menu6" onclick="reservation_opener();" href="/en/zeeland/restaurant_nelsons/reservation">Reserve now</a></li>
+
+            <li><a id="menu7" href="/en/zeeland/restaurant_nelsons/contacting">Contact</a></li>
+
+
+
+
+            <li><a id="menu9" href="/en/zeeland/eventscalendar" id="calendar"><div class="calendar_pic"></div>
+                <!-- <img src="http://c754417.r17.cf2.rackcdn.com/common/images/calander_icon.gif" alt="" />-->Calendar
+            </a></li>
+
+            <li></li>
+        </ul>
+    </div>
+
+
+
+
+
+    <div class="mid_secton" id="mid_secton">
+        <h2 style="width: 100%;">Nelsons</h2>
+        <h5 style="width: 100%;">Welcome home at Nelsons!</h5>
+        <p>Hogezoom 187<br />
+            4325 BH Renesse</p>
+
+
+        <a onclick="openContactDialog()" href="/en/zeeland/restaurant_nelsons/reservation" class="link_button02">
+            Reserve now
+        </a>
+
+        <div class="box">
+            <div class="mid">
+                <div class="top">
+                    <div class="bottom">
+
+                        <p><span><img src="http://c754417.r17.cf2.rackcdn.com/common/images/icon_09.gif" alt="" /></span>
+                            <em>Average rating</em>
+                            <strong class="avg"></strong>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text">Welcome in restaurant Nelsons in Renesse.<br><br>You feel at home when you are in our restaurant.<br>You can come by us for a lunch, diner or a simple drink.<br><br></div>
+        <div id="description_dialog" style="display: none;padding: 0em 0em; background-color:transparent;">
+            <div class="pop_up" style="">
+                <div class="inner">
+                    <h4>Nelsons</h4>
+                    <a id="description_a" href="javascript:closeDescription();" class="description_close">Close</a>
+                    <p>Welcome in restaurant Nelsons in Renesse.<br><br>You feel at home when you are in our restaurant.<br>You can come by us for a lunch, diner or a simple drink.<br><br></p>
+                    <p> </p>
+                    <div class="break"></div>
+                </div>
+            </div>
+        </div>
+        <a class="readmore" id="description_opener" onclick="showDescription();">Read more</a>
+    </div>
+
+    <style type="text/css">
+        #saveReservation label.error {
+            margin-top: -52px;
+            color: red;
+            width: auto;
+            float: right;
+        }
+
+        #event_saveReservation label.error {
+            margin-top: -52px;
+            color: red;
+            width: auto;
+            float: right;
+        }
+        .overlay {
+
+            margin-left:500px;
+            background-color: white;
+            position: absolute;
+
+            left: 224px;
+            background-color: white;
+            z-index: 1;
+        }
+    </style>
+
+
+    <div class="right_secton" id="right_secton">
+        <div class="tab_section">
+            <div class="midbg">
+                <div class="bottombg">
+                    <div class="tabbing">
+                        <ul>
+                            <li id="lt1"><a id="at1" href="javascript:void(0);" class="select" rel="t1"><span id="st1" style="text-transform: uppercase;">2 Photos</span></a></li>
+
+
+
+
+
+                            <li class="" id="lt4"><a  id="at4" href="javascript:resize();" rel="t4" class="last_box"><span id="st4" class="last_span"  style="text-transform: uppercase;">Map &amp; route</span></a></li>
+                        </ul>
+                        <div class="carousel" id="content1" style="height: 330px;">
+
+                            <div id="gallery" class="ad-gallery">
+                                <div class="ad-image-wrapper">
+                                </div>
+                                <div class="ad-controls">
+                                </div>
+                                <div class="ad-nav">
+                                    <div class="ad-thumbs">
+                                        <ul class="ad-thumb-list">
+
+                                            <div>
+                                                <a href="http://media.diningcity.com/restaurantpictures/33033_std.jpg">
+                                                    <img style="background-color: white;" src="http://media.diningcity.com/restaurantpictures/33033_thumb.jpg" width="63" height="48" title="" alt="">
+                                                </a>
+                                            </div>
+
+
+                                            <div>
+                                                <a href="http://media.diningcity.com/restaurantpictures/33034_std.jpg">
+                                                    <img style="background-color: white;" src="http://media.diningcity.com/restaurantpictures/33034_thumb.jpg" width="63" height="48" title="" alt="">
+                                                </a>
+                                            </div>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video" id="content2"  style="height: 312px;">
+
+                            <div class="video_image">
+
+                            </div>
+                        </div>
+                        <div class="tour" id="content3" style="z-index: 10; height: 352px;">
+                            <div class="tour_image">
+
+
+                            </div>
+
+                        </div>
+                        <span class="clear"></span>
+                        <div class="route" id="content4"  style="height: 346px;">
+                            <div class="route_image">
+                                <div style="position: relative; width: 382px; height: 286px;">
+                                    <div id="mapstreet" style="width: 382px; height: 286px; z-index: 1 "></div>
+                                    <iframe id="shimmer" src="" frameborder="0" style="position: absolute;
+                                            right: 0px; top: 0px; width: 382px; height: 286px; "></iframe>
+                                    <div id="mapbig" style="top: 0px; left: 0px; width: 382px; height: 286px; position: absolute;"></div>
+                                </div>
+                            </div>
+                            <div class="rows">
+                                <form action="javascript: showGoogleMaps('Hogezoom 187, 4325 BH, Renesse' ,$('input[name=gmap_address]').val());" method="get">
+                                    <fieldset>
+                                        <label>Address:</label>
+                                        <div class="inputbg">
+                                            <input type="text" name="gmap_address" value="" />
+                                        </div>
+                                        <input type="button" name="" value="route" style="color: white; padding-right: 40px; padding-bottom: 4px;" class="button" onclick="showGoogleMaps('Hogezoom 187, 4325 BH, Renesse' ,$('input[name=gmap_address]').val());" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<div class="middle_content" id="middle_content">
+<div>
+    <div class="top_shadow png">&nbsp;</div>
+</div>
+<div class="left_panel">
+<div class="informatie png">
+    <h2>Information about the Restaurant</h2>
+    <div class="chain">
+        <ul>
+
+
+
+
+
+
+
+            <li id="inf_4"><em>Website</em><span><a rel="nofollow" target="_blank" href="http://www.nelsons.nl">Restaurant's website</a></span></li>
+
+
+
+
+
+            <style type="text/css">
+                option.imagebacked {
+                    padding: 2px 0 2px 20px;
+                    background-repeat: no-repeat;
+                    background-position: 1px 2px;
+                    vertical-align: middle;
+                }
+            </style>
+
+
+            <li id="inf_4"><em>Wheelchair accessible</em><span>
+                                                No
+                                            </span></li>
+
+
+
+            <li id="inf_5"><em>Parking</em><span>
+                                                Paid Parking
+                                            </span></li>
+
+
+
+
+
+            <li id="inf_7"><em>Smoking</em><span>
+                                                No seperate smoking area
+                                            </span></li>
+
+
+
+
+
+
+            <li id="inf_8">
+                <em>Location</em>
+                                                <span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		                                                                <a href="/en/zeeland/search?sopt=1747">Renesse</a>
+
+
+
+
+
+                                                </span>
+            </li>
+
+
+
+
+
+
+
+            <li id="inf_10">
+                <em>Cuisine</em>
+                                                <span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		                                                                <a href="/en/zeeland/search?sopt=43">French</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                </span>
+            </li>
+
+
+
+
+
+
+
+            <li id="inf_12">
+                <em>Extras</em>
+                                                <span>
+
+
+
+
+
+
+
+
+		                                                                <a href="/en/zeeland/search?sopt=25">Terrace</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                </span>
+            </li>
+
+
+
+
+
+
+
+            <li id="inf_13" ><em>Payment</em>
+                                            <span>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/MasterCard6.jpg" alt="" /></a>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/JCB4.jpg" alt="" /></a>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Pin11.gif" alt="Pin" /></a>
+
+                                                    <a href="#" class="card"><img src="http://media.diningcity.com/paymethods/Visa7.jpg" alt="" /></a>
+
+                                            </span>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="opening" id="opening">
+    <h2>Opening hours</h2>
+    <div class="tabbing_below">
+        <ul>
+            <li><a href="javascript:void(0);" class="active" rel="t111"><span style="text-transform: uppercase;">Dinner</span></a></li>
+            <li><a href="javascript:void(0);" class="" rel="t222"><span style="text-transform: uppercase;">Lunch</span></a></li>
+        </ul>
+    </div>
+    <div class="chain01" style="display:block" id="content111">
+        <ul>
+            <li class="light_gray"><em>
+                Monday
+            </em><span>
+                                            17:00 - 21:00
+
+                                        </span></li>
+            <li><em>Tuesday
+            </em><span>17:00 - 21:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Wednesday
+            </em><span>17:00 - 21:00
+
+                                        </span></li>
+            <li><em>Thursday</em>
+                                        <span>17:00 - 21:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Friday</em>
+                                        <span>17:00 - 21:00
+
+                                        </span></li>
+            <li><em>Saturday</em>
+                                        <span>17:00 - 21:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Sunday</em>
+                                        <span>17:00 - 21:00
+
+
+                                        </span></li>
+        </ul>
+    </div>
+    <span class="clear"></span>
+    <div class="chain01" style="display:none" id="content222">
+        <ul>
+            <li class="light_gray"><em>Monday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li><em>Tuesday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Wednesday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li><em>Thursday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Friday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li><em>Saturday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+            <li class="light_gray"><em>Sunday</em>
+                                        <span>12:00 - 17:00
+
+                                        </span></li>
+        </ul>
+    </div>
+</div>
+<div class="advertise">
+    <p>(Advertisement)</p>
+    <div class="banner02"><img src="http://c754417.r17.cf2.rackcdn.com/common/images/banner02.jpg" alt="" /></div>
+</div>
+<div class="bottom_link">
+
+    <a href="/en/zeeland/restaurant_nelsons/reservation" onclick="reservation_opener();" class="link_button02"><div class="mouse_pic"></div>
+        Reserve now
+    </a>
+
+
+    <a href="/en/zeeland/restaurant_nelsons/contacting" class="bottom_button01"><div class="phone_pic"></div><!--<span><img src="http://c754417.r17.cf2.rackcdn.com/common/images/icon_08.gif" alt="" /></span>-->
+        Telephone number
+    </a> </div>
+</div>
+
+<div class="right_panel png">
+
+    <a name="review_label" ></a>
+
+    <div id="reviews" class="review">
+        <h4 id="reviewnumber">0 Reviews</h4>
+        <p class="black_txt"></p>
+        <div class="visitor_review">
+            <div class="review_mid">
+                <div class="review_top">
+                    <div class="review_bottom">
+                        <div class="col_left">
+                            <ul>
+
+                                <li><em>Cuisine</em><span>
+
+	                                                        </span></li>
+
+                                <li><em>Service</em><span>
+
+	                                                        </span></li>
+
+                                <li><em>Atmosphere</em><span>
+
+	                                                        </span></li>
+
+                            </ul>
+                        </div>
+                        <div class="col_right"> <strong class="avg"></strong>
+                            <em>Average rating</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="plaats_review">
+
+            <a id="review_opener" href="/en/zeeland/restaurant_nelsons/createreview">Post your review</a>
+
+            <div class="review_more">
+                <a style="float:right "id="review_opener" href="/en/zeeland/restaurant_nelsons/reviews">&nbsp;&nbsp;&nbsp;&nbsp;Show all reviews</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="image_section" class="no_bg">
+    <h3 class="small">Nelsons visitors also visited</h3>
+
+    <ul>
+
+        <li>
+            <p><a href="/en/zeeland/restaurant_bottles"><img src="http://media.diningcity.com/restaurantpictures/m_rest26274_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Restaurant Bottles</span>
+        </li>
+
+        <li>
+            <p><a href="/en/zeeland/restaurant_interscaldes"><img src="http://media.diningcity.com/restaurantpictures/33778_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Inter Scaldes</span>
+        </li>
+
+        <li>
+            <p><a href="/en/zeeland/deeetkamermiddelburg"><img src="http://media.diningcity.com/restaurantpictures/m_rest7302_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>De Eetkamer</span>
+        </li>
+
+        <li>
+            <p><a href="/en/zeeland/restaurant_hetbadpaviljoen"><img src="http://media.diningcity.com/restaurantpictures/m_rest7199_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Het Badpaviljoen</span>
+        </li>
+
+        <li>
+            <p><a href="/en/zeeland/restaurant_aubergedesmoules"><img src="http://media.diningcity.com/restaurantpictures/27548_logo.jpg" alt="" width="150px" height="106px" /></a></p>
+            <span>Auberge des Moules</span>
+        </li>
+
+    </ul>
+</div>
+</div>
+
+
+<!-- Footer start here -->
+
+
+
+
+
+<div id="footer" class="png">
+<div class="footer_top">
+    <div class="col1">
+        <h5>Add a restaurant</h5>
+        <p>Add your restaurant to diningcity.com</p>
+
+
+        <a href="/en/zeeland/pages/restaurantadd" class="anchor">Add a restaurant <div class="link_arrow"></div></a> </div>
+
+    <div class="col2">
+        <h5>DiningCity newsletter</h5>
+        <p>Receive the hottest restaurant news from DiningCity.com</p>
+        <p class="email">Email address</p>
+        <div class="email_box">
+            <form id="footer_nl" onsubmit="return false;"  action="" method="post">
+                <div class="input_email">
+                    <input type="text" id="newsletter_email" name="newsletter_email" value=""/>
+                </div>
+                <div class="button02">
+                    <input type="image" src="http://c754417.r17.cf2.rackcdn.com/common/images/button02_empty.png" class="png" onclick="saveSubscription();"/>
+                    <span id="news_button" style="color: white; position: relative; left: 10px; top: -21px; cursor: pointer;" onclick="saveSubscription();">Subscribe</span>
+                </div>
+
+
+                <a style="color:#FFCC99;text-decoration:none;" href="/en/zeeland/pages//unsubscribe">Unsubscribe newsletter <div class="link_arrow"></div></a>
+
+            </form>
+        </div>
+    </div>
+    <div class="col3">
+        <h5>Add a restaurant</h5>
+        <p>Add your restaurant to diningcity.com</p>
+
+
+        <a href="/en/zeeland/pages/restaurantadd" class="anchor">Add a restaurant <div class="link_arrow"></div></a>
+
+
+        <div class="zoek_box">
+
+        </div>
+    </div>
+</div>
+<!-- Footer top here -->
+<!-- Footer middle start here -->
+<div class="footer_mid">
+<div class="static-footer">
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3>DiningCity local</h3>
+            <a href="/nl/amsterdam/" title="Restaurants in Amsterdam" lang="nl">Restaurants in Amsterdam</a>
+            <a href="/nl/rotterdam+en+zuid-holland+zuid/" title="Restaurants in Rotterdam" lang="nl">Restaurants in Rotterdam</a>
+            <a href="/nl/utrecht+en+het+gooi/" title="Restaurants in Utrecht" lang="nl">Restaurants in Utrecht</a>
+            <a href="/nl/den+haag+en+zuid-holland+noord/" title="Restaurants in Den Haag" lang="nl">Restaurants in Den Haag</a>
+            <a href="/nl/antwerpen/" title="Restaurants in Antwerpen" lang="nl">Restaurants in Antwerpen</a>
+            <a href="/nl/brussel/" title="Restaurants in Brussel" lang="nl">Restaurants in Brussel</a>
+            <a href="/de/berlin/" title="Restaurants in Berlin" lang="de">Restaurants in Berlin</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/de/wien/" title="Restaurants in Wien" lang="de">Restaurants in Wien</a>
+            <a href="/de/salzburg/" title="Restaurants in Salzburg" lang="de">Restaurants in Salzburg</a>
+            <a href="/hu/budapest/" title="&Eacute;ttermek - Budapest" lang="hu">&Eacute;ttermek - Budapest</a>
+            <a title="Restaurace v Praze" lang="cz">Restaurace v Praze (2012.)</a>
+            <a title="Restaurante din Bucuresti" lang="en">Restaurante din Bucuresti (2012)</a>
+            <a title="Restauranter i K&oslash;benhavn" lang="da">Restauranter i K&oslash;benhavn (2012)</a>
+            <a href="/fr/france/" title="Restaurants en Paris" lang="fr">Restaurants en Paris</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/it/roma+e+lazio/" title="Ristoranti a Roma" lang="it">Ristoranti a Roma</a>
+            <a href="/it/milano+e+lombardia/" title="Ristoranti a Milano" lang="it">Ristoranti a Milano</a>
+            <a href="/it/firenze+e+toscana/" title="Ristoranti a Firenze" lang="it">Ristoranti a Firenze</a>
+            <a href="/es/madrid/" title="Restaurantes en Madrid" lang="es">Restaurantes en Madrid</a>
+            <a href="/es/barcelona/" title="Restaurantes en Barcelona" lang="es">Restaurantes en Barcelona</a>
+            <a href="/en/dubai/" title="Restaurants in Dubai" lang="en">Restaurants in Dubai</a>
+            <a href="/en/new+york/" title="Restaurants in New York" lang="en">Restaurants in New York</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/cape+town/" title="Restaurants in Cape Town" lang="en">Restaurants in Cape Town</a>
+            <a href="/en/gardenroute/" title="Restaurants in Garden Route SA" lang="en">Restaurants in Garden Route SA</a>
+            <a href="/en/winelands/" title="Restaurants in Winelands SA" lang="en">Restaurants in Winelands SA</a>
+            <a href="/en/singapore+city/" title="Restaurants in Singapore" lang="en">Restaurants in Singapore</a>
+            <a href="/zh/shanghai/" title="&#39184;&#39302; &#19978;&#28023;" lang="zh">&#39184;&#39302; &#19978;&#28023;</a>
+            <a href="/zh/hong+kong+city/" title="&#39184;&#24307; &#39321;&#28207;" lang="zh">&#39184;&#24307; &#39321;&#28207;</a>
+            <a href="/zh/beijing/" title="&#39184;&#39302; &#21271;&#20140;" lang="zh">&#39184;&#39302; &#21271;&#20140;</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3>DiningCity international</h3>
+            <a href="/en/amsterdam/" title="Restaurants in Amsterdam" lang="en">Restaurants in Amsterdam</a>
+            <a href="/en/rotterdam/" title="Restaurants in Rotterdam" lang="en">Restaurants in Rotterdam</a>
+            <a href="/en/utrecht/" title="Restaurants in Utrecht" lang="en">Restaurants in Utrecht</a>
+            <a href="/en/the+hague+and+south-holland/" title="Restaurants in The Hague" lang="en">Restaurants in The Hague</a>
+            <a href="/en/antwerp/" title="Restaurants in Antwerp" lang="en">Restaurants in Antwerp</a>
+            <a href="/en/brussels/" title="Restaurants in Brussels" lang="en">Restaurants in Brussels</a>
+            <a href="/en/berlin/" title="Restaurants in Berlin" lang="en">Restaurants in Berlin</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/vienna/" title="Restaurants in Vienna" lang="en">Restaurants in Vienna</a>
+            <a href="/en/salzburg/" title="Restaurants in Salzburg" lang="en">Restaurants in Salzburg</a>
+            <a href="/en/budapest/" title="Restaurants in Budapest" lang="en">Restaurants in Budapest</a>
+            <a title="Restaurants in Prague" lang="en">Restaurants in Prague (2012)</a>
+            <a title="Restaurants in Bucharest" lang="en">Restaurants in Bucharest (2012)</a>
+            <a title="Restaurants in Copenhagen" lang="en">Restaurants in Copenhagen (2012)</a>
+            <a href="/en/paris/" title="Restaurants in Paris" lang="en">Restaurants in Paris</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/rome+and+latium/" title="Restaurants in Rome" lang="en">Restaurants in Rome</a>
+            <a href="/en/milan+and+lombardy/" title="Restaurants in Milan" lang="en">Restaurants in Milan</a>
+            <a href="/en/florence+and+tuscany/" title="Restaurants in Florence" lang="en">Restaurants in Florence</a>
+            <a href="/en/madrid/" title="Restaurants in Madrid" lang="en">Restaurants in Madrid</a>
+            <a href="/en/barcelona/" title="Restaurants in Barcelona" lang="en">Restaurants in Barcelona</a>
+            <a href="/en/dubai/" title="Restaurants in Dubai" lang="en">Restaurants in Dubai</a>
+            <a href="/en/new+york/" title="Restaurants in New York" lang="en">Restaurants in New York</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="/en/cape+town/" title="Restaurants in Cape Town" lang="en">Restaurants in Cape Town</a>
+            <a href="/en/gardenroute/" title="Restaurants in Garden Route SA" lang="en">Restaurants in Garden Route SA</a>
+            <a href="/en/winelands/" title="Restaurants in Winelands SA" lang="en">Restaurants in Winelands SA</a>
+            <a href="/en/singapore+city/" title="Restaurants in Singapore" lang="en">Restaurants in Singapore</a>
+            <a href="/en/shanghai/" title="Restaurants in Shanghai" lang="en">Restaurants in Shanghai</a>
+            <a href="/en/hong+kong+city/" title="Restaurants in Hong Kong" lang="en">Restaurants in Hong Kong</a>
+            <a href="/en/beijing/" title="Restaurants in Beijing" lang="en">Restaurants in Beijing</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3><span style="text-transform: capitalize">all countries</span></h3>
+            <a href="http://www.diningcity.nl/" title="Restaurants in Nederland" lang="nl">DiningCity.nl</a>
+            <a href="http://www.diningcity.be/" title="Restaurants in Belgi&euml;" lang="nl">DiningCity.be</a>
+            <a href="http://www.diningcity.de/" title="Restaurants in Deutschland" lang="de">DiningCity.de</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.it/" title="Restauranti a Italia" lang="it">DiningCity.it</a>
+            <a href="http://www.diningcity.es/" title="Restaurantes en Espa&ntilde;a" lang="es">DiningCity.es</a>
+            <a title="Restauranter i Danmark" lang="da">DiningCity.dk</a>
+            <a href="http://www.diningcity.co.za/" title="Restaurants in South Africa" land="en">DiningCity.co.za</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.hu/" title="Ã&Eacute;ttermek - Magyarorsz&aacute;g" lang="hu">DiningCity.hu</a>
+            <a href="http://www.diningcity.at/" title="Restaurants in &Ouml;sterreich" lang="de">DiningCity.at</a>
+            <a href="http://www.diningcity.ae/" title="Restaurants in United Arab Emirates" lang="en">DiningCity.ae</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.diningcity.cn/" title="Restaurants in China" lang="zh">DiningCity.cn</a>
+            <a href="http://www.diningcity.hk/" title="Restaurants in Hong Kong" lang="en">DiningCity.hk</a>
+            <a href="http://www.diningcity.sg/" title="Restaurants in Singapore" lang="en">DiningCity.sg</a>
+        </div>
+    </div>
+    <div style="clear:left">
+        <div class="wrapper-small">
+            <h3><span style="text-transform: capitalize">restaurant weeks</span></h3>
+            <a href="http://www.restaurantweek.nl/" title="Restaurantweek in Nederland" lang="nl">Restaurantweek.nl</a>
+            <a href="http://www.restaurantweek.be/" title="Restaurantweek in Belgi&euml;" lang="nl">Restaurantweek.be</a>
+            <a href="http://www.restaurantweek.de/" title="Restaurantweek in Deutschland" lang="de">Restaurantweek.de</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.it/" title="Restaurantweek a Italia" lang="it">Restaurantweek.it</a>
+            <a href="http://www.restaurantweek.hu/" title="Restaurantweek - Magyarorsz&aacute;g" lang="hu">Restaurantweek.hu</a>
+            <a href="http://www.restaurantweek.dk/" title="Restaurantweek i Danmark" lang="da">Restaurantweek.dk</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.sg/" title="Restaurantweek in Singapore" lang="en">Restaurantweek.sg</a>
+            <a href="http://www.restaurantwoche.at/" title="Restaurantwoche in &Ouml;sterreich" lang="de">Restaurantwoche.at</a>
+            <a href="http://www.restaurantweek.cn/" title="Restaurantweek Shanghai" lang="zh">Restaurantweek.cn</a>
+        </div>
+        <div class="wrapper-small">
+            <h3>&nbsp;</h3>
+            <a href="http://www.restaurantweek.hk/" title="Restaurantweek Hongkong" lang="en">Restaurantweek.hk</a>
+            <a href="http://www.restaurantweek.co.za/" title="Restaurantweek in South Africa" lang="en">Restaurantweek.co.za</a>
+        </div>
+    </div>
+</div>
+
+<div class="footer_bottom">
+    <div class="col01">&copy; 2011 DiningCity.com</div>
+    <div class="col02" style="text-align:center;"></div>
+    <div class="col03"><a href="/sitemap">Sitemap</a>&nbsp;&nbsp;&nbsp;
+
+
+        <a href="/en/zeeland/pages/aboutus" title="About us" lang="en">About us</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="/en/zeeland/pages/contact" title="DiningCity Contact" lang="en">Contact</a>
+
+
+    </div>
+</div>
+
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#async=1"></script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18214395-1']);
+    _gaq.push(['_setDomainName', 'none']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    if ( $.browser.msie ) {
+        if($.browser.version == 7.0) {
+            $('#news_button').css('top', '-25px');
+            $('#search_button_footer').css('top', '-25px');
+            $('#flags_margin').css('margin-top', '18px');
+            $('.col01 ul li').css('padding-top', '10px');
+            $('.col01 ul li.first').css('margin-top', '-10px');
+        }
+    }
+
+    function pxLen(text){
+        $("#ruler").html(text);
+        return $("#ruler").width();
+    }
+
+    $("#footer").ready(function() {
+        $("#footer_nl").validate({
+        });
+    });
+
+    function saveSubscription() {
+        $('#newsletter_email').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
+
+        var ok = $("#footer_nl").validate().element("#newsletter_email");
+
+        if(ok) {
+
+
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
+    }
+
+
+    function saveSubscriptionRegion() {
+        $('#newsletter_email_region').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
+        var ok = $("#newsletter_email_region_form").validate().element("#newsletter_email_region");
+
+        if(ok) {
+
+
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email_region"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email_region"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
+        return false;
+    }
+    function saveSubscriptionCountry() {
+        $('#newsletter_email_country').rules("add", {
+            required: true,
+            email: true,
+            messages: {
+                required: "",
+                email: ""
+            }
+        });
+        var ok = $("#newsletter_email_country_form").validate().element("#newsletter_email_country");
+
+        if(ok) {
+
+
+            var url = "/en/the+netherlands/savesubscription";
+
+
+            var data = $.ajax({
+                type : "POST",
+                url : url,
+                data : 'newsletter_email=' + $('input[name="newsletter_email_country"]').val(),
+                success: function (html) {
+                    alert("You have been subscribed.");
+                    $('input[name="newsletter_email_country"]').val('');
+                }
+            });
+        } else {
+            alert("Invalid e-mail address. You have not been subscribed.");
+        }
+        return false;
+    }
+</script>
+
+<!-- Footer end here -->
+</div>
+</div>
+<span id="ruler" style="display: none; white-space: nowrap;"></span>
+</body>
+
+</html>

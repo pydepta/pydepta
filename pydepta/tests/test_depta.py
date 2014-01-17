@@ -32,9 +32,23 @@ CASES = [
     ]
 
 INFER_CASES = [
+    ('6', 'http://www.diningcity.com/en/zeeland/restaurant_nelsons', {
+        # seed trained from 2.html
+        'seed': '2.json',
+        'data': {'Service': '8.0',
+                 'Atmosphere': '7.0',
+                 'Cuisine': '9.0',
+                 'General': '8.0',
+                 'text': 'Heerlijk gegeten',
+                 'date': '06 Sep 2013, 17:59'},
+        'expected': {
+            # empty
+        }
+    }),
+
     ('7', 'http://www.diningcity.com/en/zeeland/restaurant_hetbadpaviljoen', {
         # seed trained from 2.html
-        'seed': '7.json',
+        'seed': '2.json',
         'data': {'Service': '8.0',
                  'Atmosphere': '7.0',
                  'Cuisine': '9.0',
@@ -57,7 +71,7 @@ INFER_CASES = [
 
     ('9', 'http://www.couverts.nl/restaurant/domburg/strand-90', {
         # seed trained from 8.html
-        'seed': '9.json',
+        'seed': '8.json',
         'data': {'text': 'Wir haben Sylvester dort verbracht und',
                  'date': '06-01-2014'},
         'assert_in': {
@@ -70,6 +84,8 @@ def _normalize_text(text):
     return re.sub(ur'\s+', u' ', text).replace(u'\u00a0', u' ').strip()
 
 def _merge_list_of_dict(items):
+    if not items:
+        return {}
     d = {}
     for item in items:
         for k, v in item.iteritems():
