@@ -160,5 +160,6 @@ class Depta(object):
         return self.scraper._ex.extract(page)[0]
 
     def _region_to_htmlpage(self, region):
-        seed_body = tostring(region.parent[region.start], encoding=unicode, method='html')
-        return HtmlPage(body=seed_body)
+        body = [tostring(region.parent[region.start + i], encoding=unicode, method='html') \
+                     for i in range(region.k)]
+        return HtmlPage(body=u"".join(body))
