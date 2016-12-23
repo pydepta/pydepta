@@ -472,3 +472,4 @@ class PartialTreeAligner(object):
         get the position of the element within the parent.
         """
         return element.getparent().index(element)
+

@@ -11,3 +11,4 @@ class DomTreeBuilder(object):
     def build(self):
         parser = etree.HTMLParser(encoding='utf-8')
         return etree.fromstring(self.html, parser)
+

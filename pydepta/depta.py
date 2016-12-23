@@ -162,3 +162,4 @@ class Depta(object):
     def _region_to_htmlpage(self, region):
         seed_body = tostring(region.parent[region.start], encoding=unicode, method='html')
         return HtmlPage(body=seed_body)
+
