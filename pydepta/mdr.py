@@ -417,10 +417,10 @@ class MiningDataField(object):
         # handle text
         if e is not None:
             if seed.text and seed.text.strip():
-                r.append(Field(self._get_text(e.text), ''))
+                r.append(Field(self._get_text(e.text), e))
         else:
             if seed.text and seed.text.strip():
-                r.append(Field(u'', ''))
+                r.append(Field(u'', etree.Element('empty')))
 
         # handle children
         for child in seed:
@@ -429,10 +429,10 @@ class MiningDataField(object):
         # handle tail
         if e is not None:
             if seed.tail and seed.tail.strip():
-                r.append(Field(self._get_text(e.tail) or u'', ''))
+                r.append(Field(self._get_text(e.tail) or u'', e))
         else:
             if seed.tail and seed.tail.strip():
-                r.append(Field(u'', ''))
+                r.append(Field(u'', etree.Element('empty')))
 
         return r
 
