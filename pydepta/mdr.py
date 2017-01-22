@@ -196,7 +196,13 @@ class MiningDataRegion(object):
                 flag = True
                 for j in xrange(start + i, len(root) - k, k):
                     pair = GeneralizedNode(root[j], k), GeneralizedNode(root[j + k], k)
-                    score = scores.get(pair)
+                    # Note Johannes: I was getting "Unorderable None >= float"
+                    #   in python 2.x "None >= thresh" yields False, while
+                    #   in python 3.x it's illegal
+                    #   https://stackoverflow.com/questions/7383782/
+                    #   technically in py2 "None" evaluates to something less
+                    #       than 0
+                    score = scores.get(pair, 0)
                     if score >= threshold:
                         if flag:
                             cur_region.k = k
@@ -411,10 +417,10 @@ class MiningDataField(object):
         # handle text
         if e is not None:
             if seed.text and seed.text.strip():
-                r.append(Field(self._get_text(e.text), ''))
+                r.append(Field(self._get_text(e.text), e))
         else:
             if seed.text and seed.text.strip():
-                r.append(Field(u'', ''))
+                r.append(Field(u'', etree.Element('empty')))
 
         # handle children
         for child in seed:
@@ -423,10 +429,10 @@ class MiningDataField(object):
         # handle tail
         if e is not None:
             if seed.tail and seed.tail.strip():
-                r.append(Field(self._get_text(e.tail) or u'', ''))
+                r.append(Field(self._get_text(e.tail) or u'', e))
         else:
             if seed.tail and seed.tail.strip():
-                r.append(Field(u'', ''))
+                r.append(Field(u'', etree.Element('empty')))
 
         return r
 
@@ -436,3 +442,4 @@ class MiningDataField(object):
                 return text.decode('utf8', 'ignore')
             return text
         return u''
+
